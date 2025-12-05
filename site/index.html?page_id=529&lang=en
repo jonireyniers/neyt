@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en-GB"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8" lang="en-GB"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9" lang="en-GB"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en-GB"> <!--<![endif]-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Office furniture &laquo; Neyt Furniture</title>
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="http://www.neytfurniture.com/site/xmlrpc.php">
+
+<meta name='robots' content='max-image-preview:large' />
+	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
+	<link rel="alternate" href="index.html?page_id=529&amp;lang=en" hreflang="en" />
+<link rel="alternate" href="http://www.neytfurniture.com/site/?page_id=527&#038;lang=nl" hreflang="nl" />
+<link rel="alternate" href="http://www.neytfurniture.com/site/?page_id=531&#038;lang=fr" hreflang="fr" />
+<link rel='dns-prefetch' href='http://fonts.googleapis.com/' />
+<link rel="alternate" type="application/rss+xml" title="Neyt Furniture &raquo; Feed" href="http://www.neytfurniture.com/site/?feed=rss2&#038;lang=en" />
+<link rel="alternate" type="application/rss+xml" title="Neyt Furniture &raquo; Comments Feed" href="http://www.neytfurniture.com/site/?feed=comments-rss2&#038;lang=en" />
+<script type="text/javascript">
+/* <![CDATA[ */
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16.0.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16.0.1\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/www.neytfurniture.com\/site\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.8.3"}};
+/*! This file is auto-generated */
+!function(s,n){var o,i,e;function c(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function p(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data),a=(e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0),new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data));return t.every(function(e,t){return e===a[t]})}function u(e,t){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);for(var n=e.getImageData(16,16,1,1),a=0;a<n.data.length;a++)if(0!==n.data[a])return!1;return!0}function f(e,t,n,a){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\udde8\ud83c\uddf6","\ud83c\udde8\u200b\ud83c\uddf6")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!a(e,"\ud83e\udedf")}return!1}function g(e,t,n,a){var r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):s.createElement("canvas"),o=r.getContext("2d",{willReadFrequently:!0}),i=(o.textBaseline="top",o.font="600 32px Arial",{});return e.forEach(function(e){i[e]=t(o,e,n,a)}),i}function t(e){var t=s.createElement("script");t.src=e,t.defer=!0,s.head.appendChild(t)}"undefined"!=typeof Promise&&(o="wpEmojiSettingsSupports",i=["flag","emoji"],n.supports={everything:!0,everythingExceptFlag:!0},e=new Promise(function(e){s.addEventListener("DOMContentLoaded",e,{once:!0})}),new Promise(function(t){var n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+g.toString()+"("+[JSON.stringify(i),f.toString(),p.toString(),u.toString()].join(",")+"));",a=new Blob([e],{type:"text/javascript"}),r=new Worker(URL.createObjectURL(a),{name:"wpTestEmojiSupports"});return void(r.onmessage=function(e){c(n=e.data),r.terminate(),t(n)})}catch(e){}c(n=g(i,f,p,u))}t(n)}).then(function(e){for(var t in e)n.supports[t]=e[t],n.supports.everything=n.supports.everything&&n.supports[t],"flag"!==t&&(n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&n.supports[t]);n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&!n.supports.flag,n.DOMReady=!1,n.readyCallback=function(){n.DOMReady=!0}}).then(function(){return e}).then(function(){var e;n.supports.everything||(n.readyCallback(),(e=n.source||{}).concatemoji?t(e.concatemoji):e.wpemoji&&e.twemoji&&(t(e.twemoji),t(e.wpemoji)))}))}((window,document),window._wpemojiSettings);
+/* ]]> */
+</script>
+<style id='wp-emoji-styles-inline-css' type='text/css'>
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+</style>
+<link rel='stylesheet' id='wp-block-library-css' href='wp-includes/css/dist/block-library/style.min.css?ver=6.8.3' type='text/css' media='all' />
+<style id='classic-theme-styles-inline-css' type='text/css'>
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+</style>
+<style id='global-styles-inline-css' type='text/css'>
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+:root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='contact-form-7-css' href='wp-content/plugins/contact-form-7/includes/css/styles.css?ver=6.1.4' type='text/css' media='all' />
+<link rel='stylesheet' id='wc-gallery-style-css' href='wp-content/plugins/wc-gallery/includes/css/style.css?ver=1.67' type='text/css' media='all' />
+<link rel='stylesheet' id='wc-gallery-popup-style-css' href='wp-content/plugins/wc-gallery/includes/css/magnific-popup.css?ver=1.1.0' type='text/css' media='all' />
+<link rel='stylesheet' id='wc-gallery-flexslider-style-css' href='wp-content/plugins/wc-gallery/includes/vendors/flexslider/flexslider.css?ver=2.6.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wc-gallery-owlcarousel-style-css' href='wp-content/plugins/wc-gallery/includes/vendors/owlcarousel/assets/owl.carousel.css?ver=2.1.4' type='text/css' media='all' />
+<link rel='stylesheet' id='wc-gallery-owlcarousel-theme-style-css' href='wp-content/plugins/wc-gallery/includes/vendors/owlcarousel/assets/owl.theme.default.css?ver=2.1.4' type='text/css' media='all' />
+<link rel='stylesheet' id='eventbrite-event-style-css' href='wp-content/themes/eventbrite-event/style.css?ver=6.8.3' type='text/css' media='all' />
+<link rel='stylesheet' id='eventbrite-event-cutive-css' href='http://fonts.googleapis.com/css?family=Cutive&#038;ver=6.8.3' type='text/css' media='all' />
+<link rel='stylesheet' id='eventbrite-event-raleway-css' href='http://fonts.googleapis.com/css?family=Raleway%3A400%2C800&#038;ver=6.8.3' type='text/css' media='all' />
+<script type="text/javascript" src="wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="text/javascript" src="wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<script type="text/javascript" src="wp-content/themes/eventbrite-event/js/libs/modernizr.min.js?ver=20140304" id="eventbrite-event-modernizr-js"></script>
+<link rel="https://api.w.org/" href="http://www.neytfurniture.com/site/index.php?rest_route=/" /><link rel="alternate" title="JSON" type="application/json" href="http://www.neytfurniture.com/site/index.php?rest_route=/wp/v2/pages/529" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.neytfurniture.com/site/xmlrpc.php?rsd" />
+<link rel="canonical" href="index.html?page_id=529&amp;lang=en" />
+<link rel='shortlink' href='http://www.neytfurniture.com/site/?p=529' />
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="http://www.neytfurniture.com/site/index.php?rest_route=%2Foembed%2F1.0%2Fembed&#038;url=http%3A%2F%2Fwww.neytfurniture.com%2Fsite%2F%3Fpage_id%3D529%26lang%3Den&#038;lang=en" />
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="http://www.neytfurniture.com/site/index.php?rest_route=%2Foembed%2F1.0%2Fembed&#038;url=http%3A%2F%2Fwww.neytfurniture.com%2Fsite%2F%3Fpage_id%3D529%26lang%3Den&#038;format=xml&#038;lang=en" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href='https://fonts.googleapis.com/css2?display=swap&family=Muli:wght@300&family=Noto+Sans' rel='stylesheet'><!-- All in one Favicon 4.8 --><link rel="icon" href="http://www2.neytfurniture.com/site/wp-content/uploads/2015/05/favicon-16x16t.gif" type="image/png"/>
+		<style type="text/css">
+					.logo-text h1,
+			.logo-text h5 {
+				position: absolute;
+				clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+				clip: rect(1px, 1px, 1px, 1px);
+			}
+				</style>
+		<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #373737; background-image: url("http://www2.neytfurniture.com/site/wp-content/themes/eventbrite-event/img/bg-main.png"); background-position: left top; background-size: auto; background-repeat: repeat; background-attachment: scroll; }
+</style>
+	<style id="sccss">/* Enter Your Custom CSS Here */
+
+/* Theme: suppress footer */
+.site-footer { 
+  display:none;}
+
+/* Theme: Switch color of menu */
+.menu li a:link {color: white;}
+.menu li a:visited {color: white;}
+.menu li a:visited:hover {background:#349acc; color: white;}
+.menu li a:hover {background:#349acc; color: white;}
+.menu a:hover:before,.menu a:hover:after {background: #349acc;}
+
+.logo-text {display: none !important;}
+
+.wp-caption:hover {
+  border-color: #349acc;
+  opacity:0.7; }
+
+.wp-caption {
+  display: inline-block;
+  vertical-align: top;
+  margin: 1px 1px 1px 1px;
+  padding-bottom:0px;
+  padding-top:0px;
+  position:relative;}
+
+.wp-caption-text {
+  text-align: left;
+  font-weight: normal;
+  position: absolute;
+  left:0%;
+  right:0%;
+  padding:5px 5px 5px 5px;
+  background:#349acc !important;
+  color:#ffffff !important;
+  font-style:normal;
+  opacity:0.85 ! important;
+  bottom:0%;}
+
+.gallery-icon img {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #ccc;}
+
+.gallery-icon img:hover {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #349acc;
+  opacity:0.7; }
+
+.sidebar .widget h2::after {background: #349acc;}
+
+a:link {color: #349acc; }
+a:visited {color: #007acc; }
+a:visited:hover {color: #007acc; }
+a:hover {color: #007acc; }
+a:active {color: gray; }
+
+/* Contact form custom settings */
+/*
+.button-submit {
+  background: #349acc ! important;
+  font-family: "Noto Sans" ! important;
+  margin: 0px ! important;}
+.button-reset {
+  font-family: "Noto Sans" ! important;
+  margin: 0px ! important;}
+.wdform_page {
+  font-family: "Muli" ! important;
+  padding-top: 0px ! important;}
+.wdform-page-and-images {padding-left: 0px  ! important;}
+.wdform-field {padding-top: 0px ! important; /*width: 100px ! important;*/}
+.wdform-field[type = "type_submit_reset"] {
+  border-spacing: 0px! important;
+/*  padding-left: 102px ! important;*/}
+.wdform-label {color: rgb(102,102,102) ! important;}
+*/
+.mini_label {margin-top: 0px ! important;}
+
+div.post-entry p { padding: 0px 0px 0px 0px ! important;}
+</style>	<style id="egf-frontend-styles" type="text/css">
+		p {font-family: 'Muli', sans-serif;font-style: normal;font-weight: 300;} h1 {font-family: 'Noto Sans', sans-serif;font-style: normal;font-weight: 400;} h2 {font-family: 'Noto Sans', sans-serif;font-style: normal;font-weight: 400;} h3 {} h4 {} h5 {} h6 {} 	</style>
+	</head>
+
+<body class="wp-singular page-template-default page page-id-529 page-child parent-pageid-17 custom-background wp-theme-eventbrite-event">
+		<header role="banner">
+		<div class="container">
+			<div class="logo-row">
+												<a href="../robots.txt" class="logo">
+					<img src="http://www2.neytfurniture.com/site/wp-content/uploads/2015/05/neyt_logo1.gif" />
+				</a>
+								<a href="../robots.txt" class="logo-text">
+					<h1>Neyt Furniture</h1>
+					<h5>Fine furniture for fine people</h5>
+				</a>
+			</div>
+			<a href="index.html?page_id=529&amp;lang=en#" class="menu-toggle">-</a>
+		</div>
+	</header>
+
+	<section role="main" class="main-container">
+		<div id="site-container" class="container">
+			<nav class="menu"><ul id="menu-rootmenuen" class="menu"><li id="menu-item-238" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-page-ancestor menu-item-238"><a href="../robots.txt">Furniture</a></li>
+<li id="menu-item-240" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-240"><a href="http://www.neytfurniture.com/site/?page_id=2&#038;lang=en">Company</a></li>
+<li id="menu-item-239" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-239"><a href="http://www.neytfurniture.com/site/?page_id=10&#038;lang=en">Contact</a></li>
+<li id="menu-item-237-nl" class="lang-item lang-item-6 lang-item-nl lang-item-first menu-item menu-item-type-custom menu-item-object-custom menu-item-237-nl"><a href="http://www.neytfurniture.com/site/?page_id=527&#038;lang=nl" hreflang="nl-NL" lang="nl-NL">Nederlands</a></li>
+<li id="menu-item-237-fr" class="lang-item lang-item-10 lang-item-fr menu-item menu-item-type-custom menu-item-object-custom menu-item-237-fr"><a href="http://www.neytfurniture.com/site/?page_id=531&#038;lang=fr" hreflang="fr-FR" lang="fr-FR">Français</a></li>
+</ul></nav>		<div class="row">
+			<div class="span8">
+				<div class="left-col">
+												<div class="event-text post-529 page type-page status-publish hentry" id="post-529">
+	<h1 class="pagetitle">Office furniture</h1>	<div class="post-entry">
+		<figure id="attachment_3269" aria-labelledby="figcaption_attachment_3269" class="wp-caption alignnone" style="width: 228px"><a href="http://www.neytfurniture.com/site/?page_id=3308&amp;lang=en"><img decoding="async" class="wp-image-3269 size-medium" src="wp-content/uploads/2021/11/OF-202111-CAP1-OF-228x171.jpg" alt="" width="228" height="171" srcset="wp-content/uploads/2021/11/OF-202111-CAP1-OF-228x171.jpg 228w, wp-content/uploads/2021/11/OF-202111-CAP1-OF-250x188.jpg 250w, wp-content/uploads/2021/11/OF-202111-CAP1-OF-550x413.jpg 550w, wp-content/uploads/2021/11/OF-202111-CAP1-OF-800x600.jpg 800w, wp-content/uploads/2021/11/OF-202111-CAP1-OF-240x180.jpg 240w, wp-content/uploads/2021/11/OF-202111-CAP1-OF-400x300.jpg 400w, wp-content/uploads/2021/11/OF-202111-CAP1-OF-667x500.jpg 667w, wp-content/uploads/2021/11/OF-202111-CAP1-OF.jpg 1024w" sizes="(max-width: 228px) 100vw, 228px" /></a><figcaption id="figcaption_attachment_3269" class="wp-caption-text">CAPO black/chestnut &#8211; Golden Oak</figcaption></figure>
+<figure id="attachment_3866" aria-labelledby="figcaption_attachment_3866" class="wp-caption alignnone" style="width: 228px"><a href="https://www.neytfurniture.com/site/?page_id=3878&amp;lang=en"><img decoding="async" class="wp-image-3866 size-medium" src="wp-content/uploads/2025/11/OF-202511-FLE1-OF-228x171.jpg" alt="" width="228" height="171" srcset="wp-content/uploads/2025/11/OF-202511-FLE1-OF-228x171.jpg 228w, wp-content/uploads/2025/11/OF-202511-FLE1-OF-250x188.jpg 250w, wp-content/uploads/2025/11/OF-202511-FLE1-OF-550x413.jpg 550w, wp-content/uploads/2025/11/OF-202511-FLE1-OF-800x600.jpg 800w, wp-content/uploads/2025/11/OF-202511-FLE1-OF-240x180.jpg 240w, wp-content/uploads/2025/11/OF-202511-FLE1-OF-400x300.jpg 400w, wp-content/uploads/2025/11/OF-202511-FLE1-OF-667x500.jpg 667w, wp-content/uploads/2025/11/OF-202511-FLE1-OF.jpg 1024w" sizes="(max-width: 228px) 100vw, 228px" /></a><figcaption id="figcaption_attachment_3866" class="wp-caption-text">FLEXO bolivar wood / sandoak</figcaption></figure>
+<figure id="attachment_3142" aria-labelledby="figcaption_attachment_3142" class="wp-caption alignnone" style="width: 228px"><a href="http://www.neytfurniture.com/site/?page_id=3199&amp;lang=en"><img decoding="async" class="alignnone wp-image-3142 size-medium" src="wp-content/uploads/2021/06/OF-202106-HOM2-OF-228x171.jpg" alt="" width="228" height="171" srcset="wp-content/uploads/2021/06/OF-202106-HOM2-OF-228x171.jpg 228w, wp-content/uploads/2021/06/OF-202106-HOM2-OF-250x188.jpg 250w, wp-content/uploads/2021/06/OF-202106-HOM2-OF-550x413.jpg 550w, wp-content/uploads/2021/06/OF-202106-HOM2-OF-800x600.jpg 800w, wp-content/uploads/2021/06/OF-202106-HOM2-OF-240x180.jpg 240w, wp-content/uploads/2021/06/OF-202106-HOM2-OF-400x300.jpg 400w, wp-content/uploads/2021/06/OF-202106-HOM2-OF-667x500.jpg 667w, wp-content/uploads/2021/06/OF-202106-HOM2-OF.jpg 1024w" sizes="(max-width: 228px) 100vw, 228px" /></a><figcaption id="figcaption_attachment_3142" class="wp-caption-text">HOME OFFICE Royal oak</figcaption></figure>
+<figure id="attachment_3372" aria-labelledby="figcaption_attachment_3372" class="wp-caption alignnone" style="width: 228px"><a href="http://www.neytfurniture.com/site/?page_id=3455&amp;lang=en"><img loading="lazy" decoding="async" class="wp-image-3372 size-medium" src="wp-content/uploads/2022/11/OF-202211-HOS2-OF-228x171.jpg" alt="" width="228" height="171" srcset="wp-content/uploads/2022/11/OF-202211-HOS2-OF-228x171.jpg 228w, wp-content/uploads/2022/11/OF-202211-HOS2-OF-250x188.jpg 250w, wp-content/uploads/2022/11/OF-202211-HOS2-OF-550x413.jpg 550w, wp-content/uploads/2022/11/OF-202211-HOS2-OF-800x600.jpg 800w, wp-content/uploads/2022/11/OF-202211-HOS2-OF-240x180.jpg 240w, wp-content/uploads/2022/11/OF-202211-HOS2-OF-400x300.jpg 400w, wp-content/uploads/2022/11/OF-202211-HOS2-OF-667x500.jpg 667w, wp-content/uploads/2022/11/OF-202211-HOS2-OF.jpg 1024w" sizes="auto, (max-width: 228px) 100vw, 228px" /></a><figcaption id="figcaption_attachment_3372" class="wp-caption-text">HOME SPACE Spring oak / Golden oak / Vintage</figcaption></figure>
+<figure id="attachment_2406" aria-labelledby="figcaption_attachment_2406" class="wp-caption alignnone" style="width: 228px"><a href="http://www.neytfurniture.com/site/?page_id=2896&amp;lang=en"><img loading="lazy" decoding="async" class="wp-image-2406 size-medium" src="wp-content/uploads/2018/01/OF-201801-CON2-OF-228x171.jpg" alt="" width="228" height="171" srcset="wp-content/uploads/2018/01/OF-201801-CON2-OF-228x171.jpg 228w, wp-content/uploads/2018/01/OF-201801-CON2-OF.jpg 1024w, wp-content/uploads/2018/01/OF-201801-CON2-OF-250x188.jpg 250w, wp-content/uploads/2018/01/OF-201801-CON2-OF-550x413.jpg 550w, wp-content/uploads/2018/01/OF-201801-CON2-OF-800x600.jpg 800w, wp-content/uploads/2018/01/OF-201801-CON2-OF-240x180.jpg 240w, wp-content/uploads/2018/01/OF-201801-CON2-OF-400x300.jpg 400w, wp-content/uploads/2018/01/OF-201801-CON2-OF-667x500.jpg 667w" sizes="auto, (max-width: 228px) 100vw, 228px" /></a><figcaption id="figcaption_attachment_2406" class="wp-caption-text">PRONTO Sherman grey / structure white / black-vintage oak</figcaption></figure>
+<figure id="attachment_3373" aria-labelledby="figcaption_attachment_3373" class="wp-caption alignnone" style="width: 228px"><a href="http://www.neytfurniture.com/site/?page_id=3487&amp;lang=en"><img loading="lazy" decoding="async" class="wp-image-3373 size-medium" src="wp-content/uploads/2022/11/OF-202211-RIO2-OF-2-228x171.jpg" alt="" width="228" height="171" srcset="wp-content/uploads/2022/11/OF-202211-RIO2-OF-2-228x171.jpg 228w, wp-content/uploads/2022/11/OF-202211-RIO2-OF-2-250x188.jpg 250w, wp-content/uploads/2022/11/OF-202211-RIO2-OF-2-550x413.jpg 550w, wp-content/uploads/2022/11/OF-202211-RIO2-OF-2-800x600.jpg 800w, wp-content/uploads/2022/11/OF-202211-RIO2-OF-2-240x180.jpg 240w, wp-content/uploads/2022/11/OF-202211-RIO2-OF-2-400x300.jpg 400w, wp-content/uploads/2022/11/OF-202211-RIO2-OF-2-667x500.jpg 667w, wp-content/uploads/2022/11/OF-202211-RIO2-OF-2.jpg 1024w" sizes="auto, (max-width: 228px) 100vw, 228px" /></a><figcaption id="figcaption_attachment_3373" class="wp-caption-text">RIO Spring oak / Humus oak</figcaption></figure>
+		<div class="clr"></div>
+	</div> <!-- end post-entry -->
+	</div> <!-- end post -->
+							<hr/>
+																	</div>
+			</div>
+			
+
+<aside class="span4" role="complementary">
+	<div class="sidebar">
+		
+		<div id="rpwe_widget-2" class="widget rpwe_widget recent-posts-extended"><style>.rpwe-block ul{
+list-style: none !important;
+margin-left: 0 !important;
+padding-left: 0 !important;
+}
+
+.rpwe-block li{
+border-bottom: 1px solid #eee;
+margin-bottom: 10px;
+padding-bottom: 10px;
+list-style-type: none;
+}
+
+.rpwe-block a{
+display: inline !important;
+text-decoration: none;
+}
+
+.rpwe-block h3:hover {
+text-decoration: underline !important;}
+
+.rpwe-block h3{
+background: none !important;
+clear: none;
+margin-bottom: 0 !important;
+margin-top: 0 !important;
+font-weight: 400;
+font-size: 12.86px !important;
+line-height:1.3em;
+}
+
+.rpwe-thumb{
+border: 1px solid #eee !important;
+box-shadow: none !important;
+margin: 2px 10px 2px 0;
+padding: 3px !important;
+}
+
+.rpwe-summary{
+font-size: 12px;
+}
+
+.rpwe-time{
+color: #bbb;
+font-size: 11px;
+}
+
+.rpwe-alignleft{
+display: inline;
+float: left;
+}
+
+.rpwe-alignright{
+display: inline;
+float: right;
+}
+
+.rpwe-aligncenter{
+display: block;
+margin-left: auto;
+margin-right: auto;
+}
+
+.rpwe-clearfix:before,
+.rpwe-clearfix:after{
+content: &quot;&quot;;
+display: table !important;
+}
+
+.rpwe-clearfix:after{
+clear: both;
+}
+
+.rpwe-clearfix{
+zoom: 1;
+}
+</style><h2 class="widget-title">Recent posts</h2><div  class="rpwe-block"><ul class="rpwe-ul"><li class="rpwe-li rpwe-clearfix"><h3 class="rpwe-title"><a href="http://www.neytfurniture.com/site/?p=81&#038;lang=en" target="_self">International Furniture Fair, Brussels &#8211; November</a></h3></li></ul></div><!-- Generated by http://wordpress.org/plugins/recent-posts-widget-extended/ --></div><div id="text-3" class="widget widget_text"><h2 class="widget-title">Closing dates:</h2>			<div class="textwidget"><p>21/04/2025</p>
+<p>01/05/2025 &#8211; 02/05/2025</p>
+<p>29/05/2025 – 30/05/2025</p>
+<p>9/06/2025</p>
+<p>07/07/2025 – 25/07/2025</p>
+<p>11/08/2025 – 15/08/2025</p>
+<p>10/11/2025 &#8211; 11/11/2025</p>
+<p>25/12/2025 – 31/12/2025</p>
+</div>
+		</div>	</div>
+</aside>
+		</div>
+	</div>
+</section>
+<footer class="site-footer row" role="contentinfo">
+	<div class="container">
+				<p>
+			<a class="wordpress-link" href="http://wordpress.org/" rel="generator">Proudly powered by WordPress</a>
+			Theme: Eventbrite Single Event by <a href="http://voceplatforms.com/" rel="designer" class="designer-link">Voce Platforms</a>.		</p>
+	</div>
+</footer>
+<script type="text/javascript" src="wp-includes/js/dist/hooks.min.js?ver=4d63a3d491d11ffd8ac6" id="wp-hooks-js"></script>
+<script type="text/javascript" src="wp-includes/js/dist/i18n.min.js?ver=5e580eb46a90c2b997e6" id="wp-i18n-js"></script>
+<script type="text/javascript" id="wp-i18n-js-after">
+/* <![CDATA[ */
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+/* ]]> */
+</script>
+<script type="text/javascript" src="wp-content/plugins/contact-form-7/includes/swv/js/index.js?ver=6.1.4" id="swv-js"></script>
+<script type="text/javascript" id="contact-form-7-js-before">
+/* <![CDATA[ */
+var wpcf7 = {
+    "api": {
+        "root": "http:\/\/www.neytfurniture.com\/site\/index.php?rest_route=\/",
+        "namespace": "contact-form-7\/v1"
+    }
+};
+/* ]]> */
+</script>
+<script type="text/javascript" src="wp-content/plugins/contact-form-7/includes/js/index.js?ver=6.1.4" id="contact-form-7-js"></script>
+<script type="text/javascript" src="wp-content/themes/eventbrite-event/js/script.js?ver=20130915" id="eventbrite-event-main-js"></script>
+<script type="text/javascript" src="wp-content/themes/eventbrite-event/js/bootstrap/bootstrap-carousel.js?ver=20130915" id="eventbrite-event-carousel-js"></script>
+<script type="text/javascript" src="wp-content/themes/eventbrite-event/js/bootstrap/bootstrap-collapse.js?ver=20130915" id="eventbrite-event-collapse-js"></script>
+<script type="text/javascript" src="wp-content/themes/eventbrite-event/js/bootstrap/bootstrap-tooltip.js?ver=20130915" id="eventbrite-event-tooltip-js"></script>
+<script type="text/javascript" src="wp-content/themes/eventbrite-event/js/bootstrap/bootstrap-popover.js?ver=20130915" id="eventbrite-event-popover-js"></script>
+<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?render=6LfZKMQZAAAAAHRdfXHDTnS9E1ZKsS_D9IIrFjY_&amp;ver=3.0" id="google-recaptcha-js"></script>
+<script type="text/javascript" src="wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0" id="wp-polyfill-js"></script>
+<script type="text/javascript" id="wpcf7-recaptcha-js-before">
+/* <![CDATA[ */
+var wpcf7_recaptcha = {
+    "sitekey": "6LfZKMQZAAAAAHRdfXHDTnS9E1ZKsS_D9IIrFjY_",
+    "actions": {
+        "homepage": "homepage",
+        "contactform": "contactform"
+    }
+};
+/* ]]> */
+</script>
+<script type="text/javascript" src="wp-content/plugins/contact-form-7/modules/recaptcha/index.js?ver=6.1.4" id="wpcf7-recaptcha-js"></script>
+</body>
+</html>
