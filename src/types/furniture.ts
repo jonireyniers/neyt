@@ -1,6 +1,8 @@
+export type CategoryKey = 'adult-bedrooms' | 'baby-bedrooms' | 'youth-bedrooms' | 'dining' | 'office';
+
 export interface FurnitureItem {
   id: string;
-  category: 'adult-bedrooms' | 'baby-bedrooms' | 'youth-bedrooms' | 'dining' | 'office';
+  category: CategoryKey;
   names: {
     en: string;
     fr: string;
@@ -27,4 +29,9 @@ export type Locale = 'en' | 'fr' | 'nl';
 export interface ClosingPeriod {
   year: number;
   periods: string[];
+}
+
+export interface FurnitureData {
+  furniture: FurnitureItem[];
+  categories: Record<CategoryKey, Category>;
 }
