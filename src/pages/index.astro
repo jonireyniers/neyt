@@ -1,0 +1,75 @@
+---
+// filepath: src/pages/index.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import furnitureData from '../data/furniture.json';
+import companyData from '../data/company.json';
+
+const locale = 'en';
+const recentFurniture = furnitureData.furniture.slice(0, 6);
+---
+
+<BaseLayout title="Neyt Furniture - Fine furniture for fine people" locale={locale}>
+  <Header locale={locale} />
+  
+  <main>
+    <section class="bg-gradient-to-br from-primary to-secondary text-white section">
+      <div class="container text-center">
+        <h1 class="text-5xl md:text-6xl font-serif font-bold mb-6">
+          {companyData.company.names[locale]}
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
+          {companyData.company.taglines[locale]}
+        </p>
+        <a href="/furniture" class="inline-block bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+          View Our Collection
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-center mb-12">
+          Recent Additions
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {recentFurniture.map(item => (
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow">
+              <div class="aspect-[4/3] bg-gray-200">
+                <img src={item.images[0]} alt={item.names[locale]} class="w-full h-full object-cover" loading="lazy" />
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-semibold mb-2">{item.names[locale]}</h3>
+                <p class="text-gray-600 text-sm">
+                  {furnitureData.categories[item.category][locale]}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {companyData.closingDates.length > 0 && (
+      <section class="section bg-accent/10">
+        <div class="container max-w-2xl">
+          <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-accent">
+            <h3 class="text-xl font-semibold mb-3">Closing Dates {companyData.closingDates[0].year}</h3>
+            <ul class="space-y-2">
+              {companyData.closingDates[0].periods.map(period => (
+                <li class="flex items-center gap-2">
+                  <span class="text-accent">•</span>
+                  <span>{period}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+    )}
+  </main>
+
+  <Footer locale={locale} />
+</BaseLayout>

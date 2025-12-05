@@ -1,0 +1,33 @@
+{
+  "closingDates": [
+    {
+      "year": 2025,
+      "periods": [
+        "21/04/2025",
+        "01/05/2025 - 02/05/2025",
+        "29/05/2025 - 30/05/2025",
+        "09/06/2025",
+        "07/07/2025 - 25/07/2025",
+        "11/08/2025 - 15/08/2025",
+        "10/11/2025 - 11/11/2025",
+        "25/12/2025 - 31/12/2025"
+      ]
+    }
+  ],
+  "company": {
+    "names": {
+      "en": "Neyt Furniture",
+      "fr": "Meubles Neyt",
+      "nl": "Meubelen Neyt"
+    },
+    "taglines": {
+      "en": "Fine furniture for fine people",
+      "fr": "Meubles raffinés pour personnes raffinées",
+      "nl": "Fijne meubelen voor fijne mensen"
+    },
+    "contact": {
+      "email": "info@neytfurniture.be",
+      "phone": "+32 XXX XX XX XX"
+    }
+  }
+}
