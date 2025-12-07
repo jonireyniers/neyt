@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const locale: 'en' | 'fr' | 'nl' = 'nl';
+---
+<BaseLayout title="Contact — Neyt" locale={locale}>
+  <Header locale={locale} />
+
+  <main class="section">
+    <div class="container max-w-4xl">
+      <h1 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-center">Contact</h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        <!-- Contact info -->
+        <div class="bg-gradient-to-br from-white to-slate-50 border rounded-xl p-6 shadow-sm">
+          <h2 class="text-xl font-semibold mb-4">Neyt NV</h2>
+
+          <address class="not-italic text-sm space-y-1 mb-4">
+            <div>Heistraat 12</div>
+            <div>9080 Beervelde</div>
+            <div>België</div>
+            <div>Tel: <a href="tel:+3293539208" class="text-accent hover:underline">+32 9 353 92 08</a></div>
+            <div>Fax: +32 9 353 92 10</div>
+          </address>
+
+          <p class="text-sm text-gray-600">
+            <strong>Alleen B2B.</strong> We verkopen niet rechtstreeks aan het publiek. Voor meer informatie over Neyt-producten kunt u contact opnemen met een meubelzaak in uw omgeving.
+          </p>
+
+          <dl class="mt-6 space-y-2 text-sm text-gray-700">
+            <div>
+              <dt class="font-medium">Openingstijden</dt>
+              <dd>Maa–Vri, alleen productieurzeuren</dd>
+            </div>
+            <div>
+              <dt class="font-medium">E-mail</dt>
+              <dd><a href="mailto:info@example.com" class="text-accent hover:underline">info@example.com</a></dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Form -->
+        <div class="bg-white border rounded-xl p-6 shadow-md">
+          <h2 class="text-lg font-semibold mb-4">Stuur ons een bericht</h2>
+
+          <form id="contactForm" class="space-y-4" method="post" action="/api/contact" novalidate>
+            <div>
+              <label for="name" class="block text-sm font-medium mb-1">Voornaam - Achternaam <span class="text-accent">*</span></label>
+              <input id="name" name="name" required class="w-full border bg-gray-50 px-3 py-2 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-accent/40" />
+            </div>
+
+            <div>
+              <label for="company" class="block text-sm font-medium mb-1">Bedrijf <span class="text-accent">*</span></label>
+              <input id="company" name="company" required class="w-full border bg-gray-50 px-3 py-2 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-accent/40" />
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="activity" class="block text-sm font-medium mb-1">Activiteit</label>
+                <input id="activity" name="activity" class="w-full border bg-gray-50 px-3 py-2 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-accent/40" />
+              </div>
+
+              <div>
+                <label for="city" class="block text-sm font-medium mb-1">Plaats / Stad</label>
+                <input id="city" name="city" class="w-full border bg-gray-50 px-3 py-2 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-accent/40" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="country" class="block text-sm font-medium mb-1">Land <span class="text-accent">*</span></label>
+                <select id="country" name="country" required class="w-full border bg-gray-50 px-3 py-2 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-accent/40">
+                  <option value="">—Kies een optie—</option>
+                  <option value="BE">België</option>
+                  <option value="NL">Nederland</option>
+                  <option value="FR">Frankrijk</option>
+                  <option value="DE">Duitsland</option>
+                  <option value="OTHER">Overig</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="email" class="block text-sm font-medium mb-1">E‑mail <span class="text-accent">*</span></label>
+                <input id="email" name="email" type="email" required class="w-full border bg-gray-50 px-3 py-2 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-accent/40" />
+              </div>
+            </div>
+
+            <div>
+              <label for="message" class="block text-sm font-medium mb-1">Bericht <span class="text-accent">*</span></label>
+              <textarea id="message" name="message" rows="6" required class="w-full border bg-gray-50 px-3 py-2 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-accent/40"></textarea>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <div class="text-sm text-gray-600">* = verplicht veld</div>
+              <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 bg-accent text-white rounded-md hover:bg-accent-600 focus:outline-none focus:ring-2 focus:ring-accent/50">
+                Bericht verzenden
+              </button>
+            </div>
+
+            <div id="status" class="text-sm mt-2 min-h-[1.5rem] text-gray-700"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer locale={locale} />
+
+  <script type="module">
+    const form = document.getElementById('contactForm');
+    const statusEl = document.getElementById('status');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusEl.textContent = 'Verzenden…';
+      statusEl.classList.remove('text-red-600', 'text-green-600');
+
+      const data = new FormData(form);
+
+      try {
+        const resp = await fetch('/api/contact', { method: 'POST', body: data });
+        const json = await resp.json();
+
+        if (resp.ok && json?.success) {
+          statusEl.textContent = 'Bericht verzonden. Dank u wel.';
+          statusEl.classList.add('text-green-600');
+          form.reset();
+        } else {
+          statusEl.textContent = json?.error || 'Er is iets misgegaan. Probeer het later opnieuw.';
+          statusEl.classList.add('text-red-600');
+        }
+      } catch (err) {
+        statusEl.textContent = 'Verbinding mislukt. Controleer uw netwerk.';
+        statusEl.classList.add('text-red-600');
+      }
+    });
+  </script>
+</BaseLayout>

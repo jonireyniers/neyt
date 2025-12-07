@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import companyData from '../../data/company.json';
+import type { CompanyData, Company } from '../../types/company';
+
+const locale: 'en' | 'fr' | 'nl' = 'nl';
+const company = (companyData as CompanyData).company as Company;
+const closingDates = ((companyData as CompanyData).closingDates) ?? [];
+---
+
+<BaseLayout title={`${company.names[locale]} — Bedrijf`} locale={locale}>
+  <Header locale={locale} />
+
+  <main class="section">
+    <div class="container">
+      <header class="mb-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-serif font-bold mb-3">{company.names[locale]}</h1>
+        {company.taglines?.[locale] && (
+          <p class="text-lg text-gray-600">{company.taglines[locale]}</p>
+        )}
+      </header>
+
+      <section class="mb-8 grid md:grid-cols-2 gap-8 items-start">
+        <div class="prose max-w-none">
+          <h2>Bedrijf</h2>
+
+          <p>
+            NEYT is een Belgisch familiebedrijf met productiefaciliteit in Beervelde,
+            gespecialiseerd in de productie van moderne klaptafels sinds meer dan 35 jaar.
+          </p>
+
+          <p>
+            Zeer moderne, high-tech machines samen met uitgebreide automatisering stellen ons in staat
+            moderne meubels tegen zeer concurrerende prijzen te produceren, die wereldwijd kunnen worden verkocht.
+          </p>
+
+          <p>
+            Ons assortiment bestaat uit baby-, tiener- en volwassen slaapkamermeubels,
+            eet-/woonkamermeubels en kantoormalubels.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <div class="aspect-[4/3] bg-gray-100">
+            <img src="/images/thumb_foto175a.jpg" alt="NEYT productiefaciliteit" class="w-full h-full object-cover" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-8">
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h3 class="text-xl font-semibold mb-3">Contact</h3>
+
+          <address class="not-italic text-sm space-y-1">
+            <div class="font-medium">Neyt NV</div>
+            <div>Heistraat 12</div>
+            <div>9080 Beervelde</div>
+            <div>België</div>
+            <div>Tel: <a href="tel:+3293539208" class="text-accent">+32 9 353 92 08</a></div>
+            <div>Fax: +32 9 353 92 10</div>
+          </address>
+
+          <p class="mt-4 text-sm text-gray-600">
+            <strong>Alleen B2B.</strong> We verkopen niet rechtstreeks aan het publiek. Voor meer informatie over Neyt-producten kunt u contact opnemen met een meubelzaak in uw omgeving.
+          </p>
+        </div>
+      </section>
+
+      {closingDates.length > 0 && (
+        <section class="mb-8">
+          <div class="bg-accent/10 p-6 rounded-lg border-l-4 border-accent">
+            <h3 class="text-lg font-semibold mb-3">Sluitingsperiodes — {closingDates[0].year}</h3>
+            <ul class="list-disc pl-5 space-y-1">
+              {closingDates[0].periods.map((p: string) => <li>{p}</li>)}
+            </ul>
+          </div>
+        </section>
+      )}
+    </div>
+  </main>
+
+  <Footer locale={locale} />
+</BaseLayout>

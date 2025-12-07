@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const locale: 'en' | 'fr' | 'nl' = 'en';
+---
+
+<BaseLayout title="Upload Furniture" locale={locale}>
+  <Header locale={locale} />
+
+  <main class="section">
+    <div class="container max-w-2xl">
+      <h1 class="text-3xl font-serif font-bold mb-6">Add Furniture</h1>
+
+      <form id="uploadForm" class="bg-white rounded-lg shadow-md p-6 space-y-4">
+        <div>
+          <label for="name" class="block text-sm font-medium mb-1">Name*</label>
+          <input id="name" name="name" required class="w-full border px-3 py-2 rounded-md" />
+        </div>
+
+        <div>
+          <label for="category" class="block text-sm font-medium mb-1">Category*</label>
+          <select id="category" name="category" required class="w-full border px-3 py-2 rounded-md">
+            <option value="">Select category</option>
+            <option value="adult-bedrooms">Adult Bedrooms</option>
+            <option value="youth-bedrooms">Youth Bedrooms</option>
+            <option value="baby-bedrooms">Baby Bedrooms</option>
+            <option value="office">Office</option>
+            <option value="dining">Dining</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="image" class="block text-sm font-medium mb-1">Image*</label>
+          <input id="image" name="image" type="file" accept="image/*" required class="w-full border px-3 py-2 rounded-md" />
+        </div>
+
+        <button type="submit" class="px-4 py-2 bg-accent text-white rounded-md">
+          Upload
+        </button>
+
+        <div id="status" class="text-sm"></div>
+      </form>
+    </div>
+  </main>
+
+  <Footer locale={locale} />
+
+  <script type="module">
+    import { createClient } from '@supabase/supabase-js';
+
+    const supabase = createClient(
+      import.meta.env.PUBLIC_SUPABASE_URL,
+      import.meta.env.PUBLIC_SUPABASE_ANON_KEY
+    );
+
+    const form = document.getElementById('uploadForm');
+    const statusEl = document.getElementById('status');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusEl.textContent = 'Uploading...';
+
+      const formData = new FormData(form);
+      const file = formData.get('image');
+      const name = formData.get('name');
+      const category = formData.get('category');
+
+      try {
+        // Upload image to Supabase Storage
+        const fileName = `${Date.now()}-${file.name}`;
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('furniture')
+          .upload(`public/${fileName}`, file);
+
+        if (uploadError) throw uploadError;
+
+        // Add to database
+        const { error: dbError } = await supabase
+          .from('furniture')
+          .insert([{
+            name,
+            category,
+            image_url: `${import.meta.env.PUBLIC_SUPABASE_URL}/storage/v1/object/public/furniture/public/${fileName}`,
+            created_at: new Date()
+          }]);
+
+        if (dbError) throw dbError;
+
+        statusEl.textContent = 'Uploaded successfully!';
+        statusEl.classList.add('text-green-600');
+        form.reset();
+      } catch (err) {
+        statusEl.textContent = `Error: ${err.message}`;
+        statusEl.classList.add('text-red-600');
+      }
+    });
+  </script>
+</BaseLayout>

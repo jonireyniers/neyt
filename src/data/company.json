@@ -1,33 +1,28 @@
 {
-  "closingDates": [
-    {
-      "year": 2025,
-      "periods": [
-        "21/04/2025",
-        "01/05/2025 - 02/05/2025",
-        "29/05/2025 - 30/05/2025",
-        "09/06/2025",
-        "07/07/2025 - 25/07/2025",
-        "11/08/2025 - 15/08/2025",
-        "10/11/2025 - 11/11/2025",
-        "25/12/2025 - 31/12/2025"
-      ]
-    }
-  ],
   "company": {
     "names": {
-      "en": "Neyt Furniture",
-      "fr": "Meubles Neyt",
-      "nl": "Meubelen Neyt"
+      "en": "Neyt NV",
+      "fr": "Neyt NV",
+      "nl": "Neyt NV"
     },
     "taglines": {
       "en": "Fine furniture for fine people",
-      "fr": "Meubles raffinés pour personnes raffinées",
-      "nl": "Fijne meubelen voor fijne mensen"
+      "fr": "Meubles de qualité pour les gens de qualité",
+      "nl": "Fijn meubilair voor fijne mensen"
+    },
+    "description": {
+      "en": "NEYT is a Belgian family business with production facility in Beervelde, specialised in the production of modern flat pack furniture since more than 35 years.\n\nVery modern, high tech machinery together with an extensive automation permits us to produce modern furniture at very competitive prices, which can be sold worldwide.\n\nOur range consists out of nursery, teenage and adult bedroom furniture, dining/ living room furniture and office furniture.\n\nthumb_foto175a"
     },
     "contact": {
-      "email": "info@neytfurniture.be",
-      "phone": "+32 XXX XX XX XX"
+      "email": "info@neyt.example",
+      "phone": "+32 9 353 92 08"
+    },
+    "address": {
+      "lines": ["Heistraat 12"],
+      "postal": "9080",
+      "city": "Beervelde",
+      "country": "Belgium"
     }
-  }
+  },
+  "closingDates": []
 }

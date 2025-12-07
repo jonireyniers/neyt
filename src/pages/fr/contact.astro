@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const locale: 'en' | 'fr' | 'nl' = 'fr';
+---
+<BaseLayout title="Contact — Neyt" locale={locale}>
+  <Header locale={locale} />
+
+  <main class="section">
+    <div class="container max-w-4xl">
+      <h1 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-center">Contact</h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        <!-- Contact info -->
+        <div class="bg-gradient-to-br from-white to-slate-50 border rounded-xl p-6 shadow-sm">
+          <h2 class="text-xl font-semibold mb-4">Neyt NV</h2>
+
+          <address class="not-italic text-sm space-y-1 mb-4">
+            <div>Heistraat 12</div>
+            <div>9080 Beervelde</div>
+            <div>Belgique</div>
+            <div>Tel: <a href="tel:+3293539208" class="text-accent hover:underline">+32 9 353 92 08</a></div>
+            <div>Fax: +32 9 353 92 10</div>
+          </address>
+
+          <p class="text-sm text-gray-600">
+            <strong>B2B Uniquement.</strong> Nous ne vendons pas directement au public. Pour plus d'informations sur les produits Neyt, contactez un magasin de meubles dans votre région.
+          </p>
+
+          <dl class="mt-6 space-y-2 text-sm text-gray-700">
+            <div>
+              <dt class="font-medium">Horaires</dt>
+              <dd>Lun–Ven, heures de production uniquement</dd>
+            </div>
+            <div>
+              <dt class="font-medium">E-mail</dt>
+              <dd><a href="mailto:info@example.com" class="text-accent hover:underline">info@example.com</a></dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Form -->
+        <div class="bg-white border rounded-xl p-6 shadow-md">
+          <h2 class="text-lg font-semibold mb-4">Envoyez-nous un message</h2>
+
+          <form id="contactForm" class="space-y-4" method="post" action="/api/contact" novalidate>
+            <div>
+              <label for="name" class="block text-sm font-medium mb-1">Nom et Prénom <span class="text-accent">*</span></label>
+              <input id="name" name="name" required class="w-full border bg-gray-50 px-3 py-2 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-accent/40" />
+            </div>
+
+            <div>
+              <label for="company" class="block text-sm font-medium mb-1">Entreprise <span class="text-accent">*</span></label>
+              <input id="company" name="company" required class="w-full border bg-gray-50 px-3 py-2 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-accent/40" />
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="activity" class="block text-sm font-medium mb-1">Activité</label>
+                <input id="activity" name="activity" class="w-full border bg-gray-50 px-3 py-2 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-accent/40" />
+              </div>
+
+              <div>
+                <label for="city" class="block text-sm font-medium mb-1">Ville</label>
+                <input id="city" name="city" class="w-full border bg-gray-50 px-3 py-2 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-accent/40" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="country" class="block text-sm font-medium mb-1">Pays <span class="text-accent">*</span></label>
+                <select id="country" name="country" required class="w-full border bg-gray-50 px-3 py-2 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-accent/40">
+                  <option value="">—Veuillez choisir une option—</option>
+                  <option value="BE">Belgique</option>
+                  <option value="NL">Pays-Bas</option>
+                  <option value="FR">France</option>
+                  <option value="DE">Allemagne</option>
+                  <option value="OTHER">Autre</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="email" class="block text-sm font-medium mb-1">E‑mail <span class="text-accent">*</span></label>
+                <input id="email" name="email" type="email" required class="w-full border bg-gray-50 px-3 py-2 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-accent/40" />
+              </div>
+            </div>
+
+            <div>
+              <label for="message" class="block text-sm font-medium mb-1">Message <span class="text-accent">*</span></label>
+              <textarea id="message" name="message" rows="6" required class="w-full border bg-gray-50 px-3 py-2 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-accent/40"></textarea>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <div class="text-sm text-gray-600">* = champ obligatoire</div>
+              <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 bg-accent text-white rounded-md hover:bg-accent-600 focus:outline-none focus:ring-2 focus:ring-accent/50">
+                Envoyer le message
+              </button>
+            </div>
+
+            <div id="status" class="text-sm mt-2 min-h-[1.5rem] text-gray-700"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer locale={locale} />
+
+  <script type="module">
+    const form = document.getElementById('contactForm');
+    const statusEl = document.getElementById('status');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusEl.textContent = 'Envoi en cours…';
+      statusEl.classList.remove('text-red-600', 'text-green-600');
+
+      const data = new FormData(form);
+
+      try {
+        const resp = await fetch('/api/contact', { method: 'POST', body: data });
+        const json = await resp.json();
+
+        if (resp.ok && json?.success) {
+          statusEl.textContent = 'Message envoyé. Merci.';
+          statusEl.classList.add('text-green-600');
+          form.reset();
+        } else {
+          statusEl.textContent = json?.error || 'Une erreur est survenue. Réessayez plus tard.';
+          statusEl.classList.add('text-red-600');
+        }
+      } catch (err) {
+        statusEl.textContent = 'Connexion échouée. Vérifiez votre réseau.';
+        statusEl.classList.add('text-red-600');
+      }
+    });
+  </script>
+</BaseLayout>

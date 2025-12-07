@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import furnitureData from '../../data/furniture.json';
+import companyData from '../../data/company.json';
+import type { FurnitureItem } from '../../types/furniture';
+
+const locale = 'fr';
+const recentFurniture = furnitureData.furniture.slice(0, 6);
+
+function getCategoryName(category: string, locale: 'en' | 'fr' | 'nl'): string {
+  const categories = furnitureData.categories as Record<string, { en: string; fr: string; nl: string }>;
+  return categories[category]?.[locale] || category;
+}
+---
+
+<BaseLayout title="Neyt Furniture - Fine furniture for fine people" locale={locale}>
+  <Header locale={locale} />
+  
+  <main>
+    <section class="bg-gradient-to-br from-primary to-secondary text-white section">
+      <div class="container text-center">
+        <h1 class="text-5xl md:text-6xl font-serif font-bold mb-6">
+          {companyData.company.names[locale]}
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
+          {companyData.company.taglines[locale]}
+        </p>
+        <a href="/fr/furniture" class="inline-block bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+          View Our Collection
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-center mb-12">
+          Recent Additions
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {recentFurniture.map(item => (
+            <article class="bg-white rounded-lg shadow-md overflow-hidden">
+              <div class="aspect-[4/3] bg-gray-200">
+                <img src={item.images[0]} alt={item.names[locale] || item.names.en} class="w-full h-full object-cover" loading="lazy" />
+              </div>
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">{item.names[locale] || item.names.en}</h3>
+                <p class="text-sm text-gray-600">{getCategoryName(item.category, locale)}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer locale={locale} />
+</BaseLayout>
