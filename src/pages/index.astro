@@ -3,12 +3,15 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { getFurniture } from '../lib/supabase';
+import { getFurniture, getClosingDates } from '../lib/supabase';
 import companyData from '../data/company.json';
 
 const locale: 'en' | 'fr' | 'nl' = 'en';
 const allFurniture = await getFurniture();
-const recentFurniture = allFurniture.slice(0, 6); // Laatste 6 items
+const recentFurniture = allFurniture.slice(0, 6);
+
+const currentYear = new Date().getFullYear();
+const closingDates = await getClosingDates(currentYear);
 
 const categoryLabels = {
   'adult-bedrooms': { en: 'Adult Bedrooms', fr: 'Chambres Adultes', nl: 'Volwassen Slaapkamers' },
@@ -20,6 +23,17 @@ const categoryLabels = {
 
 function getCategoryName(category: string, locale: 'en' | 'fr' | 'nl'): string {
   return categoryLabels[category]?.[locale] || category;
+}
+
+function formatDateRange(start: string, end: string, locale: 'en' | 'fr' | 'nl'): string {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  
+  const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit' };
+  const startStr = startDate.toLocaleDateString(locale === 'en' ? 'en-GB' : locale, options);
+  const endStr = endDate.toLocaleDateString(locale === 'en' ? 'en-GB' : locale, options);
+  
+  return `${startStr} - ${endStr}`;
 }
 ---
 
@@ -39,10 +53,10 @@ function getCategoryName(category: string, locale: 'en' | 'fr' | 'nl'): string {
         </p>
         <div class="flex gap-4">
           <a href="/furniture" class="inline-block bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg">
-            {locale === 'nl' ? 'Bekijk Collectie' : locale === 'fr' ? 'Voir Collection' : 'View Collection'}
+            View Collection
           </a>
-          <a href="/about" class="inline-block bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-all">
-            {locale === 'nl' ? 'Over Ons' : locale === 'fr' ? 'À Propos' : 'About Us'}
+          <a href="/company" class="inline-block bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-all">
+            About Us
           </a>
         </div>
       </div>
@@ -52,18 +66,14 @@ function getCategoryName(category: string, locale: 'en' | 'fr' | 'nl'): string {
     <section class="section bg-gray-50">
       <div class="container">
         <div class="text-center mb-12">
-          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4">
-            {locale === 'nl' ? 'Nieuwste Toevoegingen' : locale === 'fr' ? 'Derniers Ajouts' : 'Recent Additions'}
-          </h2>
-          <p class="text-gray-600 text-lg">
-            {locale === 'nl' ? 'Ontdek onze nieuwste meubelen' : locale === 'fr' ? 'Découvrez nos derniers meubles' : 'Discover our latest furniture pieces'}
-          </p>
+          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4">Recent Additions</h2>
+          <p class="text-gray-600 text-lg">Discover our latest furniture pieces</p>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {recentFurniture.map(item => {
             const images = item.images || [item.image_url];
-            const itemName = locale === 'nl' ? item.name_nl : (locale === 'fr' ? item.name_fr : item.name_en) || item.name_nl;
+            const itemName = item.name_en || item.name_nl;
             
             return (
               <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all transform hover:-translate-y-1">
@@ -89,7 +99,7 @@ function getCategoryName(category: string, locale: 'en' | 'fr' | 'nl'): string {
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
-                      {locale === 'nl' ? 'Download PDF' : locale === 'fr' ? 'Télécharger PDF' : 'Download PDF'}
+                      Download PDF
                     </a>
                   )}
                 </div>
@@ -103,31 +113,48 @@ function getCategoryName(category: string, locale: 'en' | 'fr' | 'nl'): string {
             href="/furniture" 
             class="inline-block bg-accent text-white px-8 py-3 rounded-lg font-semibold hover:bg-accent/90 transition-colors"
           >
-            {locale === 'nl' ? 'Bekijk Alle Meubelen' : locale === 'fr' ? 'Voir Tous Les Meubles' : 'View All Furniture'}
+            View All Furniture
           </a>
         </div>
       </div>
     </section>
 
     <!-- Closing Dates -->
-    {companyData.closingDates.length > 0 && (
+    {closingDates.length > 0 && (
       <section class="section">
-        <div class="container max-w-3xl">
-          <div class="bg-white rounded-lg shadow-lg p-8 border-l-4 border-accent">
-            <h3 class="text-2xl font-serif font-bold mb-4 flex items-center gap-2">
-              <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              {locale === 'nl' ? 'Sluitingsdagen' : locale === 'fr' ? 'Dates de Fermeture' : 'Closing Dates'} {companyData.closingDates[0].year}
-            </h3>
-            <ul class="space-y-3">
-              {companyData.closingDates[0].periods.map(period => (
-                <li class="flex items-start gap-3">
-                  <span class="text-accent text-xl mt-0.5">•</span>
-                  <span class="text-gray-700">{period}</span>
-                </li>
-              ))}
-            </ul>
+        <div class="container">
+          <div class="max-w-2xl mx-auto">
+            <div class="bg-white rounded-xl shadow-lg p-8 border-l-4 border-accent">
+              <h3 class="text-2xl font-serif font-bold mb-6 flex items-center gap-2">
+                <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Closing Dates {currentYear}
+              </h3>
+              <ul class="space-y-3">
+                {closingDates.map(date => {
+                  const description = date[`description_${locale}`];
+                  return (
+                    <li class="flex items-start gap-3 py-2">
+                      <span class="text-accent text-xl leading-none mt-0.5">•</span>
+                      <div>
+                        <span class="text-gray-700 font-medium">
+                          {formatDateRange(date.period_start, date.period_end, locale)}
+                        </span>
+                        {description && (
+                          <p class="text-sm text-gray-600 mt-1">{description}</p>
+                        )}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+              <div class="mt-6 p-4 bg-amber-50 border-l-4 border-amber-500 rounded">
+                <p class="text-sm text-gray-700">
+                  <strong class="text-amber-700">Note:</strong> No shipments will be processed during these periods.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -137,13 +164,13 @@ function getCategoryName(category: string, locale: 'en' | 'fr' | 'nl'): string {
     <section class="section bg-gradient-to-br from-primary to-secondary text-white">
       <div class="container text-center">
         <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">
-          {locale === 'nl' ? 'Klaar om uw perfecte meubel te vinden?' : locale === 'fr' ? 'Prêt à trouver votre meuble parfait?' : 'Ready to find your perfect furniture?'}
+          Ready to find your perfect furniture?
         </h2>
         <p class="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-          {locale === 'nl' ? 'Bezoek onze showroom of neem contact met ons op voor persoonlijk advies' : locale === 'fr' ? 'Visitez notre showroom ou contactez-nous pour des conseils personnalisés' : 'Visit our showroom or contact us for personalized advice'}
+          Visit our showroom or contact us for personalized advice
         </p>
         <a href="/contact" class="inline-block bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg">
-          {locale === 'nl' ? 'Contact Opnemen' : locale === 'fr' ? 'Nous Contacter' : 'Get in Touch'}
+          Get in Touch
         </a>
       </div>
     </section>

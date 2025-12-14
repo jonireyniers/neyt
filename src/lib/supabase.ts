@@ -3,36 +3,39 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
 const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
-
-export type Furniture = {
-  id: number;
-  name_nl: string;
-  name_fr?: string;
-  name_en?: string;
-  category: string;
-  categories: string[]; // Niet meer optional
-  image_url: string;
-  images: string[]; // Niet meer optional
-  pdf_url?: string;
-  created_at: string;
-};
-
-export async function getFurniture() {
-  const { data, error } = await supabase
-    .from('furniture')
-    .select('*')
-    .order('created_at', { ascending: false });
-
-  if (error) {
-    console.error('Error fetching furniture:', error);
-    return [];
-  }
-
-  return data as Furniture[];
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error('Missing Supabase environment variables');
 }
 
-export async function getFurnitureByCategory(category: string) {
+export const supabase = createClient(supabaseUrl, supabaseKey);
+
+export interface Furniture {
+  id: string;
+  name_en: string;
+  name_fr?: string;
+  name_nl: string;
+  category: string;
+  categories?: string[];
+  image_url: string;
+  images?: string[];
+  pdf_url?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ClosingDate {
+  id: string;
+  year: number;
+  period_start: string;
+  period_end: string;
+  description_en?: string;
+  description_fr?: string;
+  description_nl?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getFurniture(): Promise<Furniture[]> {
   const { data, error } = await supabase
     .from('furniture')
     .select('*')
@@ -43,10 +46,25 @@ export async function getFurnitureByCategory(category: string) {
     return [];
   }
 
-  // Filter in JavaScript - werkt perfect met JSONB
-  const filtered = data.filter(item => 
-    item.categories && item.categories.includes(category)
-  );
+  return data || [];
+}
 
-  return filtered as Furniture[];
+export async function getClosingDates(year?: number): Promise<ClosingDate[]> {
+  let query = supabase
+    .from('closing_dates')
+    .select('*')
+    .order('period_start', { ascending: true });
+
+  if (year) {
+    query = query.eq('year', year);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.error('Error fetching closing dates:', error);
+    return [];
+  }
+
+  return data || [];
 }
