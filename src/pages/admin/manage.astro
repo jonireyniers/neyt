@@ -1,0 +1,503 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getFurniture } from '../../lib/supabase';
+
+const locale: 'en' | 'fr' | 'nl' = 'nl';
+const items = await getFurniture();
+
+const categoryLabels = {
+  'adult-bedrooms': 'Volwassen Slaapkamers',
+  'youth-bedrooms': 'Jeugd Slaapkamers',
+  'baby-bedrooms': 'Baby Slaapkamers',
+  'office': 'Kantoren',
+  'dining': 'Eetkamers'
+};
+---
+
+<BaseLayout title="Manage Furniture" locale={locale}>
+  <Header locale={locale} />
+
+  <main class="section">
+    <div class="container">
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-serif font-bold">Manage Furniture</h1>
+        <div class="flex gap-2">
+          <a href="/admin/upload" class="px-4 py-2 bg-accent text-white rounded-md hover:bg-accent/90">
+            + Add New
+          </a>
+          <button id="logoutBtn" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+            Logout
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <table class="w-full">
+          <thead class="bg-gray-50 border-b">
+            <tr>
+              <th class="text-left p-4">Image</th>
+              <th class="text-left p-4">Name</th>
+              <th class="text-left p-4">Category</th>
+              <th class="text-left p-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map(item => (
+              <tr class="border-b hover:bg-gray-50" data-item-id={item.id}>
+                <td class="p-4">
+                  <img src={item.image_url} alt={item.name_nl} class="w-20 h-20 object-cover rounded" />
+                </td>
+                <td class="p-4">
+                  <div>
+                    <div class="font-semibold">{item.name_nl}</div>
+                    {item.name_fr && <div class="text-sm text-gray-600">{item.name_fr}</div>}
+                    {item.name_en && <div class="text-sm text-gray-600">{item.name_en}</div>}
+                    {item.pdf_url && (
+                      <a href={item.pdf_url} target="_blank" class="text-xs text-blue-600 hover:underline flex items-center gap-1 mt-1">
+                        📄 PDF
+                      </a>
+                    )}
+                  </div>
+                </td>
+                <td class="p-4">
+                  <span class="px-2 py-1 bg-gray-100 rounded text-sm">
+                    {categoryLabels[item.category]}
+                  </span>
+                </td>
+                <td class="p-4 space-x-2">
+                  <button 
+                    data-id={item.id}
+                    data-name-nl={item.name_nl}
+                    data-name-fr={item.name_fr || ''}
+                    data-name-en={item.name_en || ''}
+                    data-categories={JSON.stringify(item.categories || [item.category])}
+                    data-images={JSON.stringify(item.images || [item.image_url])}
+                    data-pdf-url={item.pdf_url || ''}
+                    class="edit-btn px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                  >
+                    Edit
+                  </button>
+                  <button 
+                    data-id={item.id}
+                    data-image-url={item.image_url}
+                    data-images={JSON.stringify(item.images || [item.image_url])}
+                    class="delete-btn px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Edit Modal -->
+  <div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">
+      <h2 class="text-2xl font-bold mb-4">Edit Furniture</h2>
+      
+      <form id="editForm" class="space-y-4">
+        <input type="hidden" id="edit-id" />
+        
+        <div class="grid grid-cols-3 gap-4">
+          <div>
+            <label for="edit-name-nl" class="block text-sm font-medium mb-1">Naam (NL)*</label>
+            <input id="edit-name-nl" required class="w-full border px-3 py-2 rounded-md" />
+          </div>
+          <div>
+            <label for="edit-name-fr" class="block text-sm font-medium mb-1">Nom (FR)</label>
+            <input id="edit-name-fr" class="w-full border px-3 py-2 rounded-md" />
+          </div>
+          <div>
+            <label for="edit-name-en" class="block text-sm font-medium mb-1">Name (EN)</label>
+            <input id="edit-name-en" class="w-full border px-3 py-2 rounded-md" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-2">Categories*</label>
+          <div id="edit-categories" class="space-y-2 border rounded-md p-3">
+            <label class="flex items-center gap-2">
+              <input type="checkbox" value="adult-bedrooms" class="edit-category-checkbox rounded" />
+              <span class="text-sm">Volwassen Slaapkamers</span>
+            </label>
+            <label class="flex items-center gap-2">
+              <input type="checkbox" value="youth-bedrooms" class="edit-category-checkbox rounded" />
+              <span class="text-sm">Jeugd Slaapkamers</span>
+            </label>
+            <label class="flex items-center gap-2">
+              <input type="checkbox" value="baby-bedrooms" class="edit-category-checkbox rounded" />
+              <span class="text-sm">Baby Slaapkamers</span>
+            </label>
+            <label class="flex items-center gap-2">
+              <input type="checkbox" value="office" class="edit-category-checkbox rounded" />
+              <span class="text-sm">Kantoren</span>
+            </label>
+            <label class="flex items-center gap-2">
+              <input type="checkbox" value="dining" class="edit-category-checkbox rounded" />
+              <span class="text-sm">Eetkamers</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Current Images -->
+        <div>
+          <label class="block text-sm font-medium mb-2">Huidige foto's</label>
+          <div id="current-images" class="grid grid-cols-3 gap-2 mb-2"></div>
+        </div>
+
+        <!-- Add/Replace Images -->
+        <div>
+          <label for="edit-images" class="block text-sm font-medium mb-1">
+            Nieuwe foto's toevoegen
+          </label>
+          <input 
+            id="edit-images" 
+            type="file" 
+            accept="image/*" 
+            multiple 
+            class="w-full border px-3 py-2 rounded-md" 
+          />
+          <p class="text-xs text-gray-500 mt-1">Selecteer meerdere foto's om toe te voegen</p>
+        </div>
+
+        <!-- Current PDF -->
+        <div>
+          <label class="block text-sm font-medium mb-2">Huidige PDF</label>
+          <div id="current-pdf" class="mb-2"></div>
+        </div>
+
+        <!-- Add/Replace PDF -->
+        <div>
+          <label for="edit-pdf" class="block text-sm font-medium mb-1">
+            PDF wijzigen/toevoegen
+          </label>
+          <input 
+            id="edit-pdf" 
+            type="file" 
+            accept=".pdf" 
+            class="w-full border px-3 py-2 rounded-md" 
+          />
+          <p class="text-xs text-gray-500 mt-1">Laat leeg om huidige PDF te behouden</p>
+        </div>
+
+        <div id="edit-status" class="text-sm"></div>
+
+        <div class="flex gap-2">
+          <button type="submit" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+            Save Changes
+          </button>
+          <button type="button" id="cancelEdit" class="flex-1 px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <Footer locale={locale} />
+
+  <script is:inline src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script is:inline define:vars={{ SUPABASE_URL: import.meta.env.PUBLIC_SUPABASE_URL, SUPABASE_KEY: import.meta.env.PUBLIC_SUPABASE_ANON_KEY }}>
+    const { createClient } = supabase;
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Check if user is logged in
+    (async () => {
+      const { data: { user } } = await supabaseClient.auth.getUser();
+      
+      if (!user) {
+        window.location.href = '/admin/login';
+        return;
+      }
+    })();
+
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        
+        if (!confirm('Are you sure you want to delete this item?')) return;
+
+        const id = btn.getAttribute('data-id');
+        const images = JSON.parse(btn.getAttribute('data-images') || '[]');
+        const pdfUrl = btn.getAttribute('data-pdf-url');
+        btn.disabled = true;
+        btn.textContent = 'Deleting...';
+        
+        try {
+          // Delete from database first
+          const { error: dbError } = await supabaseClient
+            .from('furniture')
+            .delete()
+            .eq('id', id);
+          
+          if (dbError) throw dbError;
+          
+          // Delete all images from storage
+          for (const imageUrl of images) {
+            const fileName = imageUrl.split('/').pop();
+            await supabaseClient.storage
+              .from('furniture')
+              .remove([fileName]);
+          }
+
+          // Delete PDF if exists
+          if (pdfUrl) {
+            const pdfFileName = pdfUrl.split('/').pop();
+            await supabaseClient.storage
+              .from('furniture')
+              .remove([pdfFileName]);
+          }
+          
+          document.querySelector(`[data-item-id="${id}"]`).remove();
+          alert('Item deleted successfully!');
+        } catch (err) {
+          alert('Error: ' + err.message);
+          btn.disabled = false;
+          btn.textContent = 'Delete';
+        }
+      });
+    });
+
+    // Logout button
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await supabaseClient.auth.signOut();
+      window.location.href = '/';
+    });
+
+    const editModal = document.getElementById('editModal');
+    const editForm = document.getElementById('editForm');
+    const editStatus = document.getElementById('edit-status');
+
+    let currentImages = [];
+    let imagesToDelete = [];
+    let currentPdfUrl = null;
+    let deletePdf = false;
+
+    // Edit functionality
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        const nameNl = btn.getAttribute('data-name-nl');
+        const nameFr = btn.getAttribute('data-name-fr');
+        const nameEn = btn.getAttribute('data-name-en');
+        const categories = JSON.parse(btn.getAttribute('data-categories') || '[]');
+        const images = JSON.parse(btn.getAttribute('data-images') || '[]');
+        const pdfUrl = btn.getAttribute('data-pdf-url');
+
+        document.getElementById('edit-id').value = id;
+        document.getElementById('edit-name-nl').value = nameNl;
+        document.getElementById('edit-name-fr').value = nameFr;
+        document.getElementById('edit-name-en').value = nameEn;
+        
+        // Check de juiste categorieën
+        document.querySelectorAll('.edit-category-checkbox').forEach(checkbox => {
+          checkbox.checked = categories.includes(checkbox.value);
+        });
+        
+        currentImages = [...images];
+        imagesToDelete = [];
+        currentPdfUrl = pdfUrl;
+        deletePdf = false;
+        
+        // Display current images with delete button
+        const currentImagesDiv = document.getElementById('current-images');
+        currentImagesDiv.innerHTML = images.map((url, idx) => `
+          <div class="relative">
+            <img src="${url}" class="w-full h-20 object-cover rounded" />
+            <button 
+              type="button"
+              class="delete-image-btn absolute top-1 right-1 bg-red-600 text-white rounded-full w-6 h-6 text-xs hover:bg-red-700"
+              data-index="${idx}"
+              data-url="${url}"
+            >
+              ×
+            </button>
+          </div>
+        `).join('');
+
+        // Display current PDF
+        const currentPdfDiv = document.getElementById('current-pdf');
+        if (pdfUrl) {
+          currentPdfDiv.innerHTML = `
+            <div class="flex items-center justify-between bg-gray-100 p-2 rounded">
+              <a href="${pdfUrl}" target="_blank" class="text-sm text-blue-600 hover:underline flex items-center gap-1">
+                📄 Huidige PDF bekijken
+              </a>
+              <button 
+                type="button"
+                id="delete-pdf-btn"
+                class="text-red-600 hover:text-red-700 text-sm"
+              >
+                Verwijder
+              </button>
+            </div>
+          `;
+          
+          document.getElementById('delete-pdf-btn').addEventListener('click', () => {
+            deletePdf = true;
+            currentPdfUrl = null;
+            currentPdfDiv.innerHTML = '<p class="text-sm text-gray-500">PDF verwijderd</p>';
+          });
+        } else {
+          currentPdfDiv.innerHTML = '<p class="text-sm text-gray-500">Geen PDF</p>';
+        }
+
+        // Add delete image handlers
+        currentImagesDiv.querySelectorAll('.delete-image-btn').forEach(delBtn => {
+          delBtn.addEventListener('click', () => {
+            const idx = parseInt(delBtn.getAttribute('data-index'));
+            const url = delBtn.getAttribute('data-url');
+            currentImages.splice(idx, 1);
+            imagesToDelete.push(url);
+            delBtn.closest('div').remove();
+          });
+        });
+
+        editModal.classList.remove('hidden');
+      });
+    });
+
+    // Close modal
+    document.getElementById('cancelEdit').addEventListener('click', () => {
+      editModal.classList.add('hidden');
+      editForm.reset();
+    });
+
+    // Submit edit
+    editForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      editStatus.textContent = 'Saving...';
+      editStatus.className = 'text-sm text-blue-600';
+
+      const id = document.getElementById('edit-id').value;
+      const nameNl = document.getElementById('edit-name-nl').value;
+      const nameFr = document.getElementById('edit-name-fr').value || null;
+      const nameEn = document.getElementById('edit-name-en').value || null;
+      
+      // Verzamel geselecteerde categorieën
+      const selectedCategories = Array.from(
+        document.querySelectorAll('.edit-category-checkbox:checked')
+      ).map(cb => cb.value);
+
+      if (selectedCategories.length === 0) {
+        editStatus.textContent = 'Selecteer minimaal één categorie';
+        editStatus.className = 'text-sm text-red-600';
+        return;
+      }
+
+      const newFiles = document.getElementById('edit-images').files;
+      const newPdfFile = document.getElementById('edit-pdf').files[0];
+
+      try {
+        const imageUrls = [...currentImages];
+
+        // Upload new images
+        if (newFiles.length > 0) {
+          editStatus.textContent = `Uploading ${newFiles.length} new image(s)...`;
+          
+          for (let i = 0; i < newFiles.length; i++) {
+            const file = newFiles[i];
+            const fileName = `${Date.now()}-${i}-${file.name}`;
+            
+            const { error: uploadError } = await supabaseClient.storage
+              .from('furniture')
+              .upload(fileName, file);
+
+            if (uploadError) throw uploadError;
+
+            const { data: urlData } = supabaseClient.storage
+              .from('furniture')
+              .getPublicUrl(fileName);
+
+            imageUrls.push(urlData.publicUrl);
+          }
+        }
+
+        // Delete removed images from storage
+        if (imagesToDelete.length > 0) {
+          editStatus.textContent = 'Removing old images...';
+          
+          for (const url of imagesToDelete) {
+            const fileName = url.split('/').pop();
+            await supabaseClient.storage
+              .from('furniture')
+              .remove([fileName]);
+          }
+        }
+
+        // Handle PDF
+        let pdfUrl = currentPdfUrl;
+
+        // Delete old PDF if requested
+        if (deletePdf && currentPdfUrl) {
+          const oldPdfFileName = currentPdfUrl.split('/').pop();
+          await supabaseClient.storage
+            .from('furniture')
+            .remove([oldPdfFileName]);
+          pdfUrl = null;
+        }
+
+        // Upload new PDF
+        if (newPdfFile) {
+          editStatus.textContent = 'Uploading new PDF...';
+          
+          // Delete old PDF first if exists
+          if (currentPdfUrl) {
+            const oldPdfFileName = currentPdfUrl.split('/').pop();
+            await supabaseClient.storage
+              .from('furniture')
+              .remove([oldPdfFileName]);
+          }
+          
+          const pdfFileName = `${Date.now()}-${newPdfFile.name}`;
+          const { error: pdfError } = await supabaseClient.storage
+            .from('furniture')
+            .upload(pdfFileName, newPdfFile);
+
+          if (pdfError) throw pdfError;
+
+          const { data: pdfUrlData } = supabaseClient.storage
+            .from('furniture')
+            .getPublicUrl(pdfFileName);
+
+          pdfUrl = pdfUrlData.publicUrl;
+        }
+
+        // Update database
+        editStatus.textContent = 'Updating database...';
+        
+        const { error } = await supabaseClient
+          .from('furniture')
+          .update({
+            name_nl: nameNl,
+            name_fr: nameFr,
+            name_en: nameEn,
+            category: selectedCategories[0], // Eerste voor backwards compatibility
+            categories: selectedCategories, // Alle categorieën
+            images: imageUrls,
+            image_url: imageUrls[0] || null,
+            pdf_url: pdfUrl
+          })
+          .eq('id', id);
+
+        if (error) throw error;
+
+        editStatus.textContent = 'Saved! Refreshing...';
+        editStatus.className = 'text-sm text-green-600';
+        
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      } catch (err) {
+        editStatus.textContent = `Error: ${err.message}`;
+        editStatus.className = 'text-sm text-red-600';
+      }
+    });
+  </script>
+</BaseLayout>
