@@ -68,3 +68,17 @@ export async function getClosingDates(year?: number): Promise<ClosingDate[]> {
 
   return data || [];
 }
+export async function getFurnitureByCategory(category: string): Promise<Furniture[]> {
+  const { data, error } = await supabase
+    .from('furniture')
+    .select('*')
+    .eq('category', category) // Filter op de categorie die uit de URL komt
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching furniture by category:', error);
+    return [];
+  }
+
+  return data || [];
+}
