@@ -1,0 +1,54 @@
+{
+  "company": {
+    "names": {
+      "en": "Neyt Furniture",
+      "fr": "Neyt Meubles",
+      "nl": "Neyt Meubelen"
+    },
+    "taglines": {
+      "en": "Fine furniture for fine people",
+      "fr": "Meubles de qualité pour des personnes de qualité",
+      "nl": "Kwaliteitsmeubelen voor kwaliteitsmensen"
+    },
+    "description": {
+      "en": "NEYT is a Belgian family business with production facility in Beervelde, specialised in the production of modern flat pack furniture since more than 35 years.\n\nVery modern, high tech machinery together with an extensive automation permits us to produce modern furniture at very competitive prices, which can be sold worldwide.\n\nOur range consists out of nursery, teenage and adult bedroom furniture, dining/ living room furniture and office furniture.\n\nthumb_foto175a"
+    },
+    "contact": {
+      "address": {
+        "street": "Heistraat 12",
+        "city": "9080 Beervelde",
+        "country": "Belgium"
+      },
+      "phone": "+32 9 353 92 08",
+      "fax": "+32 9 353 92 10",
+      "email": "info@neyt.example"
+    },
+    "businessHours": {
+      "en": {
+        "monday": "8:00 - 12:00, 13:00 - 17:00",
+        "tuesday": "8:00 - 12:00, 13:00 - 17:00",
+        "wednesday": "8:00 - 12:00, 13:00 - 17:00",
+        "thursday": "8:00 - 12:00, 13:00 - 17:00",
+        "friday": "8:00 - 12:00, 13:00 - 16:00",
+        "weekend": "Closed"
+      },
+      "fr": {
+        "monday": "8h00 - 12h00, 13h00 - 17h00",
+        "tuesday": "8h00 - 12h00, 13h00 - 17h00",
+        "wednesday": "8h00 - 12h00, 13h00 - 17h00",
+        "thursday": "8h00 - 12h00, 13h00 - 17h00",
+        "friday": "8h00 - 12h00, 13h00 - 16h00",
+        "weekend": "Fermé"
+      },
+      "nl": {
+        "monday": "8u00 - 12u00, 13u00 - 17u00",
+        "tuesday": "8u00 - 12u00, 13u00 - 17u00",
+        "wednesday": "8u00 - 12u00, 13u00 - 17u00",
+        "thursday": "8u00 - 12u00, 13u00 - 17u00",
+        "friday": "8u00 - 12u00, 13u00 - 16u00",
+        "weekend": "Gesloten"
+      }
+    }
+  },
+  "closingDates": []
+}

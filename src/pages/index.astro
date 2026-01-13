@@ -1,0 +1,180 @@
+---
+// filepath: src/pages/index.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getFurniture, getClosingDates } from '../lib/supabase';
+import companyData from '../data/company.json';
+
+const locale: 'en' | 'fr' | 'nl' = 'en';
+const allFurniture = await getFurniture();
+const recentFurniture = allFurniture.slice(0, 6);
+
+const currentYear = new Date().getFullYear();
+const closingDates = await getClosingDates(currentYear);
+
+const categoryLabels = {
+  'adult-bedrooms': { en: 'Adult Bedrooms', fr: 'Chambres Adultes', nl: 'Volwassen Slaapkamers' },
+  'youth-bedrooms': { en: 'Youth Bedrooms', fr: 'Chambres Jeunes', nl: 'Jeugd Slaapkamers' },
+  'baby-bedrooms': { en: 'Baby Bedrooms', fr: 'Chambres Bébé', nl: 'Baby Slaapkamers' },
+  'office': { en: 'Offices', fr: 'Bureaux', nl: 'Kantoren' },
+  'dining': { en: 'Dining Rooms', fr: 'Salles à Manger', nl: 'Eetkamers' }
+};
+
+function getCategoryName(category: string, locale: 'en' | 'fr' | 'nl'): string {
+  return categoryLabels[category]?.[locale] || category;
+}
+
+function formatDateRange(start: string, end: string, locale: 'en' | 'fr' | 'nl'): string {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  
+  const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit' };
+  const startStr = startDate.toLocaleDateString(locale === 'en' ? 'en-GB' : locale, options);
+  const endStr = endDate.toLocaleDateString(locale === 'en' ? 'en-GB' : locale, options);
+  
+  return `${startStr} - ${endStr}`;
+}
+---
+
+<BaseLayout title="Neyt Furniture - Fine furniture for fine people" locale={locale}>
+  <Header locale={locale} />
+  
+  <main>
+    <!-- Hero Section -->
+    <section class="relative h-[600px] bg-gradient-to-br from-primary to-secondary overflow-hidden">
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="relative container h-full flex flex-col justify-center items-center text-center text-white">
+        <h1 class="text-5xl md:text-7xl font-serif font-bold mb-6 animate-fade-in">
+          {companyData.company.names[locale]}
+        </h1>
+        <p class="text-xl md:text-3xl mb-8 max-w-3xl font-light">
+          {companyData.company.taglines[locale]}
+        </p>
+        <div class="flex gap-4">
+          <a href="/furniture" class="inline-block bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg">
+            View Collection
+          </a>
+          <a href="/company" class="inline-block bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-all">
+            About Us
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recent Additions -->
+    <section class="section bg-gray-50">
+      <div class="container">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4">Recent Additions</h2>
+          <p class="text-gray-600 text-lg">Discover our latest furniture pieces</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {recentFurniture.map(item => {
+            const images = item.images || [item.image_url];
+            const itemName = item.name_en || item.name_nl;
+            
+            return (
+              <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all transform hover:-translate-y-1">
+                <div class="aspect-[4/3] bg-gray-200 overflow-hidden">
+                  <img 
+                    src={images[0]} 
+                    alt={itemName} 
+                    class="w-full h-full object-cover hover:scale-110 transition-transform duration-500" 
+                    loading="lazy" 
+                  />
+                </div>
+                <div class="p-6">
+                  <h3 class="text-xl font-semibold mb-2">{itemName}</h3>
+                  <p class="text-gray-600 text-sm mb-3">
+                    {getCategoryName(item.categories?.[0] || item.category, locale)}
+                  </p>
+                  {item.pdf_url && (
+                    <a 
+                      href={item.pdf_url} 
+                      target="_blank"
+                      class="inline-flex items-center gap-2 text-accent hover:text-accent/80 text-sm font-medium"
+                    >
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      Download PDF
+                    </a>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+
+        <div class="text-center mt-12">
+          <a 
+            href="/furniture" 
+            class="inline-block bg-accent text-white px-8 py-3 rounded-lg font-semibold hover:bg-accent/90 transition-colors"
+          >
+            View All Furniture
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Closing Dates -->
+    {closingDates.length > 0 && (
+      <section class="section">
+        <div class="container">
+          <div class="max-w-2xl mx-auto">
+            <div class="bg-white rounded-xl shadow-lg p-8 border-l-4 border-accent">
+              <h3 class="text-2xl font-serif font-bold mb-6 flex items-center gap-2">
+                <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Closing Dates {currentYear}
+              </h3>
+              <ul class="space-y-3">
+                {closingDates.map(date => {
+                  const description = date[`description_${locale}`];
+                  return (
+                    <li class="flex items-start gap-3 py-2">
+                      <span class="text-accent text-xl leading-none mt-0.5">•</span>
+                      <div>
+                        <span class="text-gray-700 font-medium">
+                          {formatDateRange(date.period_start, date.period_end, locale)}
+                        </span>
+                        {description && (
+                          <p class="text-sm text-gray-600 mt-1">{description}</p>
+                        )}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+              <div class="mt-6 p-4 bg-amber-50 border-l-4 border-amber-500 rounded">
+                <p class="text-sm text-gray-700">
+                  <strong class="text-amber-700">Note:</strong> No shipments will be processed during these periods.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- CTA Section -->
+    <section class="section bg-gradient-to-br from-primary to-secondary text-white">
+      <div class="container text-center">
+        <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">
+          Ready to find your perfect furniture?
+        </h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+          Visit our showroom or contact us for personalized advice
+        </p>
+        <a href="/contact" class="inline-block bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg">
+          Get in Touch
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer locale={locale} />
+</BaseLayout>

@@ -1,0 +1,125 @@
+{
+  "furniture": [
+    {
+      "id": "bb-201712-vic",
+      "category": "adult-bedrooms",
+      "names": {
+        "en": "Clara Golden oak",
+        "fr": "Chambre Adulte Victoria",
+        "nl": "Volwassen Slaapkamer Victoria"
+      },
+      "images": ["/images/furniture/CLA-AD-667x500.jpg"],
+      "year": 2017,
+      "month": 12
+    },
+    {
+      "id": "of-201801-con2",
+      "category": "office",
+      "names": {
+        "en": "CAPO black/chestnut – Golden Oak",
+        "fr": "Bureau Connor 2",
+        "nl": "Kantoor Connor 2"
+      },
+      "images": ["/images/furniture/capo-black.jpg"],
+      "year": 2018,
+      "month": 1
+    },
+    {
+      "id": "bb-202106-pau",
+      "category": "adult-bedrooms",
+      "names": {
+        "en": "Adult Bedroom Paula",
+        "fr": "Chambre Adulte Paula",
+        "nl": "Volwassen Slaapkamer Paula"
+      },
+      "images": ["/images/furniture/BB-202106-PAU-BB.jpg"],
+      "year": 2021,
+      "month": 6
+    },
+    {
+      "id": "of-202106-hom2",
+      "category": "office",
+      "names": {
+        "en": "FLEXO Bolivar wood/sandoak",
+        "fr": "Bureau Home 2",
+        "nl": "Kantoor Home 2"
+      },
+      "images": ["/images/furniture/flexo.jpg"],
+      "year": 2021,
+      "month": 6
+    },
+    {
+      "id": "of-202111-cap1",
+      "category": "office",
+      "names": {
+        "nl": "Kantoor Capri 1"
+      },
+      "images": ["/images/furniture/home-office.jpg"],
+      "year": 2021,
+      "month": 11
+    },
+    {
+      "id": "of-homespace",
+      "category": "office",
+      "names": {
+        "en": "Home Space",
+        "fr": "Home Space",
+        "nl": "Home Space"
+      },
+      "images": ["/images/furniture/Home-space.jpg"],
+      "year": 2024,
+      "month": 1
+    },
+    {
+      "id": "of-pronto",
+      "category": "office",
+      "names": {
+        "en": "Pronto",
+        "fr": "Pronto",
+        "nl": "Pronto"
+      },
+      "images": ["/images/furniture/Pronto.jpg"],
+      "year": 2024,
+      "month": 1
+    },
+    {
+      "id": "of-rio",
+      "category": "office",
+      "names": {
+        "en": "Rio",
+        "fr": "Rio",
+        "nl": "Rio"
+      },
+      "images": ["/images/furniture/Rio-spring.jpg"],
+      "year": 2024,
+      "month": 1
+    }
+  ],
+  "categories": {
+    "adult-bedrooms": {
+      "en": "Adult Bedrooms",
+      "fr": "Chambres Adultes",
+      "nl": "Volwassen Slaapkamers"
+    },
+    "baby-bedrooms": {
+      "en": "Baby Bedrooms",
+      "fr": "Chambres Bébé",
+      "nl": "Baby Slaapkamers"
+    },
+    "youth-bedrooms": {
+      "en": "Youth Bedrooms",
+      "fr": "Chambres Jeunes",
+      "nl": "Jeugd Slaapkamers"
+    },
+    "dining": {
+      "en": "Dining Rooms",
+      "fr": "Salles à Manger",
+      "nl": "Eetkamers"
+    },
+    "office": {
+      "en": "Offices",
+      "fr": "Bureaux",
+      "nl": "Kantoren"
+    }
+  }
+}

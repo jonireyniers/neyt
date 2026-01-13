@@ -1,0 +1,38 @@
+---
+// filepath: c:\Users\h039864\OneDrive - Baloise\personal\neyt-main\src\components\LanguageSwitcher.astro
+export interface Props {
+  locale: 'en' | 'fr' | 'nl';
+  currentPath: string;
+}
+
+const { locale, currentPath } = Astro.props;
+
+const languages = [
+  { code: 'en', label: 'EN' },
+  { code: 'fr', label: 'FR' },
+  { code: 'nl', label: 'NL' }
+];
+
+function getLocalizedPath(newLocale: string) {
+  if (currentPath === '/' || currentPath === '') {
+    return newLocale === 'en' ? '/' : `/${newLocale}`;
+  }
+  const pathWithoutLocale = currentPath.replace(/^\/(en|fr|nl)/, '');
+  return newLocale === 'en' ? pathWithoutLocale || '/' : `/${newLocale}${pathWithoutLocale}`;
+}
+---
+
+<div class="flex gap-2">
+  {languages.map(lang => (
+    <a
+      href={getLocalizedPath(lang.code)}
+      class={`px-3 py-1 rounded transition-colors ${
+        locale === lang.code
+          ? 'bg-primary text-white'
+          : 'bg-gray-100 hover:bg-gray-200'
+      }`}
+    >
+      {lang.label}
+    </a>
+  ))}
+</div>

@@ -1,0 +1,28 @@
+---
+// filepath: c:\Users\h039864\OneDrive - Baloise\personal\neyt-main\src\components\Footer.astro
+import companyData from '../data/company.json';
+
+export interface Props {
+  locale: 'en' | 'fr' | 'nl';
+}
+
+const { locale } = Astro.props;
+const currentYear = new Date().getFullYear();
+
+const text = {
+  en: { rights: 'All rights reserved', madewith: 'Made with', by: 'by' },
+  fr: { rights: 'Tous droits réservés', madewith: 'Fait avec', by: 'par' },
+  nl: { rights: 'Alle rechten voorbehouden', madewith: 'Gemaakt met', by: 'door' }
+};
+---
+
+<footer class="bg-primary text-white mt-20">
+  <div class="container py-8">
+    <div class="text-center text-sm">
+      <p>© {currentYear} {companyData.company.names[locale]}. {text[locale].rights}.</p>
+      <p class="mt-2 text-gray-300">
+        {text[locale].madewith} ❤️ {text[locale].by} Reyniers IT Solutions
+      </p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,283 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getFurniture } from '../../lib/supabase';
+import type { Furniture } from '../../lib/supabase';
+
+const locale: 'en' | 'fr' | 'nl' = 'nl';
+const items = await getFurniture();
+
+const categoryLabels = {
+  'adult-bedrooms': { en: 'Adult Bedrooms', fr: 'Chambres Adultes', nl: 'Volwassen Slaapkamers' },
+  'youth-bedrooms': { en: 'Youth Bedrooms', fr: 'Chambres Jeunes', nl: 'Jeugd Slaapkamers' },
+  'baby-bedrooms': { en: 'Baby Bedrooms', fr: 'Chambres Bébé', nl: 'Baby Slaapkamers' },
+  'office': { en: 'Offices', fr: 'Bureaux', nl: 'Kantoren' },
+  'dining': { en: 'Dining Rooms', fr: 'Salles à Manger', nl: 'Eetkamers' }
+};
+
+function getCategoryName(category: string, locale: 'en' | 'fr' | 'nl'): string {
+  return categoryLabels[category]?.[locale] || category;
+}
+
+// Group by category - een item kan in meerdere categorieën voorkomen
+const grouped = items.reduce((acc, item) => {
+  const itemCategories = item.categories || [item.category];
+  itemCategories.forEach(cat => {
+    if (!acc[cat]) acc[cat] = [];
+    acc[cat].push(item);
+  });
+  return acc;
+}, {} as Record<string, Furniture[]>);
+
+const categoryOrder = ['adult-bedrooms', 'youth-bedrooms', 'baby-bedrooms', 'office', 'dining'];
+const sortedCategories = categoryOrder.filter(cat => grouped[cat]);
+---
+
+<BaseLayout title="Neyt — Collectie" locale={locale}>
+  <Header locale={locale} />
+
+  <main class="section">
+    <div class="container">
+      <h1 class="text-3xl font-serif font-bold mb-8">Collectie</h1>
+
+      <!-- Filter -->
+      <div class="mb-8 flex flex-wrap gap-2">
+        <button class="filter-btn active px-4 py-2 bg-accent text-white rounded-md text-sm font-medium" data-category="all">
+          Alles
+        </button>
+        {sortedCategories.map(categoryId => (
+          <button class="filter-btn px-4 py-2 bg-gray-200 text-gray-800 rounded-md text-sm font-medium hover:bg-gray-300 transition-colors" data-category={categoryId}>
+            {getCategoryName(categoryId, locale)}
+          </button>
+        ))}
+      </div>
+
+      <!-- Items -->
+      <div id="furnitureContainer" class="space-y-16">
+        {sortedCategories.map(categoryId => (
+          <section class="category-section" data-category={categoryId}>
+            <h2 class="text-2xl font-serif font-bold mb-8">{getCategoryName(categoryId, locale)}</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {grouped[categoryId].map(item => {
+                const images = item.images || [item.image_url];
+                return (
+                  <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="aspect-[4/3] bg-gray-200 relative overflow-hidden">
+                      {images.length > 1 ? (
+                        <div class="image-gallery relative w-full h-full">
+                          {images.map((url, idx) => (
+                            <img 
+                              src={url} 
+                              alt={`${item.name_nl} ${idx + 1}`}
+                              class={`absolute w-full h-full object-cover transition-opacity duration-300 ${idx === 0 ? 'opacity-100' : 'opacity-0'}`}
+                              data-index={idx}
+                            />
+                          ))}
+                          <div class="absolute bottom-2 left-0 right-0 flex justify-center gap-2">
+                            {images.map((_, idx) => (
+                              <button 
+                                class="gallery-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white"
+                                data-gallery-index={idx}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
+                        <img 
+                          src={images[0]} 
+                          alt={item.name_nl}
+                          class="w-full h-full object-cover" 
+                          loading="lazy" 
+                        />
+                      )}
+                    </div>
+                    <div class="p-4">
+                      <h3 class="text-lg font-semibold mb-2">{item.name_nl}</h3>
+                      <div class="flex items-center justify-between">
+                        {images.length > 1 && (
+                          <p class="text-xs text-gray-500">{images.length} foto's</p>
+                        )}
+                      </div>
+                      {item.pdf_url && (
+                        <a 
+                          href={item.pdf_url} 
+                          target="_blank"
+                          onclick="event.stopPropagation()"
+                          class="mt-3 inline-flex items-center gap-2 px-4 py-2 bg-accent text-white rounded-md hover:bg-accent/90 transition text-sm font-medium w-full justify-center"
+                        >
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                          Download PDF
+                        </a>
+                      )}
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        ))}
+      </div>
+    </div>
+  </main>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="hidden fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
+    <button id="closeLightbox" class="absolute top-4 right-4 text-white text-4xl hover:text-gray-300 z-10">
+      &times;
+    </button>
+    
+    <button id="prevImage" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl hover:text-gray-300 bg-black/50 rounded-full w-12 h-12 flex items-center justify-center">
+      ‹
+    </button>
+    
+    <img id="lightboxImage" class="max-w-full max-h-full object-contain" />
+    
+    <button id="nextImage" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-4xl hover:text-gray-300 bg-black/50 rounded-full w-12 h-12 flex items-center justify-center">
+      ›
+    </button>
+    
+    <div id="lightboxDots" class="absolute bottom-8 left-0 right-0 flex justify-center gap-2"></div>
+  </div>
+
+  <Footer locale={locale} />
+
+  <script>
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const sections = document.querySelectorAll('.category-section');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const category = btn.getAttribute('data-category');
+
+        filterBtns.forEach(b => {
+          b.classList.remove('active', 'bg-accent', 'text-white');
+          b.classList.add('bg-gray-200');
+        });
+        btn.classList.add('active', 'bg-accent', 'text-white');
+        btn.classList.remove('bg-gray-200');
+
+        sections.forEach(section => {
+          if (category === 'all' || section.getAttribute('data-category') === category) {
+            section.style.display = 'block';
+          } else {
+            section.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Image gallery functionality
+    document.querySelectorAll('.image-gallery').forEach(gallery => {
+      const images = gallery.querySelectorAll('img');
+      const dots = gallery.querySelectorAll('.gallery-dot');
+      let currentIndex = 0;
+
+      function showImage(index) {
+        images.forEach((img, i) => {
+          img.classList.toggle('opacity-100', i === index);
+          img.classList.toggle('opacity-0', i !== index);
+        });
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('bg-white', i === index);
+          dot.classList.toggle('bg-white/50', i !== index);
+        });
+        currentIndex = index;
+      }
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', (e) => {
+          e.stopPropagation();
+          showImage(index);
+        });
+      });
+
+      setInterval(() => {
+        showImage((currentIndex + 1) % images.length);
+      }, 3000);
+    });
+
+    // Lightbox functionality
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxDots = document.getElementById('lightboxDots');
+    const closeLightbox = document.getElementById('closeLightbox');
+    const prevImage = document.getElementById('prevImage');
+    const nextImage = document.getElementById('nextImage');
+    
+    let currentImages = [];
+    let currentLightboxIndex = 0;
+
+    function openLightbox(images, startIndex = 0) {
+      currentImages = images;
+      currentLightboxIndex = startIndex;
+      showLightboxImage(startIndex);
+      lightbox.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightboxModal() {
+      lightbox.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function showLightboxImage(index) {
+      lightboxImage.src = currentImages[index];
+      
+      lightboxDots.innerHTML = currentImages.map((_, i) => 
+        `<button class="lightbox-dot w-3 h-3 rounded-full ${i === index ? 'bg-white' : 'bg-white/50'}" data-index="${i}"></button>`
+      ).join('');
+      
+      lightboxDots.querySelectorAll('.lightbox-dot').forEach((dot, i) => {
+        dot.addEventListener('click', () => showLightboxImage(i));
+      });
+      
+      currentLightboxIndex = index;
+      
+      prevImage.style.display = currentImages.length > 1 ? 'flex' : 'none';
+      nextImage.style.display = currentImages.length > 1 ? 'flex' : 'none';
+    }
+
+    document.querySelectorAll('.image-gallery, .aspect-\\[4\\/3\\]').forEach(container => {
+      const images = Array.from(container.querySelectorAll('img')).map(img => img.src);
+      
+      container.addEventListener('click', (e) => {
+        if (e.target.tagName === 'IMG') {
+          const clickedIndex = Array.from(container.querySelectorAll('img')).indexOf(e.target);
+          openLightbox(images, clickedIndex);
+        }
+      });
+      
+      container.style.cursor = 'pointer';
+    });
+
+    closeLightbox.addEventListener('click', closeLightboxModal);
+    
+    prevImage.addEventListener('click', () => {
+      const newIndex = (currentLightboxIndex - 1 + currentImages.length) % currentImages.length;
+      showLightboxImage(newIndex);
+    });
+    
+    nextImage.addEventListener('click', () => {
+      const newIndex = (currentLightboxIndex + 1) % currentImages.length;
+      showLightboxImage(newIndex);
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        closeLightboxModal();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('hidden')) {
+        if (e.key === 'Escape') closeLightboxModal();
+        if (e.key === 'ArrowLeft') prevImage.click();
+        if (e.key === 'ArrowRight') nextImage.click();
+      }
+    });
+  </script>
+</BaseLayout>

@@ -1,0 +1,201 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const locale: 'en' | 'fr' | 'nl' = 'en';
+---
+
+<BaseLayout title="Upload Furniture" locale={locale}>
+  <Header locale={locale} />
+
+  <main class="section">
+    <div class="container max-w-2xl">
+      <h1 class="text-3xl font-serif font-bold mb-6">Add Furniture</h1>
+
+      <form id="uploadForm" class="bg-white rounded-lg shadow-md p-6 space-y-4">
+        <div class="grid grid-cols-3 gap-4">
+          <div>
+            <label for="name-nl" class="block text-sm font-medium mb-1">Naam (NL)*</label>
+            <input id="name-nl" name="name-nl" required class="w-full border px-3 py-2 rounded-md" />
+          </div>
+          <div>
+            <label for="name-fr" class="block text-sm font-medium mb-1">Nom (FR)</label>
+            <input id="name-fr" name="name-fr" class="w-full border px-3 py-2 rounded-md" />
+          </div>
+          <div>
+            <label for="name-en" class="block text-sm font-medium mb-1">Name (EN)</label>
+            <input id="name-en" name="name-en" class="w-full border px-3 py-2 rounded-md" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-2">Categories* (meerdere selecteren)</label>
+          <div class="space-y-2 border rounded-md p-3">
+            <label class="flex items-center gap-2">
+              <input type="checkbox" name="categories" value="adult-bedrooms" class="rounded" />
+              <span class="text-sm">Volwassen Slaapkamers</span>
+            </label>
+            <label class="flex items-center gap-2">
+              <input type="checkbox" name="categories" value="youth-bedrooms" class="rounded" />
+              <span class="text-sm">Jeugd Slaapkamers</span>
+            </label>
+            <label class="flex items-center gap-2">
+              <input type="checkbox" name="categories" value="baby-bedrooms" class="rounded" />
+              <span class="text-sm">Baby Slaapkamers</span>
+            </label>
+            <label class="flex items-center gap-2">
+              <input type="checkbox" name="categories" value="office" class="rounded" />
+              <span class="text-sm">Kantoren</span>
+            </label>
+            <label class="flex items-center gap-2">
+              <input type="checkbox" name="categories" value="dining" class="rounded" />
+              <span class="text-sm">Eetkamers</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label for="images" class="block text-sm font-medium mb-1">Images* (meerdere selecteren)</label>
+          <input id="images" name="images" type="file" accept="image/*" multiple required class="w-full border px-3 py-2 rounded-md" />
+          <p class="text-xs text-gray-500 mt-1">Houd Ctrl/Cmd ingedrukt om meerdere foto's te selecteren</p>
+        </div>
+
+        <div>
+          <label for="pdf" class="block text-sm font-medium mb-1">PDF (optioneel)</label>
+          <input id="pdf" name="pdf" type="file" accept=".pdf" class="w-full border px-3 py-2 rounded-md" />
+        </div>
+
+        <button type="submit" class="px-4 py-2 bg-accent text-white rounded-md">
+          Upload
+        </button>
+
+        <div id="status" class="text-sm"></div>
+      </form>
+    </div>
+  </main>
+
+  <Footer locale={locale} />
+
+  <script is:inline src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script is:inline define:vars={{ SUPABASE_URL: import.meta.env.PUBLIC_SUPABASE_URL, SUPABASE_KEY: import.meta.env.PUBLIC_SUPABASE_ANON_KEY }}>
+    const { createClient } = supabase;
+    
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Check if user is logged in
+    (async () => {
+      const { data: { user } } = await supabaseClient.auth.getUser();
+      
+      if (!user) {
+        window.location.href = '/admin/login';
+        return;
+      }
+    })();
+
+    const form = document.getElementById('uploadForm');
+    const statusEl = document.getElementById('status');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusEl.textContent = 'Uploading...';
+      statusEl.className = 'text-sm text-blue-600';
+
+      const formData = new FormData(form);
+      const files = formData.getAll('images');
+      const nameNl = formData.get('name-nl');
+      const nameFr = formData.get('name-fr') || null;
+      const nameEn = formData.get('name-en') || null;
+      
+      // Converteer expliciet naar echte array
+      const categories = Array.from(formData.getAll('categories'));
+
+      if (categories.length === 0) {
+        statusEl.textContent = 'Selecteer minimaal één categorie';
+        statusEl.className = 'text-sm text-red-600';
+        return;
+      }
+
+      console.log('Starting upload...', { nameNl, nameFr, nameEn, categories, fileCount: files.length });
+
+      try {
+        // Upload alle afbeeldingen
+        const imageUrls = [];
+        
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          const fileName = `${Date.now()}-${i}-${file.name}`;
+          
+          statusEl.textContent = `Uploading image ${i + 1} of ${files.length}...`;
+          
+          const { error: uploadError } = await supabaseClient.storage
+            .from('furniture')
+            .upload(fileName, file);
+
+          if (uploadError) throw uploadError;
+
+          const { data: urlData } = supabaseClient.storage
+            .from('furniture')
+            .getPublicUrl(fileName);
+
+          imageUrls.push(urlData.publicUrl);
+        }
+
+        // Upload PDF if present
+        let pdfUrl = null;
+        const pdfFile = formData.get('pdf');
+        if (pdfFile && pdfFile.size > 0) {
+          statusEl.textContent = 'Uploading PDF...';
+          const pdfFileName = `${Date.now()}-${pdfFile.name}`;
+          
+          const { error: pdfError } = await supabaseClient.storage
+            .from('furniture')
+            .upload(pdfFileName, pdfFile);
+
+          if (pdfError) throw pdfError;
+
+          const { data: pdfUrlData } = supabaseClient.storage
+            .from('furniture')
+            .getPublicUrl(pdfFileName);
+
+          pdfUrl = pdfUrlData.publicUrl;
+        }
+
+        statusEl.textContent = 'Saving to database...';
+
+        const insertData = {
+          name_nl: nameNl,
+          name_fr: nameFr,
+          name_en: nameEn,
+          // category: categories[0], // COMMENTED OUT - skip deze kolom
+          categories: categories, // JavaScript array
+          image_url: imageUrls[0],
+          images: imageUrls, // JavaScript array
+          pdf_url: pdfUrl
+        };
+
+        console.log('=== INSERT DATA ===', insertData);
+        
+        const { data: result, error: dbError } = await supabaseClient
+          .from('furniture')
+          .insert([insertData]);
+
+        console.log('Result:', result);
+        console.log('Error:', dbError);
+
+        if (dbError) {
+          console.error('DB Error details:', JSON.stringify(dbError, null, 2));
+          throw dbError;
+        }
+
+        statusEl.textContent = 'Uploaded successfully!';
+        statusEl.className = 'text-sm text-green-600';
+        form.reset();
+      } catch (err) {
+        console.error('Full error:', err);
+        statusEl.textContent = `Error: ${err.message}`;
+        statusEl.className = 'text-sm text-red-600';
+      }
+    });
+  </script>
+</BaseLayout>
