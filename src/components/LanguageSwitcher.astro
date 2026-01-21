@@ -15,10 +15,10 @@ const languages = [
 
 function getLocalizedPath(newLocale: string) {
   if (currentPath === '/' || currentPath === '') {
-    return newLocale === 'en' ? '/' : `/${newLocale}`;
+    return newLocale === 'nl' ? '/' : `/${newLocale}`;
   }
   const pathWithoutLocale = currentPath.replace(/^\/(en|fr|nl)/, '');
-  return newLocale === 'en' ? pathWithoutLocale || '/' : `/${newLocale}${pathWithoutLocale}`;
+  return newLocale === 'nl' ? pathWithoutLocale || '/' : `/${newLocale}${pathWithoutLocale}`;
 }
 ---
 

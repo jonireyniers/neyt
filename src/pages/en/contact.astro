@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
 
-const locale: 'en' | 'fr' | 'nl' = 'nl';
+const locale: 'en' | 'fr' | 'nl' = 'en';
 ---
 
 <BaseLayout title="Contact — Neyt" locale={locale}>
@@ -14,8 +14,8 @@ const locale: 'en' | 'fr' | 'nl' = 'nl';
     <section class="relative py-16 bg-gradient-to-br from-primary to-secondary text-white">
       <div class="container">
         <div class="max-w-3xl mx-auto text-center">
-          <h1 class="text-4xl md:text-5xl font-serif font-bold mb-4">Neem Contact Op</h1>
-          <p class="text-lg md:text-xl opacity-90">We horen graag van u. Stuur ons een bericht en we antwoorden zo snel mogelijk.</p>
+          <h1 class="text-4xl md:text-5xl font-serif font-bold mb-4">Get in Touch</h1>
+          <p class="text-lg md:text-xl opacity-90">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
         </div>
       </div>
     </section>
@@ -27,7 +27,7 @@ const locale: 'en' | 'fr' | 'nl' = 'nl';
           <!-- Contact Info -->
           <div class="space-y-8">
             <div>
-              <h2 class="text-2xl font-serif font-bold mb-6">Contactinformatie</h2>
+              <h2 class="text-2xl font-serif font-bold mb-6">Contact Information</h2>
               
               <div class="space-y-6">
                 <!-- Address Card -->
@@ -39,12 +39,12 @@ const locale: 'en' | 'fr' | 'nl' = 'nl';
                     </svg>
                   </div>
                   <div>
-                    <h3 class="font-semibold text-lg mb-2">Ons Kantoor</h3>
+                    <h3 class="font-semibold text-lg mb-2">Our Office</h3>
                     <address class="not-italic text-gray-600">
                       <div class="font-medium text-gray-900">Neyt NV</div>
                       <div>Heistraat 12</div>
                       <div>9080 Beervelde</div>
-                      <div>België</div>
+                      <div>Belgium</div>
                     </address>
                   </div>
                 </div>
@@ -57,7 +57,7 @@ const locale: 'en' | 'fr' | 'nl' = 'nl';
                     </svg>
                   </div>
                   <div>
-                    <h3 class="font-semibold text-lg mb-2">Telefoon & Fax</h3>
+                    <h3 class="font-semibold text-lg mb-2">Phone & Fax</h3>
                     <div class="text-gray-600">
                       <div>Tel: <a href="tel:+3293539208" class="text-accent hover:underline font-medium">+32 9 353 92 08</a></div>
                       <div>Fax: +32 9 353 92 10</div>
@@ -73,10 +73,10 @@ const locale: 'en' | 'fr' | 'nl' = 'nl';
                     </svg>
                   </div>
                   <div>
-                    <h3 class="font-semibold text-lg mb-2">Openingstijden</h3>
+                    <h3 class="font-semibold text-lg mb-2">Business Hours</h3>
                     <div class="text-gray-600">
-                      <div>Maandag - Vrijdag</div>
-                      <div class="text-sm">Alleen productie-uren</div>
+                      <div>Monday - Friday</div>
+                      <div class="text-sm">Production hours only</div>
                     </div>
                   </div>
                 </div>
@@ -90,10 +90,10 @@ const locale: 'en' | 'fr' | 'nl' = 'nl';
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <div>
-                  <h3 class="font-semibold text-blue-900 mb-1">Alleen B2B</h3>
+                  <h3 class="font-semibold text-blue-900 mb-1">B2B Only</h3>
                   <p class="text-sm text-blue-800">
-                    We verkopen niet rechtstreeks aan het publiek. Voor informatie over Neyt-producten, 
-                    neem contact op met een meubelzaak in uw omgeving.
+                    We do not sell directly to the public. For information about Neyt products, 
+                    please contact a furniture store in your area.
                   </p>
                 </div>
               </div>
@@ -102,33 +102,33 @@ const locale: 'en' | 'fr' | 'nl' = 'nl';
 
           <!-- Contact Form -->
           <div class="bg-white rounded-2xl shadow-xl p-8 lg:p-10">
-            <h2 class="text-2xl font-serif font-bold mb-6">Stuur ons een Bericht</h2>
+            <h2 class="text-2xl font-serif font-bold mb-6">Send us a Message</h2>
 
             <form id="contactForm" class="space-y-5" method="post" action="/api/contact" novalidate>
               <div class="grid md:grid-cols-2 gap-5">
                 <div>
                   <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
-                    Volledige Naam <span class="text-red-500">*</span>
+                    Full Name <span class="text-red-500">*</span>
                   </label>
                   <input 
                     id="name" 
                     name="name" 
                     required 
                     class="w-full border border-gray-300 px-4 py-3 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition" 
-                    placeholder="Jan Janssen"
+                    placeholder="John Doe"
                   />
                 </div>
 
                 <div>
                   <label for="company" class="block text-sm font-medium text-gray-700 mb-2">
-                    Bedrijf <span class="text-red-500">*</span>
+                    Company <span class="text-red-500">*</span>
                   </label>
                   <input 
                     id="company" 
                     name="company" 
                     required 
                     class="w-full border border-gray-300 px-4 py-3 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition" 
-                    placeholder="Uw Bedrijf"
+                    placeholder="Your Company"
                   />
                 </div>
               </div>
@@ -144,13 +144,13 @@ const locale: 'en' | 'fr' | 'nl' = 'nl';
                     type="email" 
                     required 
                     class="w-full border border-gray-300 px-4 py-3 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition" 
-                    placeholder="jan@bedrijf.nl"
+                    placeholder="john@company.com"
                   />
                 </div>
 
                 <div>
                   <label for="country" class="block text-sm font-medium text-gray-700 mb-2">
-                    Land <span class="text-red-500">*</span>
+                    Country <span class="text-red-500">*</span>
                   </label>
                   <select 
                     id="country" 
@@ -158,13 +158,13 @@ const locale: 'en' | 'fr' | 'nl' = 'nl';
                     required 
                     class="w-full border border-gray-300 px-4 py-3 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition"
                   >
-                    <option value="">Selecteer een land</option>
-                    <option value="BE">België</option>
-                    <option value="NL">Nederland</option>
-                    <option value="FR">Frankrijk</option>
-                    <option value="DE">Duitsland</option>
-                    <option value="UK">Verenigd Koninkrijk</option>
-                    <option value="OTHER">Overig</option>
+                    <option value="">Select a country</option>
+                    <option value="BE">Belgium</option>
+                    <option value="NL">Netherlands</option>
+                    <option value="FR">France</option>
+                    <option value="DE">Germany</option>
+                    <option value="UK">United Kingdom</option>
+                    <option value="OTHER">Other</option>
                   </select>
                 </div>
               </div>
@@ -172,32 +172,32 @@ const locale: 'en' | 'fr' | 'nl' = 'nl';
               <div class="grid md:grid-cols-2 gap-5">
                 <div>
                   <label for="activity" class="block text-sm font-medium text-gray-700 mb-2">
-                    Activiteit
+                    Activity
                   </label>
                   <input 
                     id="activity" 
                     name="activity" 
                     class="w-full border border-gray-300 px-4 py-3 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition" 
-                    placeholder="Meubelhandel"
+                    placeholder="Furniture Retail"
                   />
                 </div>
 
                 <div>
                   <label for="city" class="block text-sm font-medium text-gray-700 mb-2">
-                    Stad
+                    City
                   </label>
                   <input 
                     id="city" 
                     name="city" 
                     class="w-full border border-gray-300 px-4 py-3 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition" 
-                    placeholder="Brussel"
+                    placeholder="Brussels"
                   />
                 </div>
               </div>
 
               <div>
                 <label for="message" class="block text-sm font-medium text-gray-700 mb-2">
-                  Bericht <span class="text-red-500">*</span>
+                  Message <span class="text-red-500">*</span>
                 </label>
                 <textarea 
                   id="message" 
@@ -205,13 +205,13 @@ const locale: 'en' | 'fr' | 'nl' = 'nl';
                   rows="5" 
                   required 
                   class="w-full border border-gray-300 px-4 py-3 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition resize-none" 
-                  placeholder="Vertel ons over uw aanvraag..."
+                  placeholder="Tell us about your inquiry..."
                 ></textarea>
               </div>
 
               <div class="flex items-center justify-between pt-2">
                 <p class="text-sm text-gray-500">
-                  <span class="text-red-500">*</span> Verplichte velden
+                  <span class="text-red-500">*</span> Required fields
                 </p>
                 <button 
                   type="submit" 
@@ -220,7 +220,7 @@ const locale: 'en' | 'fr' | 'nl' = 'nl';
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                   </svg>
-                  Verzend Bericht
+                  Send Message
                 </button>
               </div>
 
@@ -240,7 +240,7 @@ const locale: 'en' | 'fr' | 'nl' = 'nl';
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      statusEl.textContent = 'Verzenden...';
+      statusEl.textContent = 'Sending...';
       statusEl.className = 'text-sm min-h-[1.5rem] text-blue-600';
 
       const data = new FormData(form);
@@ -250,15 +250,15 @@ const locale: 'en' | 'fr' | 'nl' = 'nl';
         const json = await resp.json();
 
         if (resp.ok && json?.success) {
-          statusEl.textContent = '✓ Bericht succesvol verzonden! We nemen binnenkort contact met u op.';
+          statusEl.textContent = '✓ Message sent successfully! We will contact you soon.';
           statusEl.className = 'text-sm min-h-[1.5rem] text-green-600 font-medium';
           form.reset();
         } else {
-          statusEl.textContent = `✗ ${json?.error || 'Er ging iets mis. Probeer het opnieuw.'}`;
+          statusEl.textContent = `✗ ${json?.error || 'Something went wrong. Please try again.'}`;
           statusEl.className = 'text-sm min-h-[1.5rem] text-red-600 font-medium';
         }
       } catch (err) {
-        statusEl.textContent = '✗ Verbinding mislukt. Controleer uw netwerk.';
+        statusEl.textContent = '✗ Connection failed. Please check your network.';
         statusEl.className = 'text-sm min-h-[1.5rem] text-red-600 font-medium';
       }
     });

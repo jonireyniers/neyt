@@ -6,7 +6,7 @@ import Footer from '../components/Footer.astro';
 import { getFurniture, getClosingDates } from '../lib/supabase';
 import companyData from '../data/company.json';
 
-const locale: 'en' | 'fr' | 'nl' = 'en';
+const locale: 'en' | 'fr' | 'nl' = 'nl';
 const allFurniture = await getFurniture();
 const recentFurniture = allFurniture.slice(0, 6);
 
@@ -37,7 +37,7 @@ function formatDateRange(start: string, end: string, locale: 'en' | 'fr' | 'nl')
 }
 ---
 
-<BaseLayout title="Neyt Furniture - Fine furniture for fine people" locale={locale}>
+<BaseLayout title="Neyt Meubelen - Kwaliteitsmeubelen voor uw interieur" locale={locale}>
   <Header locale={locale} />
   
   <main>
@@ -53,10 +53,10 @@ function formatDateRange(start: string, end: string, locale: 'en' | 'fr' | 'nl')
         </p>
         <div class="flex gap-4">
           <a href="/furniture" class="inline-block bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg">
-            View Collection
+            Bekijk Collectie
           </a>
           <a href="/company" class="inline-block bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-all">
-            About Us
+            Over Ons
           </a>
         </div>
       </div>
@@ -66,14 +66,14 @@ function formatDateRange(start: string, end: string, locale: 'en' | 'fr' | 'nl')
     <section class="section bg-gray-50">
       <div class="container">
         <div class="text-center mb-12">
-          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4">Recent Additions</h2>
-          <p class="text-gray-600 text-lg">Discover our latest furniture pieces</p>
+          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4">Nieuwste Toevoegingen</h2>
+          <p class="text-gray-600 text-lg">Ontdek onze nieuwste meubelen</p>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {recentFurniture.map(item => {
             const images = item.images || [item.image_url];
-            const itemName = item.name_en || item.name_nl;
+            const itemName = item.name_nl;
             
             return (
               <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all transform hover:-translate-y-1">
@@ -113,7 +113,7 @@ function formatDateRange(start: string, end: string, locale: 'en' | 'fr' | 'nl')
             href="/furniture" 
             class="inline-block bg-accent text-white px-8 py-3 rounded-lg font-semibold hover:bg-accent/90 transition-colors"
           >
-            View All Furniture
+            Bekijk Alle Meubelen
           </a>
         </div>
       </div>
@@ -129,7 +129,7 @@ function formatDateRange(start: string, end: string, locale: 'en' | 'fr' | 'nl')
                 <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                Closing Dates {currentYear}
+                Sluitingsdagen {currentYear}
               </h3>
               <ul class="space-y-3">
                 {closingDates.map(date => {
@@ -151,7 +151,7 @@ function formatDateRange(start: string, end: string, locale: 'en' | 'fr' | 'nl')
               </ul>
               <div class="mt-6 p-4 bg-amber-50 border-l-4 border-amber-500 rounded">
                 <p class="text-sm text-gray-700">
-                  <strong class="text-amber-700">Note:</strong> No shipments will be processed during these periods.
+                  <strong class="text-amber-700">Let op:</strong> Er worden geen verzendingen verwerkt tijdens deze periodes.
                 </p>
               </div>
             </div>
@@ -164,13 +164,13 @@ function formatDateRange(start: string, end: string, locale: 'en' | 'fr' | 'nl')
     <section class="section bg-gradient-to-br from-primary to-secondary text-white">
       <div class="container text-center">
         <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">
-          Ready to find your perfect furniture?
+          Klaar om uw perfecte meubel te vinden?
         </h2>
         <p class="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-          Visit our showroom or contact us for personalized advice
+          Bezoek onze showroom of neem contact met ons op voor persoonlijk advies
         </p>
         <a href="/contact" class="inline-block bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg">
-          Get in Touch
+          Contact Opnemen
         </a>
       </div>
     </section>

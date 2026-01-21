@@ -1,16 +1,16 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import companyData from '../data/company.json';
-import type { CompanyData, Company } from '../types/company';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import companyData from '../../data/company.json';
+import type { CompanyData, Company } from '../../types/company';
 
-const locale: 'en' | 'fr' | 'nl' = 'nl';
+const locale: 'en' | 'fr' | 'nl' = 'en';
 const company = (companyData as CompanyData).company as Company;
 const closingDates = ((companyData as CompanyData).closingDates) ?? [];
 ---
 
-<BaseLayout title={`${company.names[locale]} — Bedrijf`} locale={locale}>
+<BaseLayout title={`${company.names[locale]} — Company`} locale={locale}>
   <Header locale={locale} />
 
   <main>
@@ -31,33 +31,33 @@ const closingDates = ((companyData as CompanyData).closingDates) ?? [];
       <div class="container">
         <div class="grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 class="text-3xl font-serif font-bold mb-6">Ons Verhaal</h2>
+            <h2 class="text-3xl font-serif font-bold mb-6">Our Story</h2>
             
             <div class="space-y-4 text-gray-700">
               <p class="text-lg">
-                NEYT is een <strong>Belgisch familiebedrijf</strong> met productiefaciliteit in Beervelde, 
-                gespecialiseerd in de productie van moderne meubelen sinds meer dan 35 jaar.
+                NEYT is a <strong>Belgian family business</strong> with production facility in Beervelde, 
+                specialized in the production of modern furniture for more than 35 years.
               </p>
 
               <p>
-                Zeer moderne, high-tech machines samen met uitgebreide automatisering stellen ons in staat 
-                moderne meubels tegen zeer concurrerende prijzen te produceren, die wereldwijd kunnen worden verkocht.
+                Very modern, high-tech machines combined with extensive automation enable us to 
+                produce modern furniture at highly competitive prices, which can be sold worldwide.
               </p>
 
               <p>
-                Ons assortiment bestaat uit baby-, tiener- en volwassen slaapkamermeubels, 
-                eet-/woonkamermeubels en kantoormeubels.
+                Our range consists of baby, teenager and adult bedroom furniture, 
+                dining/living room furniture and office furniture.
               </p>
             </div>
 
             <div class="mt-8 grid grid-cols-3 gap-4 text-center">
               <div class="bg-accent/10 rounded-lg p-4">
                 <div class="text-3xl font-bold text-accent mb-1">35+</div>
-                <div class="text-sm text-gray-600">Jaar Ervaring</div>
+                <div class="text-sm text-gray-600">Years Experience</div>
               </div>
               <div class="bg-accent/10 rounded-lg p-4">
                 <div class="text-3xl font-bold text-accent mb-1">B2B</div>
-                <div class="text-sm text-gray-600">Bedrijfsmodel</div>
+                <div class="text-sm text-gray-600">Business Model</div>
               </div>
               <div class="bg-accent/10 rounded-lg p-4">
                 <div class="text-3xl font-bold text-accent mb-1">🇧🇪</div>
@@ -72,7 +72,7 @@ const closingDates = ((companyData as CompanyData).closingDates) ?? [];
                 <img 
                   src="/images/furniture/company.jpg" 
                   src="" 
-                  alt="NEYT productiefaciliteit" 
+                  alt="NEYT production facility" 
                   class="w-full h-full object-cover" 
                   loading="lazy" 
                 />
@@ -97,7 +97,7 @@ const closingDates = ((companyData as CompanyData).closingDates) ?? [];
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h3 class="text-2xl font-semibold">Contactinformatie</h3>
+              <h3 class="text-2xl font-semibold">Contact Information</h3>
             </div>
 
             <address class="not-italic space-y-3 text-gray-700">
@@ -126,8 +126,8 @@ const closingDates = ((companyData as CompanyData).closingDates) ?? [];
 
             <div class="mt-6 p-4 bg-blue-50 border-l-4 border-blue-500 rounded">
               <p class="text-sm text-gray-700">
-                <strong class="text-blue-700">Alleen B2B.</strong> We verkopen niet rechtstreeks aan het publiek. 
-                Voor meer informatie over Neyt-producten kunt u contact opnemen met een meubelzaak in uw omgeving.
+                <strong class="text-blue-700">B2B Only.</strong> We do not sell directly to the public. 
+                For more information about Neyt products, please contact a furniture store in your area.
               </p>
             </div>
           </div>
@@ -141,7 +141,7 @@ const closingDates = ((companyData as CompanyData).closingDates) ?? [];
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
-                <h3 class="text-2xl font-semibold">Sluitingsperiodes {closingDates[0].year}</h3>
+                <h3 class="text-2xl font-semibold">Closing Periods {closingDates[0].year}</h3>
               </div>
 
               <ul class="space-y-3">
@@ -155,8 +155,8 @@ const closingDates = ((companyData as CompanyData).closingDates) ?? [];
 
               <div class="mt-6 p-4 bg-amber-50 border-l-4 border-amber-500 rounded">
                 <p class="text-sm text-gray-700">
-                  <strong class="text-amber-700">Let op:</strong> Plan uw bestellingen dienovereenkomstig. 
-                  Er worden geen verzendingen verwerkt tijdens deze periodes.
+                  <strong class="text-amber-700">Please note:</strong> Plan your orders accordingly. 
+                  No shipments will be processed during these periods.
                 </p>
               </div>
             </div>
@@ -169,10 +169,10 @@ const closingDates = ((companyData as CompanyData).closingDates) ?? [];
     <section class="section bg-gradient-to-br from-primary to-secondary text-white">
       <div class="container text-center">
         <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">
-          Geïnteresseerd in Onze Producten?
+          Interested in Our Products?
         </h2>
         <p class="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-          Neem contact met ons op voor groothandel aanvragen en partnerschapsmogelijkheden
+          Contact us for wholesale inquiries and partnership opportunities
         </p>
         <div class="flex gap-4 justify-center">
           <a 
@@ -182,13 +182,13 @@ const closingDates = ((companyData as CompanyData).closingDates) ?? [];
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
             </svg>
-            Bel Ons
+            Call Us
           </a>
           <a 
-            href="/nl/furniture" 
+            href="/en/furniture" 
             class="inline-flex items-center gap-2 bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-all"
           >
-            Bekijk Collectie
+            View Collection
           </a>
         </div>
       </div>
