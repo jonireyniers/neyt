@@ -195,11 +195,6 @@ const sortedCategories = categoryOrder.filter(cat => grouped[cat] && grouped[cat
           showImage(index);
         });
       });
-
-      // Auto-rotate every 3 seconds
-      setInterval(() => {
-        showImage((currentIndex + 1) % images.length);
-      }, 3000);
     });
 
     // Lightbox functionality
