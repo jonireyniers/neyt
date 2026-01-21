@@ -3,7 +3,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { getFurniture, getClosingDates } from '../lib/supabase';
+import { getFurniture } from '../lib/supabase';
 import companyData from '../data/company.json';
 
 const locale: 'en' | 'fr' | 'nl' = 'nl';
@@ -11,7 +11,18 @@ const allFurniture = await getFurniture();
 const recentFurniture = allFurniture.slice(0, 6);
 
 const currentYear = new Date().getFullYear();
-const closingDates = await getClosingDates(currentYear);
+
+// Sluitingsdagen 2026
+const closingDates = [
+  { period_start: '2026-04-06', period_end: '2026-04-06', description_nl: 'Paasmaandag' },
+  { period_start: '2026-05-01', period_end: '2026-05-01', description_nl: 'Dag van de Arbeid' },
+  { period_start: '2026-05-14', period_end: '2026-05-15', description_nl: 'O.H. Hemelvaart weekend' },
+  { period_start: '2026-05-25', period_end: '2026-05-25', description_nl: 'Pinkstermaandag' },
+  { period_start: '2026-07-13', period_end: '2026-07-31', description_nl: 'Zomervakantie' },
+  { period_start: '2026-08-15', period_end: '2026-08-21', description_nl: 'O.L.V. Hemelvaart week' },
+  { period_start: '2026-11-11', period_end: '2026-11-11', description_nl: 'Wapenstilstand' },
+  { period_start: '2026-12-24', period_end: '2026-12-31', description_nl: 'Kerstvakantie' },
+];
 
 const categoryLabels = {
   'adult-bedrooms': { en: 'Adult Bedrooms', fr: 'Chambres Adultes', nl: 'Volwassen Slaapkamers' },
