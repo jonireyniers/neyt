@@ -17,29 +17,29 @@ const nav = {
 };
 ---
 
-<header class="py-4">
-  <div class="container flex items-center justify-between">
-    <a href="/" class="flex items-center gap-3">
-      <!-- Gebruik het logo uit /public/logo.png -->
-      <img src="/images/furniture/logo.png" alt="Neyt" class="h-28 w-auto" loading="lazy" />
-      <span class="sr-only">Neyt — home</span>
-    </a>
-
-    <div class="hidden md:flex items-center gap-8">
-      <a href={`/${locale === 'nl' ? '' : locale}`} class="hover:text-secondary transition-colors">
-        {nav[locale].home}
-      </a>
-      <a href={`/${locale === 'nl' ? '' : `${locale}/`}furniture`} class="hover:text-secondary transition-colors">
-        {nav[locale].furniture}
-      </a>
-      <a href={`/${locale === 'nl' ? '' : `${locale}/`}company`} class="hover:text-secondary transition-colors">
-        {nav[locale].company}
-      </a>
-      <a href={`/${locale === 'nl' ? '' : `${locale}/`}contact`} class="hover:text-secondary transition-colors">
-        {nav[locale].contact}
-      </a>
+<header class="py-4 sticky top-0 z-50 bg-white shadow-md">
+  <div class="container">
+    <div class="flex items-center justify-between">
+      <div class="flex-1"></div>
+      
+      <div class="hidden md:flex items-center gap-8 flex-1 justify-center">
+        <a href={`/${locale === 'nl' ? '' : locale}`} class="hover:text-secondary transition-colors">
+          {nav[locale].home}
+        </a>
+        <a href={`/${locale === 'nl' ? '' : `${locale}/`}furniture`} class="hover:text-secondary transition-colors">
+          {nav[locale].furniture}
+        </a>
+        <a href={`/${locale === 'nl' ? '' : `${locale}/`}company`} class="hover:text-secondary transition-colors">
+          {nav[locale].company}
+        </a>
+        <a href={`/${locale === 'nl' ? '' : `${locale}/`}contact`} class="hover:text-secondary transition-colors">
+          {nav[locale].contact}
+        </a>
+      </div>
+      
+      <div class="flex-1 flex justify-end">
+        <LanguageSwitcher locale={locale} currentPath={Astro.url.pathname} />
+      </div>
     </div>
-    
-    <LanguageSwitcher locale={locale} currentPath={Astro.url.pathname} />
   </div>
 </header>
