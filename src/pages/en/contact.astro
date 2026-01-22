@@ -4,6 +4,34 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 
 const locale: 'en' | 'fr' | 'nl' = 'en';
+
+const currentYear = new Date().getFullYear();
+
+// Sluitingsdagen 2026
+const closingDates = [
+  { period_start: '2026-04-06', period_end: '2026-04-06', description_nl: 'Paasmaandag', description_en: 'Easter Monday' },
+  { period_start: '2026-05-01', period_end: '2026-05-01', description_nl: 'Dag van de Arbeid', description_en: 'Labour Day' },
+  { period_start: '2026-05-14', period_end: '2026-05-15', description_nl: 'O.H. Hemelvaart weekend', description_en: 'Ascension Day weekend' },
+  { period_start: '2026-05-25', period_end: '2026-05-25', description_nl: 'Pinkstermaandag', description_en: 'Whit Monday' },
+  { period_start: '2026-07-13', period_end: '2026-07-31', description_nl: 'Zomervakantie', description_en: 'Summer vacation' },
+  { period_start: '2026-08-15', period_end: '2026-08-21', description_nl: 'O.L.V. Hemelvaart week', description_en: 'Assumption week' },
+  { period_start: '2026-11-11', period_end: '2026-11-11', description_nl: 'Wapenstilstand', description_en: 'Armistice Day' },
+  { period_start: '2026-12-24', period_end: '2026-12-31', description_nl: 'Kerstvakantie', description_en: 'Christmas vacation' },
+];
+
+function formatDateRange(start: string, end: string, locale: string): string {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
+  
+  if (start === end) {
+    return startDate.toLocaleDateString(locale === 'en' ? 'en-GB' : locale === 'fr' ? 'fr-FR' : 'nl-BE', options);
+  }
+  
+  const startStr = startDate.toLocaleDateString(locale === 'en' ? 'en-GB' : locale === 'fr' ? 'fr-FR' : 'nl-BE', options);
+  const endStr = endDate.toLocaleDateString(locale === 'en' ? 'en-GB' : locale === 'fr' ? 'fr-FR' : 'nl-BE', options);
+  return `${startStr} – ${endStr}`;
+}
 ---
 
 <BaseLayout title="Contact — Neyt" locale={locale}>
@@ -66,6 +94,41 @@ const locale: 'en' | 'fr' | 'nl' = 'en';
                 </div>
               </div>
             </div>
+
+            <!-- Closing Dates -->
+            {closingDates.length > 0 && (
+              <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-accent">
+                <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  Closing Periods {currentYear}
+                </h3>
+                <ul class="space-y-2">
+                  {closingDates.map(date => {
+                    const description = date[`description_${locale}`];
+                    return (
+                      <li class="flex items-start gap-2 text-sm">
+                        <span class="text-accent text-lg leading-none mt-0.5">•</span>
+                        <div>
+                          <span class="text-gray-700 font-medium">
+                            {formatDateRange(date.period_start, date.period_end, locale)}
+                          </span>
+                          {description && (
+                            <span class="text-gray-600"> — {description}</span>
+                          )}
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+                <div class="mt-4 p-3 bg-amber-50 border-l-4 border-amber-500 rounded">
+                  <p class="text-xs text-gray-700">
+                    <strong class="text-amber-700">Please note:</strong> No shipments will be processed during these periods.
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
 
           <!-- Contact Form -->
