@@ -19,11 +19,11 @@ const nav = {
 
 <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
   <div class="container">
-    <div class="flex items-center justify-between py-4">
-      <!-- Mobile menu button -->
+    <div class="flex items-center justify-center py-4 relative">
+      <!-- Mobile menu button - absolute left -->
       <button 
         id="mobile-menu-button" 
-        class="md:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
+        class="md:hidden absolute left-0 p-2 hover:bg-gray-100 rounded-lg transition-colors"
         aria-label="Menu"
       >
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -31,11 +31,9 @@ const nav = {
           <path class="close-icon hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
-
-      <div class="flex-1 md:flex-none"></div>
       
-      <!-- Desktop navigation -->
-      <nav class="hidden md:flex items-center gap-1 flex-1 justify-center">
+      <!-- Desktop navigation - centered -->
+      <nav class="hidden md:flex items-center gap-1">
         <a href={`/${locale === 'nl' ? '' : locale}`} class="px-5 py-2.5 rounded-lg font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-all duration-200">
           {nav[locale].home}
         </a>
@@ -50,7 +48,8 @@ const nav = {
         </a>
       </nav>
       
-      <div class="flex-1 flex justify-end">
+      <!-- Language switcher - absolute right -->
+      <div class="absolute right-0">
         <LanguageSwitcher locale={locale} currentPath={Astro.url.pathname} />
       </div>
     </div>

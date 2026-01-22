@@ -26,13 +26,13 @@ function getCategoryName(category: string, locale: 'en' | 'fr' | 'nl'): string {
   <Header locale={locale} />
   
   <main>
-    <section class="relative h-[600px] bg-gradient-to-br from-primary to-secondary overflow-hidden">
+    <section class="relative h-[350px] md:h-[450px] bg-gradient-to-br from-primary to-secondary overflow-hidden">
       <div class="absolute inset-0 bg-black/20"></div>
       <div class="relative container h-full flex flex-col justify-center items-center text-center text-white">
-        <h1 class="text-5xl md:text-7xl font-serif font-bold mb-6">
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-3 animate-fade-in">
           {companyData.company.names[locale]}
         </h1>
-        <p class="text-xl md:text-3xl mb-8 max-w-3xl font-light">
+        <p class="text-base md:text-lg lg:text-xl mb-5 max-w-3xl font-light">
           {companyData.company.taglines[locale]}
         </p>
         <div class="flex gap-4">
