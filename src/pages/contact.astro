@@ -518,9 +518,14 @@ function formatDateRange(start: string, end: string, locale: string): string {
       statusEl.className = 'text-sm min-h-[1.5rem] text-blue-600';
 
       const data = new FormData(form);
+      const jsonData = Object.fromEntries(data.entries());
 
       try {
-        const resp = await fetch('/api/contact', { method: 'POST', body: data });
+        const resp = await fetch('/api/contact', { 
+          method: 'POST', 
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(jsonData)
+        });
         const json = await resp.json();
 
         if (resp.ok && json?.success) {

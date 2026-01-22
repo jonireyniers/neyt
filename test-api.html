@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Contact API</title>
+</head>
+<body>
+  <h1>Test Contact Form API</h1>
+  <form id="testForm">
+    <input type="text" name="name" placeholder="Naam" value="Test Persoon" required><br>
+    <input type="text" name="company" placeholder="Bedrijf" value="Test BV" required><br>
+    <input type="email" name="email" placeholder="Email" value="test@test.com" required><br>
+    <input type="text" name="country" placeholder="Land" value="Nederland" required><br>
+    <textarea name="message" placeholder="Bericht" required>Test bericht</textarea><br>
+    <button type="submit">Verstuur</button>
+  </form>
+  <div id="result"></div>
+
+  <script>
+    document.getElementById('testForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const resultDiv = document.getElementById('result');
+      resultDiv.textContent = 'Verzenden...';
+      
+      const formData = new FormData(e.target);
+      
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const data = await response.json();
+        
+        resultDiv.innerHTML = `
+          <h3>Response:</h3>
+          <p>Status: ${response.status}</p>
+          <p>OK: ${response.ok}</p>
+          <pre>${JSON.stringify(data, null, 2)}</pre>
+        `;
+        
+        console.log('Full response:', response);
+        console.log('Response data:', data);
+      } catch (error) {
+        resultDiv.innerHTML = `
+          <h3>Error:</h3>
+          <p style="color: red;">${error.message}</p>
+          <pre>${error.stack}</pre>
+        `;
+        console.error('Error:', error);
+      }
+    });
+  </script>
+</body>
+</html>
