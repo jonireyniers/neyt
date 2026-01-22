@@ -17,25 +17,25 @@ const nav = {
 };
 ---
 
-<header class="py-4 sticky top-0 z-50 bg-white shadow-md">
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
   <div class="container">
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between py-4">
       <div class="flex-1"></div>
       
-      <div class="hidden md:flex items-center gap-8 flex-1 justify-center">
-        <a href={`/${locale === 'nl' ? '' : locale}`} class="hover:text-secondary transition-colors">
+      <nav class="hidden md:flex items-center gap-1 flex-1 justify-center">
+        <a href={`/${locale === 'nl' ? '' : locale}`} class="px-5 py-2.5 rounded-lg font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-all duration-200">
           {nav[locale].home}
         </a>
-        <a href={`/${locale === 'nl' ? '' : `${locale}/`}furniture`} class="hover:text-secondary transition-colors">
+        <a href={`/${locale === 'nl' ? '' : `${locale}/`}furniture`} class="px-5 py-2.5 rounded-lg font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-all duration-200">
           {nav[locale].furniture}
         </a>
-        <a href={`/${locale === 'nl' ? '' : `${locale}/`}company`} class="hover:text-secondary transition-colors">
+        <a href={`/${locale === 'nl' ? '' : `${locale}/`}company`} class="px-5 py-2.5 rounded-lg font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-all duration-200">
           {nav[locale].company}
         </a>
-        <a href={`/${locale === 'nl' ? '' : `${locale}/`}contact`} class="hover:text-secondary transition-colors">
+        <a href={`/${locale === 'nl' ? '' : `${locale}/`}contact`} class="px-5 py-2.5 rounded-lg font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-all duration-200">
           {nav[locale].contact}
         </a>
-      </div>
+      </nav>
       
       <div class="flex-1 flex justify-end">
         <LanguageSwitcher locale={locale} currentPath={Astro.url.pathname} />
