@@ -4,6 +4,34 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
 const locale: 'en' | 'fr' | 'nl' = 'nl';
+
+const currentYear = new Date().getFullYear();
+
+// Sluitingsdagen 2026
+const closingDates = [
+  { period_start: '2026-04-06', period_end: '2026-04-06', description_nl: 'Paasmaandag' },
+  { period_start: '2026-05-01', period_end: '2026-05-01', description_nl: 'Dag van de Arbeid' },
+  { period_start: '2026-05-14', period_end: '2026-05-15', description_nl: 'O.H. Hemelvaart weekend' },
+  { period_start: '2026-05-25', period_end: '2026-05-25', description_nl: 'Pinkstermaandag' },
+  { period_start: '2026-07-13', period_end: '2026-07-31', description_nl: 'Zomervakantie' },
+  { period_start: '2026-08-15', period_end: '2026-08-21', description_nl: 'O.L.V. Hemelvaart week' },
+  { period_start: '2026-11-11', period_end: '2026-11-11', description_nl: 'Wapenstilstand' },
+  { period_start: '2026-12-24', period_end: '2026-12-31', description_nl: 'Kerstvakantie' },
+];
+
+function formatDateRange(start: string, end: string, locale: string): string {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
+  
+  if (start === end) {
+    return startDate.toLocaleDateString(locale === 'en' ? 'en-GB' : locale === 'fr' ? 'fr-FR' : 'nl-BE', options);
+  }
+  
+  const startStr = startDate.toLocaleDateString(locale === 'en' ? 'en-GB' : locale === 'fr' ? 'fr-FR' : 'nl-BE', options);
+  const endStr = endDate.toLocaleDateString(locale === 'en' ? 'en-GB' : locale === 'fr' ? 'fr-FR' : 'nl-BE', options);
+  return `${startStr} – ${endStr}`;
+}
 ---
 
 <BaseLayout title="Contact — Neyt" locale={locale}>
@@ -230,6 +258,47 @@ const locale: 'en' | 'fr' | 'nl' = 'nl';
         </div>
       </div>
     </section>
+
+    <!-- Closing Dates -->
+    {closingDates.length > 0 && (
+      <section class="section bg-gray-50">
+        <div class="container">
+          <div class="max-w-2xl mx-auto">
+            <div class="bg-white rounded-xl shadow-lg p-8 border-l-4 border-accent">
+              <h3 class="text-2xl font-serif font-bold mb-6 flex items-center gap-2">
+                <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Sluitingsdagen {currentYear}
+              </h3>
+              <ul class="space-y-3">
+                {closingDates.map(date => {
+                  const description = date[`description_${locale}`];
+                  return (
+                    <li class="flex items-start gap-3 py-2">
+                      <span class="text-accent text-xl leading-none mt-0.5">•</span>
+                      <div>
+                        <span class="text-gray-700 font-medium">
+                          {formatDateRange(date.period_start, date.period_end, locale)}
+                        </span>
+                        {description && (
+                          <p class="text-sm text-gray-600 mt-1">{description}</p>
+                        )}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+              <div class="mt-6 p-4 bg-amber-50 border-l-4 border-amber-500 rounded">
+                <p class="text-sm text-gray-700">
+                  <strong class="text-amber-700">Let op:</strong> Er worden geen verzendingen verwerkt tijdens deze periodes.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
   </main>
 
   <Footer locale={locale} />
