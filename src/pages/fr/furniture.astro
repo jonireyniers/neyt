@@ -59,16 +59,23 @@ const sortedCategories = categoryOrder.filter(cat => grouped[cat]);
           <section class="category-section" data-category={categoryId}>
             <h2 class="text-2xl font-serif font-bold mb-8">{getCategoryName(categoryId, locale)}</h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {grouped[categoryId].map(item => {
-                const images = item.images || [item.image_url];
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {grouped[categoryId].map(item => {
+              const images = item.images || [item.image_url];
+              // Get featured image index for this category, default to 0
+              const featuredIndex = item.category_featured_images?.[categoryId] ?? 0;
+              // Reorder images so featured is first
+              const reorderedImages = [
+                images[featuredIndex],
+                ...images.filter((_, idx) => idx !== featuredIndex)
+              ];
                 const itemName = item.name_fr || item.name_nl;
                 return (
                   <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                     <div class="aspect-[4/3] bg-gray-200 relative overflow-hidden">
-                      {images.length > 1 ? (
+                      {reorderedImages.length > 1 ? (
                         <div class="image-gallery relative w-full h-full">
-                          {images.map((url, idx) => (
+                          {reorderedImages.map((url, idx) => (
                             <img 
                               src={url} 
                               alt={`${itemName} ${idx + 1}`}
@@ -77,7 +84,7 @@ const sortedCategories = categoryOrder.filter(cat => grouped[cat]);
                             />
                           ))}
                           <div class="absolute bottom-2 left-0 right-0 flex justify-center gap-2">
-                            {images.map((_, idx) => (
+                            {reorderedImages.map((_, idx) => (
                               <button 
                                 class="gallery-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white"
                                 data-gallery-index={idx}
@@ -87,7 +94,7 @@ const sortedCategories = categoryOrder.filter(cat => grouped[cat]);
                         </div>
                       ) : (
                         <img 
-                          src={images[0]} 
+                          src={reorderedImages[0]} 
                           alt={itemName}
                           class="w-full h-full object-cover" 
                           loading="lazy" 
@@ -97,8 +104,8 @@ const sortedCategories = categoryOrder.filter(cat => grouped[cat]);
                     <div class="p-4">
                       <h3 class="text-lg font-semibold mb-2">{itemName}</h3>
                       <div class="flex items-center justify-between">
-                        {images.length > 1 && (
-                          <p class="text-xs text-gray-500">{images.length} photos</p>
+                        {reorderedImages.length > 1 && (
+                          <p class="text-xs text-gray-500">{reorderedImages.length} photos</p>
                         )}
                       </div>
                       {item.pdf_url && (

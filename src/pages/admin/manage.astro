@@ -74,6 +74,7 @@ const categoryLabels = {
                     data-name-en={item.name_en || ''}
                     data-categories={JSON.stringify(item.categories || [item.category])}
                     data-images={JSON.stringify(item.images || [item.image_url])}
+                    data-category-featured-images={JSON.stringify(item.category_featured_images || {})}
                     data-pdf-url={item.pdf_url || ''}
                     class="edit-btn px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
                   >
@@ -149,6 +150,15 @@ const categoryLabels = {
         <div>
           <label class="block text-sm font-medium mb-2">Huidige foto's</label>
           <div id="current-images" class="grid grid-cols-3 gap-2 mb-2"></div>
+        </div>
+
+        <!-- Featured Images per Category -->
+        <div id="featured-images-section" class="hidden">
+          <label class="block text-sm font-medium mb-2">Hoofdfoto per categorie</label>
+          <div id="featured-images-container" class="space-y-3 border rounded-md p-3">
+            <!-- Will be populated dynamically based on selected categories -->
+          </div>
+          <p class="text-xs text-gray-500 mt-1">Selecteer welke foto eerst moet verschijnen in elke categorie</p>
         </div>
 
         <!-- Add/Replace Images -->
@@ -278,6 +288,66 @@ const categoryLabels = {
     let imagesToDelete = [];
     let currentPdfUrl = null;
     let deletePdf = false;
+    let categoryFeaturedImages = {};
+
+    const categoryLabelsMap = {
+      'adult-bedrooms': 'Volwassen Slaapkamers',
+      'youth-bedrooms': 'Jeugd Slaapkamers',
+      'baby-bedrooms': 'Baby Slaapkamers',
+      'office': 'Kantoren',
+      'dining': 'Eetkamers'
+    };
+
+    function updateFeaturedImagesUI() {
+      const selectedCategories = Array.from(
+        document.querySelectorAll('.edit-category-checkbox:checked')
+      ).map(cb => cb.value);
+
+      const container = document.getElementById('featured-images-container');
+      const section = document.getElementById('featured-images-section');
+
+      if (selectedCategories.length === 0 || currentImages.length === 0) {
+        section.classList.add('hidden');
+        return;
+      }
+
+      section.classList.remove('hidden');
+
+      container.innerHTML = selectedCategories.map(catId => {
+        const currentFeaturedIndex = categoryFeaturedImages[catId] ?? 0;
+        
+        return `
+          <div>
+            <label class="block text-sm font-semibold mb-2">${categoryLabelsMap[catId]}</label>
+            <div class="grid grid-cols-3 gap-2">
+              ${currentImages.map((url, idx) => `
+                <label class="relative cursor-pointer">
+                  <input 
+                    type="radio" 
+                    name="featured-${catId}" 
+                    value="${idx}"
+                    ${currentFeaturedIndex === idx ? 'checked' : ''}
+                    class="absolute top-2 left-2 w-4 h-4"
+                  />
+                  <img src="${url}" class="w-full h-20 object-cover rounded ${currentFeaturedIndex === idx ? 'ring-2 ring-blue-500' : ''}" />
+                  <div class="text-xs text-center mt-1">Foto ${idx + 1}</div>
+                </label>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Add event listeners for radio buttons
+      selectedCategories.forEach(catId => {
+        document.querySelectorAll(`input[name="featured-${catId}"]`).forEach(radio => {
+          radio.addEventListener('change', () => {
+            categoryFeaturedImages[catId] = parseInt(radio.value);
+            updateFeaturedImagesUI();
+          });
+        });
+      });
+    }
 
     // Edit functionality
     document.querySelectorAll('.edit-btn').forEach(btn => {
@@ -289,6 +359,7 @@ const categoryLabels = {
         const categories = JSON.parse(btn.getAttribute('data-categories') || '[]');
         const images = JSON.parse(btn.getAttribute('data-images') || '[]');
         const pdfUrl = btn.getAttribute('data-pdf-url');
+        categoryFeaturedImages = JSON.parse(btn.getAttribute('data-category-featured-images') || '{}');
 
         document.getElementById('edit-id').value = id;
         document.getElementById('edit-name-nl').value = nameNl;
@@ -356,8 +427,24 @@ const categoryLabels = {
             currentImages.splice(idx, 1);
             imagesToDelete.push(url);
             delBtn.closest('div').remove();
+            
+            // Update featured images indices
+            Object.keys(categoryFeaturedImages).forEach(catId => {
+              if (categoryFeaturedImages[catId] >= idx) {
+                categoryFeaturedImages[catId] = Math.max(0, categoryFeaturedImages[catId] - 1);
+              }
+            });
+            
+            updateFeaturedImagesUI();
           });
         });
+
+        // Add category checkbox listeners
+        document.querySelectorAll('.edit-category-checkbox').forEach(checkbox => {
+          checkbox.addEventListener('change', updateFeaturedImagesUI);
+        });
+
+        updateFeaturedImagesUI();
 
         editModal.classList.remove('hidden');
       });
@@ -472,6 +559,14 @@ const categoryLabels = {
         // Update database
         editStatus.textContent = 'Updating database...';
         
+        // Clean up category_featured_images - only keep selected categories
+        const cleanedFeaturedImages = {};
+        selectedCategories.forEach(catId => {
+          if (categoryFeaturedImages[catId] !== undefined) {
+            cleanedFeaturedImages[catId] = categoryFeaturedImages[catId];
+          }
+        });
+        
         const { error } = await supabaseClient
           .from('furniture')
           .update({
@@ -482,6 +577,7 @@ const categoryLabels = {
             categories: selectedCategories, // Alle categorieën
             images: imageUrls,
             image_url: imageUrls[0] || null,
+            category_featured_images: cleanedFeaturedImages,
             pdf_url: pdfUrl
           })
           .eq('id', id);

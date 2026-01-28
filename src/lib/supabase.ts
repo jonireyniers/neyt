@@ -18,6 +18,7 @@ export interface Furniture {
   categories?: string[];
   image_url: string;
   images?: string[];
+  category_featured_images?: Record<string, number>; // { 'baby-bedrooms': 0, 'youth-bedrooms': 2 }
   pdf_url?: string;
   created_at: string;
   updated_at: string;
