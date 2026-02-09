@@ -20,7 +20,7 @@ function getCategoryName(category: string, locale: 'en' | 'fr' | 'nl'): string {
   return categoryLabels[category]?.[locale] || category;
 }
 
-// Group by category - een item kan in meerdere categorieën voorkomen
+// Group by category - een item kan nu in meerdere categorieën voorkomen
 const grouped = items.reduce((acc, item) => {
   const itemCategories = item.categories || [item.category];
   itemCategories.forEach(cat => {
@@ -30,8 +30,13 @@ const grouped = items.reduce((acc, item) => {
   return acc;
 }, {} as Record<string, Furniture[]>);
 
+// Sort alphabetically within each category
+Object.keys(grouped).forEach(cat => {
+  grouped[cat].sort((a, b) => a.name_nl.localeCompare(b.name_nl));
+});
+
 const categoryOrder = ['adult-bedrooms', 'youth-bedrooms', 'baby-bedrooms', 'office', 'dining'];
-const sortedCategories = categoryOrder.filter(cat => grouped[cat]);
+const sortedCategories = categoryOrder.filter(cat => grouped[cat] && grouped[cat].length > 0);
 ---
 
 <BaseLayout title="Neyt — Collection" locale={locale}>
