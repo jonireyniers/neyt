@@ -7,7 +7,11 @@ import companyData from '../../data/company.json';
 
 const locale: 'en' | 'fr' | 'nl' = 'fr';
 const allFurniture = await getFurniture();
-const recentFurniture = allFurniture.slice(0, 6);
+// Filter items with featured_order 1-6 and sort by that order
+const featuredFurniture = allFurniture
+  .filter(item => item.featured_order && item.featured_order >= 1 && item.featured_order <= 6)
+  .sort((a, b) => (a.featured_order || 0) - (b.featured_order || 0));
+const recentFurniture = featuredFurniture.length > 0 ? featuredFurniture : allFurniture.slice(0, 6);
 
 const categoryLabels = {
   'adult-bedrooms': { en: 'Adult Bedrooms', fr: 'Chambres Adultes', nl: 'Volwassen Slaapkamers' },

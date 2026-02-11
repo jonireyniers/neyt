@@ -54,6 +54,11 @@ const categoryLabels = {
                     <div class="font-semibold">{item.name_nl}</div>
                     {item.name_fr && <div class="text-sm text-gray-600">{item.name_fr}</div>}
                     {item.name_en && <div class="text-sm text-gray-600">{item.name_en}</div>}
+                    {item.featured_order && (
+                      <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-yellow-100 text-yellow-800 text-xs rounded mt-1">
+                        ⭐ Home #{item.featured_order}
+                      </span>
+                    )}
                     {item.pdf_url && (
                       <a href={item.pdf_url} target="_blank" class="text-xs text-blue-600 hover:underline flex items-center gap-1 mt-1">
                         📄 PDF
@@ -75,6 +80,7 @@ const categoryLabels = {
                     data-categories={JSON.stringify(item.categories || [item.category])}
                     data-images={JSON.stringify(item.images || [item.image_url])}
                     data-category-featured-images={JSON.stringify(item.category_featured_images || {})}
+                    data-featured-order={item.featured_order || ''}
                     data-pdf-url={item.pdf_url || ''}
                     class="edit-btn px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
                   >
@@ -118,6 +124,22 @@ const categoryLabels = {
             <label for="edit-name-en" class="block text-sm font-medium mb-1">Name (EN)</label>
             <input id="edit-name-en" class="w-full border px-3 py-2 rounded-md" />
           </div>
+        </div>
+
+        <div>
+          <label for="edit-featured-order" class="block text-sm font-medium mb-1">
+            Home pagina positie (optioneel)
+          </label>
+          <select id="edit-featured-order" class="w-full border px-3 py-2 rounded-md">
+            <option value="">Niet op home pagina</option>
+            <option value="1">Positie 1 (eerste)</option>
+            <option value="2">Positie 2</option>
+            <option value="3">Positie 3</option>
+            <option value="4">Positie 4</option>
+            <option value="5">Positie 5</option>
+            <option value="6">Positie 6 (laatste)</option>
+          </select>
+          <p class="text-xs text-gray-500 mt-1">Kies op welke positie dit meubelstuk op de home pagina moet staan (1-6)</p>
         </div>
 
         <div>
@@ -359,12 +381,14 @@ const categoryLabels = {
         const categories = JSON.parse(btn.getAttribute('data-categories') || '[]');
         const images = JSON.parse(btn.getAttribute('data-images') || '[]');
         const pdfUrl = btn.getAttribute('data-pdf-url');
+        const featuredOrder = btn.getAttribute('data-featured-order');
         categoryFeaturedImages = JSON.parse(btn.getAttribute('data-category-featured-images') || '{}');
 
         document.getElementById('edit-id').value = id;
         document.getElementById('edit-name-nl').value = nameNl;
         document.getElementById('edit-name-fr').value = nameFr;
         document.getElementById('edit-name-en').value = nameEn;
+        document.getElementById('edit-featured-order').value = featuredOrder || '';
         
         // Check de juiste categorieën
         document.querySelectorAll('.edit-category-checkbox').forEach(checkbox => {
@@ -566,6 +590,10 @@ const categoryLabels = {
             cleanedFeaturedImages[catId] = categoryFeaturedImages[catId];
           }
         });
+
+        // Get featured order value
+        const featuredOrderValue = document.getElementById('edit-featured-order').value;
+        const featuredOrder = featuredOrderValue ? parseInt(featuredOrderValue) : null;
         
         const { error } = await supabaseClient
           .from('furniture')
@@ -578,6 +606,7 @@ const categoryLabels = {
             images: imageUrls,
             image_url: imageUrls[0] || null,
             category_featured_images: cleanedFeaturedImages,
+            featured_order: featuredOrder,
             pdf_url: pdfUrl
           })
           .eq('id', id);
