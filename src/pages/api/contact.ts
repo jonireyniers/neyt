@@ -130,8 +130,7 @@ ${message}`;
       console.error('Resend API error:', error);
       return new Response(JSON.stringify({ 
         success: false, 
-        error: 'Fout bij het versturen van email',
-        details: error.message
+        error: 'Fout bij het versturen van email'
       }), {
         status: 500,
         headers: { 'Content-Type': 'application/json' }
@@ -147,12 +146,9 @@ ${message}`;
 
   } catch (error) {
     console.error('Contact form error:', error);
-    console.error('Error details:', error instanceof Error ? error.message : String(error));
-    console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace');
     return new Response(JSON.stringify({ 
       success: false, 
-      error: 'Er is een fout opgetreden',
-      details: error instanceof Error ? error.message : String(error)
+      error: 'Er is een fout opgetreden'
     }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }

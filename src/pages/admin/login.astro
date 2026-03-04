@@ -60,12 +60,17 @@ const locale: 'en' | 'fr' | 'nl' = 'nl';
       const password = document.getElementById('password').value;
 
       try {
-        const { error } = await supabaseClient.auth.signInWithPassword({
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
           email,
           password,
         });
 
         if (error) throw error;
+
+        // Sla tokens op als cookies voor server-side auth
+        const maxAge = 60 * 60 * 24 * 7; // 7 dagen
+        document.cookie = `sb-access-token=${data.session.access_token}; path=/; max-age=${maxAge}; SameSite=Strict; Secure`;
+        document.cookie = `sb-refresh-token=${data.session.refresh_token}; path=/; max-age=${maxAge}; SameSite=Strict; Secure`;
 
         window.location.href = '/admin/manage';
       } catch (err) {

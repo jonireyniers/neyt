@@ -3,6 +3,29 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { getFurniture } from '../../lib/supabase';
+import { createClient } from '@supabase/supabase-js';
+
+// Server-side auth check
+const accessToken = Astro.cookies.get('sb-access-token')?.value;
+const refreshToken = Astro.cookies.get('sb-refresh-token')?.value;
+
+if (!accessToken || !refreshToken) {
+  return Astro.redirect('/admin/login');
+}
+
+const supabaseServer = createClient(
+  import.meta.env.PUBLIC_SUPABASE_URL,
+  import.meta.env.PUBLIC_SUPABASE_ANON_KEY
+);
+
+const { error: sessionError } = await supabaseServer.auth.setSession({
+  access_token: accessToken,
+  refresh_token: refreshToken,
+});
+
+if (sessionError) {
+  return Astro.redirect('/admin/login');
+}
 
 const locale: 'en' | 'fr' | 'nl' = 'nl';
 const items = await getFurniture();
@@ -299,6 +322,9 @@ const categoryLabels = {
     // Logout button
     document.getElementById('logoutBtn').addEventListener('click', async () => {
       await supabaseClient.auth.signOut();
+      // Wis de auth cookies
+      document.cookie = 'sb-access-token=; path=/; max-age=0';
+      document.cookie = 'sb-refresh-token=; path=/; max-age=0';
       window.location.href = '/';
     });
 
