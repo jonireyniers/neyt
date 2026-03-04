@@ -10,9 +10,15 @@ const { locale } = Astro.props;
 const currentYear = new Date().getFullYear();
 
 const text = {
-  en: { rights: 'All rights reserved', madewith: 'Made with', by: 'by' },
-  fr: { rights: 'Tous droits réservés', madewith: 'Fait avec', by: 'par' },
-  nl: { rights: 'Alle rechten voorbehouden', madewith: 'Gemaakt met', by: 'door' }
+  en: { rights: 'All rights reserved', madewith: 'Made with', by: 'by', privacy: 'Privacy Policy' },
+  fr: { rights: 'Tous droits réservés', madewith: 'Fait avec', by: 'par', privacy: 'Politique de confidentialité' },
+  nl: { rights: 'Alle rechten voorbehouden', madewith: 'Gemaakt met', by: 'door', privacy: 'Privacybeleid' }
+};
+
+const privacyLinks = {
+  en: '/en/privacy',
+  fr: '/fr/privacy',
+  nl: '/nl/privacy'
 };
 ---
 
@@ -20,6 +26,11 @@ const text = {
   <div class="container py-8">
     <div class="text-center text-sm">
       <p>© {currentYear} {companyData.company.names[locale]}. {text[locale].rights}.</p>
+      <p class="mt-2">
+        <a href={privacyLinks[locale]} class="text-gray-300 hover:text-white underline underline-offset-2 transition-colors">
+          {text[locale].privacy}
+        </a>
+      </p>
       <p class="mt-2 text-gray-300">
         {text[locale].madewith} ❤️ {text[locale].by} Reyniers IT Solutions
       </p>

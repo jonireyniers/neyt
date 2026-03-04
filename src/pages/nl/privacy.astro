@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const locale: 'en' | 'fr' | 'nl' = 'nl';
+---
+
+<BaseLayout
+  title="Privacybeleid | Neyt Meubelen"
+  description="Privacybeleid van Neyt NV – hoe wij uw persoonsgegevens verzamelen, gebruiken en beschermen conform de AVG/GDPR."
+  locale={locale}
+>
+  <Header locale={locale} />
+
+  <main class="container py-16 max-w-3xl mx-auto">
+    <h1 class="text-3xl font-bold mb-8">Privacybeleid</h1>
+    <p class="text-sm text-gray-500 mb-10">Laatste update: 4 maart 2026</p>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-semibold mb-3">1. Verantwoordelijke voor de verwerking</h2>
+      <p class="text-gray-700 leading-relaxed">
+        Neyt NV<br />
+        Heistraat 12, 9080 Beervelde, België<br />
+        BTW: BE0400.162.909<br />
+        Tel.: +32 9 353 92 08<br />
+        E-mail: <a href="mailto:info@neytfurniture.com" class="text-primary underline">info@neytfurniture.com</a>
+      </p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-semibold mb-3">2. Welke gegevens verzamelen wij?</h2>
+      <p class="text-gray-700 leading-relaxed mb-3">
+        Via het contactformulier op onze website verzamelen wij de volgende persoonsgegevens:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-1">
+        <li>Naam</li>
+        <li>E-mailadres</li>
+        <li>Bedrijfsnaam (optioneel)</li>
+        <li>Inhoud van uw bericht</li>
+      </ul>
+      <p class="text-gray-700 mt-3 leading-relaxed">
+        Wij verzamelen geen gegevens via cookies, tracking of analysediensten.
+      </p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-semibold mb-3">3. Waarvoor gebruiken wij uw gegevens?</h2>
+      <p class="text-gray-700 leading-relaxed">
+        Uw gegevens worden uitsluitend gebruikt om uw contactaanvraag te beantwoorden. Wij gebruiken uw gegevens niet voor marketingdoeleinden en delen ze niet met derden, tenzij dit wettelijk verplicht is.
+      </p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-semibold mb-3">4. Rechtsgrond voor de verwerking</h2>
+      <p class="text-gray-700 leading-relaxed">
+        De verwerking van uw persoonsgegevens is gebaseerd op uw uitdrukkelijke toestemming (art. 6(1)(a) AVG) die u geeft door het contactformulier in te vullen en te versturen.
+      </p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-semibold mb-3">5. Hoe lang bewaren wij uw gegevens?</h2>
+      <p class="text-gray-700 leading-relaxed">
+        Uw gegevens worden bewaard zolang als nodig om uw vraag te behandelen en te archiveren voor mogelijke navolgende communicatie, met een maximale bewaartermijn van <strong>2 jaar</strong> na het laatste contact. Daarna worden ze definitief gewist.
+      </p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-semibold mb-3">6. Uw rechten</h2>
+      <p class="text-gray-700 leading-relaxed mb-3">
+        Conform de Algemene Verordening Gegevensbescherming (AVG/GDPR) heeft u de volgende rechten:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 space-y-1">
+        <li><strong>Recht op inzage</strong> – u kunt opvragen welke gegevens wij over u bewaren.</li>
+        <li><strong>Recht op correctie</strong> – u kunt onjuiste gegevens laten aanpassen.</li>
+        <li><strong>Recht op verwijdering</strong> – u kunt vragen uw gegevens te wissen ("recht op vergetelheid").</li>
+        <li><strong>Recht op beperking</strong> – u kunt de verwerking laten beperken.</li>
+        <li><strong>Recht op overdraagbaarheid</strong> – u kunt uw gegevens opvragen in een leesbaar formaat.</li>
+        <li><strong>Recht van bezwaar</strong> – u kunt bezwaar maken tegen de verwerking.</li>
+        <li><strong>Recht om toestemming in te trekken</strong> – u kunt uw toestemming te allen tijde intrekken.</li>
+      </ul>
+      <p class="text-gray-700 mt-4 leading-relaxed">
+        Om deze rechten uit te oefenen, neemt u contact met ons op via <a href="mailto:info@neytfurniture.com" class="text-primary underline">info@neytfurniture.com</a>. Wij reageren binnen 30 dagen.
+      </p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-semibold mb-3">7. Klacht indienen</h2>
+      <p class="text-gray-700 leading-relaxed">
+        Indien u van mening bent dat uw rechten worden geschonden, kunt u een klacht indienen bij de Belgische Gegevensbeschermingsautoriteit (GBA):
+      </p>
+      <p class="text-gray-700 mt-2">
+        <a href="https://www.gegevensbeschermingsautoriteit.be" target="_blank" rel="noopener noreferrer" class="text-primary underline">www.gegevensbeschermingsautoriteit.be</a><br />
+        Drukpersstraat 35, 1000 Brussel<br />
+        Tel.: +32 2 274 48 00
+      </p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-semibold mb-3">8. Beveiliging van uw gegevens</h2>
+      <p class="text-gray-700 leading-relaxed">
+        Wij nemen passende technische en organisatorische maatregelen om uw persoonsgegevens te beveiligen tegen ongeoorloofde toegang, verlies of misbruik. Uw contactaanvragen worden verwerkt via een beveiligde verbinding (HTTPS).
+      </p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-semibold mb-3">9. Wijzigingen aan dit beleid</h2>
+      <p class="text-gray-700 leading-relaxed">
+        Wij kunnen dit privacybeleid van tijd tot tijd bijwerken. De meest recente versie is altijd beschikbaar op deze pagina. Wij raden u aan deze pagina regelmatig te raadplegen.
+      </p>
+    </section>
+  </main>
+
+  <Footer locale={locale} />
+</BaseLayout>
