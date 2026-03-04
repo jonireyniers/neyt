@@ -4,24 +4,11 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { getFurnitureByCategory } from '../../lib/supabase';
 
-export async function getStaticPaths() {
-  return [
-    { params: { category: 'adult-bedrooms' } },
-    { params: { category: 'youth-bedrooms' } },
-    { params: { category: 'baby-bedrooms' } },
-    { params: { category: 'office' } },
-    { params: { category: 'dining' } },
-  ];
-}
+export const prerender = false;
 
 const { category } = Astro.params;
 const locale: 'en' | 'fr' | 'nl' = 'nl';
 const furniture = await getFurnitureByCategory(category);
-
-console.log('=== DEBUG ===');
-console.log('Category:', category);
-console.log('Furniture count:', furniture.length);
-console.log('Furniture:', JSON.stringify(furniture, null, 2));
 
 const categoryLabels = {
   'adult-bedrooms': 'Volwassen Slaapkamers',
@@ -32,18 +19,16 @@ const categoryLabels = {
 };
 ---
 
-<BaseLayout title={categoryLabels[category]} locale={locale}>
+<BaseLayout
+  title={`${categoryLabels[category]} — Neyt Meubelen`}
+  description={`Ontdek het volledige aanbod ${categoryLabels[category].toLowerCase()} van Neyt NV. Kwaliteitsmeubelen voor B2B klanten.`}
+  locale={locale}
+>
   <Header locale={locale} />
 
   <main class="section">
     <div class="container">
       <h1 class="text-3xl font-serif font-bold mb-8">{categoryLabels[category]}</h1>
-
-      <p>Aantal items: {furniture.length}</p>
-
-      <pre class="bg-gray-100 p-4 rounded mb-4 overflow-auto">
-        {JSON.stringify(furniture, null, 2)}
-      </pre>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {furniture.map((item) => {

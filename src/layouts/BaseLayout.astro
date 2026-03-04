@@ -8,6 +8,7 @@ interface Props {
   locale?: 'en' | 'fr' | 'nl';
   canonical?: string;
   ogImage?: string;
+  robots?: string;
 }
 
 const { 
@@ -15,7 +16,8 @@ const {
   description = 'Quality furniture for your home', 
   locale = 'en',
   canonical,
-  ogImage = '/images/furniture/prodlogo.png'
+  ogImage = '/images/furniture/prodlogo.png',
+  robots = 'index, follow'
 } = Astro.props;
 
 const canonicalURL = canonical || Astro.url.href;
@@ -28,7 +30,7 @@ const siteURL = 'https://www.neytfurniture.com';
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={robots} />
     <title>{title}</title>
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/png" href="/favicon.png" />
