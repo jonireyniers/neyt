@@ -3,24 +3,44 @@ import { Resend } from 'resend';
 
 export const prerender = false;
 
+// Rate limiting: max 3 berichten per IP per uur
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const limit = rateLimitMap.get(ip);
+
+  if (!limit || now > limit.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + 60 * 60 * 1000 });
+    return true;
+  }
+
+  if (limit.count >= 3) {
+    return false;
+  }
+
+  limit.count++;
+  return true;
+}
+
 export const POST: APIRoute = async ({ request }) => {
   try {
-    console.log('=== API ROUTE CALLED ===');
-    console.log('Content-Type:', request.headers.get('content-type'));
-    console.log('Method:', request.method);
-    
-    // Astro parses JSON automatically, we can read it directly
+    // Rate limiting check
+    const ip = request.headers.get('x-forwarded-for') || request.headers.get('cf-connecting-ip') || 'unknown';
+    if (!checkRateLimit(ip)) {
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Te veel berichten. Probeer het later opnieuw.'
+      }), {
+        status: 429,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
     let body;
     try {
       body = await request.json();
-      console.log('Parsed body:', body);
     } catch (e) {
-      console.error('Failed to parse JSON:', e);
-      // Try to clone and read as text for debugging
-      const clonedRequest = request.clone();
-      const text = await clonedRequest.text();
-      console.log('Raw body text:', text);
-      
       return new Response(JSON.stringify({ 
         success: false, 
         error: 'Invalid JSON in request',
@@ -38,8 +58,15 @@ export const POST: APIRoute = async ({ request }) => {
     const activity = body?.activity || '';
     const city = body?.city || '';
     const message = body?.message || '';
+    const honeypot = body?.website || '';
 
-    console.log('Extracted data:', { name, company, email, country, message });
+    // Honeypot: als dit veld ingevuld is, is het een bot
+    if (honeypot) {
+      return new Response(JSON.stringify({ success: true }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
 
     // Validatie
     if (!name || !company || !email || !country || !message) {
@@ -67,11 +94,7 @@ export const POST: APIRoute = async ({ request }) => {
     // Verstuur email via Resend
     const resendApiKey = import.meta.env.RESEND_API_KEY;
     
-    console.log('RESEND_API_KEY aanwezig?', !!resendApiKey);
-    console.log('Environment vars:', Object.keys(import.meta.env));
-    
     if (!resendApiKey) {
-      console.error('RESEND_API_KEY is niet geconfigureerd');
       return new Response(JSON.stringify({ 
         success: false, 
         error: 'Email service is niet geconfigureerd' 
@@ -93,12 +116,11 @@ Stad: ${city || 'Niet opgegeven'}
 Bericht:
 ${message}`;
 
-    console.log('Sending email via Resend...');
     const resend = new Resend(resendApiKey);
     
     const { data, error } = await resend.emails.send({
       from: 'Neyt Website <noreply@neytfurniture.com>',
-      to: ['info@neytfurniture.com', 'salesbe@neytfurniture.com'],
+      to: ['reyniersitsolutions@outlook.be'],
       subject: `Nieuw contact van ${name} - ${company}`,
       text: emailBody,
       reply_to: email
@@ -116,8 +138,6 @@ ${message}`;
       });
     }
     
-    console.log('Email succesvol verzonden:', data);
-
     return new Response(JSON.stringify({ 
       success: true 
     }), {
