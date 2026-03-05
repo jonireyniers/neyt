@@ -8,6 +8,10 @@ export default defineConfig({
   output: 'server',
   adapter: vercel(),
   integrations: [tailwind(), sitemap()],
+  redirects: {
+    '/site': '/',
+    '/site/[...slug]': '/',
+  },
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'fr', 'nl'],
