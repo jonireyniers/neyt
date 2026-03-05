@@ -120,7 +120,7 @@ ${message}`;
     
     const { data, error } = await resend.emails.send({
       from: 'Neyt Website <noreply@neytfurniture.com>',
-      to: ['info@neytfurniture.com', 'salesbe@neytfurniture.com', 'reyniersitsolutions@outlook.be'],
+      to: ['info@neytfurniture.com', 'salesbe@neytfurniture.com' , ],
       subject: `Nieuw contact van ${name} - ${company}`,
       text: emailBody,
       reply_to: email
