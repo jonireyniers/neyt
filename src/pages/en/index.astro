@@ -39,7 +39,7 @@ function getCategoryName(category: string, locale: 'en' | 'fr' | 'nl'): string {
         </p>
         <div class="flex gap-4">
           <a href="/en/furniture" class="inline-block bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg">
-            View Collection
+            View collection
           </a>
           <a href="/en/company" class="inline-block bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-all">
             About Us
@@ -51,7 +51,7 @@ function getCategoryName(category: string, locale: 'en' | 'fr' | 'nl'): string {
     <section class="section bg-gray-50">
       <div class="container">
         <div class="text-center mb-12">
-          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4">Latest Additions</h2>
+          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4">Latest additions</h2>
           <p class="text-gray-600 text-lg">Discover our newest furniture</p>
         </div>
         
@@ -98,7 +98,7 @@ function getCategoryName(category: string, locale: 'en' | 'fr' | 'nl'): string {
             href="/en/furniture" 
             class="inline-block bg-accent text-white px-8 py-3 rounded-lg font-semibold hover:bg-accent/90 transition-colors"
           >
-            View All Furniture
+            View all furniture
           </a>
         </div>
       </div>
@@ -112,7 +112,7 @@ function getCategoryName(category: string, locale: 'en' | 'fr' | 'nl'): string {
               <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              Closing Dates {companyData.closingDates[0].year}
+              Closing dates {companyData.closingDates[0].year}
             </h3>
             <ul class="space-y-3">
               {companyData.closingDates[0].periods.map(period => (
