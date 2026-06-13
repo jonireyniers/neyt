@@ -67,6 +67,7 @@ const sortedCategories = categoryOrder.filter(cat => grouped[cat] && grouped[cat
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {grouped[categoryId].map(item => {
               const images = item.images || [item.image_url];
+              const pdfUrls = item.pdf_urls || (item.pdf_url ? [item.pdf_url] : []);
               // Get featured image index for this category, default to 0
               const featuredIndex = item.category_featured_images?.[categoryId] ?? 0;
               // Reorder images so featured is first
@@ -113,19 +114,19 @@ const sortedCategories = categoryOrder.filter(cat => grouped[cat] && grouped[cat
                           <p class="text-xs text-gray-500">{reorderedImages.length} photos</p>
                         )}
                       </div>
-                      {item.pdf_url && (
+                      {pdfUrls.length > 0 && pdfUrls.map((url, i) => (
                         <a 
-                          href={item.pdf_url} 
+                          href={url} 
                           target="_blank"
                           onclick="event.stopPropagation()"
-                          class="mt-3 inline-flex items-center gap-2 px-4 py-2 bg-accent text-white rounded-md hover:bg-accent/90 transition text-sm font-medium w-full justify-center"
+                          class="mt-2 inline-flex items-center gap-2 px-4 py-2 bg-accent text-white rounded-md hover:bg-accent/90 transition text-sm font-medium w-full justify-center"
                         >
                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                           </svg>
-                          Télécharger dessin technique
+                          Télécharger dessin technique{pdfUrls.length > 1 ? ` (${i + 1})` : ''}
                         </a>
-                      )}
+                      ))}
                     </div>
                   </article>
                 );

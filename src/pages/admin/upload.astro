@@ -85,8 +85,9 @@ const locale: 'en' | 'fr' | 'nl' = 'en';
         </div>
 
         <div>
-          <label for="pdf" class="block text-sm font-medium mb-1">PDF (optioneel)</label>
-          <input id="pdf" name="pdf" type="file" accept=".pdf" class="w-full border px-3 py-2 rounded-md" />
+          <label for="pdf" class="block text-sm font-medium mb-1">PDF's (optioneel, meerdere selecteren)</label>
+          <input id="pdf" name="pdf" type="file" accept=".pdf" multiple class="w-full border px-3 py-2 rounded-md" />
+          <p class="text-xs text-gray-500 mt-1">Houd Ctrl/Cmd ingedrukt om meerdere PDF's te selecteren</p>
         </div>
 
         <button type="submit" class="px-4 py-2 bg-accent text-white rounded-md">
@@ -164,24 +165,28 @@ const locale: 'en' | 'fr' | 'nl' = 'en';
           imageUrls.push(urlData.publicUrl);
         }
 
-        // Upload PDF if present
-        let pdfUrl = null;
-        const pdfFile = formData.get('pdf');
-        if (pdfFile && pdfFile.size > 0) {
-          statusEl.textContent = 'Uploading PDF...';
-          const pdfFileName = `${Date.now()}-${pdfFile.name}`;
+        // Upload PDFs if present
+        let pdfUrls = [];
+        const pdfFiles = formData.getAll('pdf').filter(f => f.size > 0);
+        if (pdfFiles.length > 0) {
+          statusEl.textContent = `Uploading ${pdfFiles.length} PDF(s)...`;
           
-          const { error: pdfError } = await supabaseClient.storage
-            .from('furniture')
-            .upload(pdfFileName, pdfFile);
+          for (let i = 0; i < pdfFiles.length; i++) {
+            const file = pdfFiles[i];
+            const pdfFileName = `${Date.now()}-${i}-${file.name}`;
+            
+            const { error: pdfError } = await supabaseClient.storage
+              .from('furniture')
+              .upload(pdfFileName, file);
 
-          if (pdfError) throw pdfError;
+            if (pdfError) throw pdfError;
 
-          const { data: pdfUrlData } = supabaseClient.storage
-            .from('furniture')
-            .getPublicUrl(pdfFileName);
+            const { data: pdfUrlData } = supabaseClient.storage
+              .from('furniture')
+              .getPublicUrl(pdfFileName);
 
-          pdfUrl = pdfUrlData.publicUrl;
+            pdfUrls.push(pdfUrlData.publicUrl);
+          }
         }
 
         statusEl.textContent = 'Saving to database...';
@@ -194,7 +199,8 @@ const locale: 'en' | 'fr' | 'nl' = 'en';
           categories: categories, // JavaScript array
           image_url: imageUrls[0],
           images: imageUrls, // JavaScript array
-          pdf_url: pdfUrl
+          pdf_url: pdfUrls[0] || null,
+          pdf_urls: pdfUrls
         };
 
         console.log('=== INSERT DATA ===', insertData);

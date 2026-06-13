@@ -82,11 +82,14 @@ const categoryLabels = {
                         ⭐ Home #{item.featured_order}
                       </span>
                     )}
-                    {item.pdf_url && (
-                      <a href={item.pdf_url} target="_blank" class="text-xs text-blue-600 hover:underline flex items-center gap-1 mt-1">
-                        📄 PDF
-                      </a>
-                    )}
+                    {(() => {
+                      const urls = item.pdf_urls || (item.pdf_url ? [item.pdf_url] : []);
+                      return urls.length > 0 ? urls.map((url, i) => (
+                        <a href={url} target="_blank" class="text-xs text-blue-600 hover:underline flex items-center gap-1 mt-1">
+                          📄 PDF{urls.length > 1 ? ` ${i + 1}` : ''}
+                        </a>
+                      )) : null;
+                    })()}
                   </div>
                 </td>
                 <td class="p-4">
@@ -105,6 +108,7 @@ const categoryLabels = {
                     data-category-featured-images={JSON.stringify(item.category_featured_images || {})}
                     data-featured-order={item.featured_order || ''}
                     data-pdf-url={item.pdf_url || ''}
+                    data-pdf-urls={JSON.stringify(item.pdf_urls || (item.pdf_url ? [item.pdf_url] : []))}
                     class="edit-btn px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
                   >
                     Edit
@@ -113,6 +117,7 @@ const categoryLabels = {
                     data-id={item.id}
                     data-image-url={item.image_url}
                     data-images={JSON.stringify(item.images || [item.image_url])}
+                    data-pdf-urls={JSON.stringify(item.pdf_urls || (item.pdf_url ? [item.pdf_url] : []))}
                     class="delete-btn px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
                   >
                     Delete
@@ -221,24 +226,25 @@ const categoryLabels = {
           <p class="text-xs text-gray-500 mt-1">Selecteer meerdere foto's om toe te voegen</p>
         </div>
 
-        <!-- Current PDF -->
+        <!-- Current PDFs -->
         <div>
-          <label class="block text-sm font-medium mb-2">Huidige PDF</label>
-          <div id="current-pdf" class="mb-2"></div>
+          <label class="block text-sm font-medium mb-2">Huidige PDF's</label>
+          <div id="current-pdfs" class="mb-2 space-y-2"></div>
         </div>
 
-        <!-- Add/Replace PDF -->
+        <!-- Add PDFs -->
         <div>
-          <label for="edit-pdf" class="block text-sm font-medium mb-1">
-            PDF wijzigen/toevoegen
+          <label for="edit-pdfs" class="block text-sm font-medium mb-1">
+            Nieuwe PDF's toevoegen
           </label>
           <input 
-            id="edit-pdf" 
+            id="edit-pdfs" 
             type="file" 
             accept=".pdf" 
+            multiple
             class="w-full border px-3 py-2 rounded-md" 
           />
-          <p class="text-xs text-gray-500 mt-1">Laat leeg om huidige PDF te behouden</p>
+          <p class="text-xs text-gray-500 mt-1">Houd Ctrl/Cmd ingedrukt om meerdere PDF's te selecteren</p>
         </div>
 
         <div id="edit-status" class="text-sm"></div>
@@ -280,7 +286,7 @@ const categoryLabels = {
 
         const id = btn.getAttribute('data-id');
         const images = JSON.parse(btn.getAttribute('data-images') || '[]');
-        const pdfUrl = btn.getAttribute('data-pdf-url');
+        const pdfUrls = JSON.parse(btn.getAttribute('data-pdf-urls') || '[]');
         btn.disabled = true;
         btn.textContent = 'Deleting...';
         
@@ -301,8 +307,8 @@ const categoryLabels = {
               .remove([fileName]);
           }
 
-          // Delete PDF if exists
-          if (pdfUrl) {
+          // Delete all PDFs if any
+          for (const pdfUrl of pdfUrls) {
             const pdfFileName = pdfUrl.split('/').pop();
             await supabaseClient.storage
               .from('furniture')
@@ -334,8 +340,8 @@ const categoryLabels = {
 
     let currentImages = [];
     let imagesToDelete = [];
-    let currentPdfUrl = null;
-    let deletePdf = false;
+    let currentPdfUrls = [];
+    let pdfsToDelete = [];
     let categoryFeaturedImages = {};
 
     const categoryLabelsMap = {
@@ -406,7 +412,7 @@ const categoryLabels = {
         const nameEn = btn.getAttribute('data-name-en');
         const categories = JSON.parse(btn.getAttribute('data-categories') || '[]');
         const images = JSON.parse(btn.getAttribute('data-images') || '[]');
-        const pdfUrl = btn.getAttribute('data-pdf-url');
+        const pdfUrls = JSON.parse(btn.getAttribute('data-pdf-urls') || '[]');
         const featuredOrder = btn.getAttribute('data-featured-order');
         categoryFeaturedImages = JSON.parse(btn.getAttribute('data-category-featured-images') || '{}');
 
@@ -423,8 +429,8 @@ const categoryLabels = {
         
         currentImages = [...images];
         imagesToDelete = [];
-        currentPdfUrl = pdfUrl;
-        deletePdf = false;
+        currentPdfUrls = [...pdfUrls];
+        pdfsToDelete = [];
         
         // Display current images with delete button
         const currentImagesDiv = document.getElementById('current-images');
@@ -442,31 +448,39 @@ const categoryLabels = {
           </div>
         `).join('');
 
-        // Display current PDF
-        const currentPdfDiv = document.getElementById('current-pdf');
-        if (pdfUrl) {
-          currentPdfDiv.innerHTML = `
+        // Display current PDFs
+        const currentPdfDiv = document.getElementById('current-pdfs');
+        if (pdfUrls.length > 0) {
+          currentPdfDiv.innerHTML = pdfUrls.map((url, idx) => `
             <div class="flex items-center justify-between bg-gray-100 p-2 rounded">
-              <a href="${pdfUrl}" target="_blank" class="text-sm text-blue-600 hover:underline flex items-center gap-1">
-                📄 Huidige PDF bekijken
+              <a href="${url}" target="_blank" class="text-sm text-blue-600 hover:underline flex items-center gap-1">
+                📄 PDF ${idx + 1}
               </a>
               <button 
                 type="button"
-                id="delete-pdf-btn"
-                class="text-red-600 hover:text-red-700 text-sm"
+                class="delete-pdf-btn text-red-600 hover:text-red-700 text-sm"
+                data-index="${idx}"
+                data-url="${url}"
               >
                 Verwijder
               </button>
             </div>
-          `;
+          `).join('');
           
-          document.getElementById('delete-pdf-btn').addEventListener('click', () => {
-            deletePdf = true;
-            currentPdfUrl = null;
-            currentPdfDiv.innerHTML = '<p class="text-sm text-gray-500">PDF verwijderd</p>';
+          currentPdfDiv.querySelectorAll('.delete-pdf-btn').forEach(delBtn => {
+            delBtn.addEventListener('click', () => {
+              const idx = parseInt(delBtn.getAttribute('data-index'));
+              const url = delBtn.getAttribute('data-url');
+              currentPdfUrls.splice(idx, 1);
+              pdfsToDelete.push(url);
+              delBtn.closest('div').remove();
+              if (currentPdfUrls.length === 0) {
+                currentPdfDiv.innerHTML = '<p class="text-sm text-gray-500">Geen PDF\'s</p>';
+              }
+            });
           });
         } else {
-          currentPdfDiv.innerHTML = '<p class="text-sm text-gray-500">Geen PDF</p>';
+          currentPdfDiv.innerHTML = '<p class="text-sm text-gray-500">Geen PDF\'s</p>';
         }
 
         // Add delete image handlers
@@ -529,7 +543,7 @@ const categoryLabels = {
       }
 
       const newFiles = document.getElementById('edit-images').files;
-      const newPdfFile = document.getElementById('edit-pdf').files[0];
+      const newPdfFiles = document.getElementById('edit-pdfs').files;
 
       try {
         const imageUrls = [...currentImages];
@@ -568,42 +582,39 @@ const categoryLabels = {
           }
         }
 
-        // Handle PDF
-        let pdfUrl = currentPdfUrl;
+        // Handle PDFs
+        let pdfUrls = [...currentPdfUrls];
 
-        // Delete old PDF if requested
-        if (deletePdf && currentPdfUrl) {
-          const oldPdfFileName = currentPdfUrl.split('/').pop();
-          await supabaseClient.storage
-            .from('furniture')
-            .remove([oldPdfFileName]);
-          pdfUrl = null;
-        }
-
-        // Upload new PDF
-        if (newPdfFile) {
-          editStatus.textContent = 'Uploading new PDF...';
-          
-          // Delete old PDF first if exists
-          if (currentPdfUrl) {
-            const oldPdfFileName = currentPdfUrl.split('/').pop();
+        // Delete removed PDFs from storage
+        if (pdfsToDelete.length > 0) {
+          editStatus.textContent = 'Removing old PDFs...';
+          for (const url of pdfsToDelete) {
+            const fileName = url.split('/').pop();
             await supabaseClient.storage
               .from('furniture')
-              .remove([oldPdfFileName]);
+              .remove([fileName]);
           }
+        }
+
+        // Upload new PDFs
+        if (newPdfFiles.length > 0) {
+          editStatus.textContent = `Uploading ${newPdfFiles.length} new PDF(s)...`;
           
-          const pdfFileName = `${Date.now()}-${newPdfFile.name}`;
-          const { error: pdfError } = await supabaseClient.storage
-            .from('furniture')
-            .upload(pdfFileName, newPdfFile);
+          for (let i = 0; i < newPdfFiles.length; i++) {
+            const file = newPdfFiles[i];
+            const pdfFileName = `${Date.now()}-${i}-${file.name}`;
+            const { error: pdfError } = await supabaseClient.storage
+              .from('furniture')
+              .upload(pdfFileName, file);
 
-          if (pdfError) throw pdfError;
+            if (pdfError) throw pdfError;
 
-          const { data: pdfUrlData } = supabaseClient.storage
-            .from('furniture')
-            .getPublicUrl(pdfFileName);
+            const { data: pdfUrlData } = supabaseClient.storage
+              .from('furniture')
+              .getPublicUrl(pdfFileName);
 
-          pdfUrl = pdfUrlData.publicUrl;
+            pdfUrls.push(pdfUrlData.publicUrl);
+          }
         }
 
         // Update database
@@ -633,7 +644,8 @@ const categoryLabels = {
             image_url: imageUrls[0] || null,
             category_featured_images: cleanedFeaturedImages,
             featured_order: featuredOrder,
-            pdf_url: pdfUrl
+            pdf_url: pdfUrls[0] || null,
+            pdf_urls: pdfUrls
           })
           .eq('id', id);
 
