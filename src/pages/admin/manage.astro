@@ -84,9 +84,10 @@ const categoryLabels = {
                     )}
                     {(() => {
                       const urls = item.pdf_urls || (item.pdf_url ? [item.pdf_url] : []);
+                      const labels = item.pdf_labels || [];
                       return urls.length > 0 ? urls.map((url, i) => (
                         <a href={url} target="_blank" class="text-xs text-blue-600 hover:underline flex items-center gap-1 mt-1">
-                          📄 PDF{urls.length > 1 ? ` ${i + 1}` : ''}
+                          📄 {labels[i] || `PDF${urls.length > 1 ? ` ${i + 1}` : ''}`}
                         </a>
                       )) : null;
                     })()}
@@ -109,6 +110,7 @@ const categoryLabels = {
                     data-featured-order={item.featured_order || ''}
                     data-pdf-url={item.pdf_url || ''}
                     data-pdf-urls={JSON.stringify(item.pdf_urls || (item.pdf_url ? [item.pdf_url] : []))}
+                    data-pdf-labels={JSON.stringify(item.pdf_labels || [])}
                     class="edit-btn px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
                   >
                     Edit
@@ -245,6 +247,7 @@ const categoryLabels = {
             class="w-full border px-3 py-2 rounded-md" 
           />
           <p class="text-xs text-gray-500 mt-1">Houd Ctrl/Cmd ingedrukt om meerdere PDF's te selecteren</p>
+          <div id="edit-pdf-preview" class="mt-2 space-y-2"></div>
         </div>
 
         <div id="edit-status" class="text-sm"></div>
@@ -341,6 +344,7 @@ const categoryLabels = {
     let currentImages = [];
     let imagesToDelete = [];
     let currentPdfUrls = [];
+    let currentPdfLabels = [];
     let pdfsToDelete = [];
     let categoryFeaturedImages = {};
 
@@ -413,6 +417,7 @@ const categoryLabels = {
         const categories = JSON.parse(btn.getAttribute('data-categories') || '[]');
         const images = JSON.parse(btn.getAttribute('data-images') || '[]');
         const pdfUrls = JSON.parse(btn.getAttribute('data-pdf-urls') || '[]');
+        const pdfLabels = JSON.parse(btn.getAttribute('data-pdf-labels') || '[]');
         const featuredOrder = btn.getAttribute('data-featured-order');
         categoryFeaturedImages = JSON.parse(btn.getAttribute('data-category-featured-images') || '{}');
 
@@ -430,6 +435,7 @@ const categoryLabels = {
         currentImages = [...images];
         imagesToDelete = [];
         currentPdfUrls = [...pdfUrls];
+        currentPdfLabels = [...pdfLabels];
         pdfsToDelete = [];
         
         // Display current images with delete button
@@ -452,17 +458,24 @@ const categoryLabels = {
         const currentPdfDiv = document.getElementById('current-pdfs');
         if (pdfUrls.length > 0) {
           currentPdfDiv.innerHTML = pdfUrls.map((url, idx) => `
-            <div class="flex items-center justify-between bg-gray-100 p-2 rounded">
-              <a href="${url}" target="_blank" class="text-sm text-blue-600 hover:underline flex items-center gap-1">
-                📄 PDF ${idx + 1}
+            <div class="flex items-center gap-2 bg-gray-100 p-2 rounded" data-pdf-index="${idx}">
+              <span class="text-sm text-gray-500 w-6">${idx + 1}.</span>
+              <input
+                type="text"
+                class="pdf-label-input flex-1 border px-2 py-1 rounded text-sm bg-white"
+                value="${pdfLabels[idx] || ''}"
+                placeholder="Naam voor deze PDF"
+              />
+              <a href="${url}" target="_blank" class="text-blue-600 hover:underline text-sm shrink-0">
+                📄
               </a>
               <button 
                 type="button"
-                class="delete-pdf-btn text-red-600 hover:text-red-700 text-sm"
+                class="delete-pdf-btn text-red-600 hover:text-red-700 text-sm shrink-0"
                 data-index="${idx}"
                 data-url="${url}"
               >
-                Verwijder
+                ✕
               </button>
             </div>
           `).join('');
@@ -472,6 +485,7 @@ const categoryLabels = {
               const idx = parseInt(delBtn.getAttribute('data-index'));
               const url = delBtn.getAttribute('data-url');
               currentPdfUrls.splice(idx, 1);
+              currentPdfLabels.splice(idx, 1);
               pdfsToDelete.push(url);
               delBtn.closest('div').remove();
               if (currentPdfUrls.length === 0) {
@@ -514,10 +528,35 @@ const categoryLabels = {
       });
     });
 
+    // Show label inputs when new PDFs are selected in edit modal
+    document.getElementById('edit-pdfs').addEventListener('change', () => {
+      const files = document.getElementById('edit-pdfs').files;
+      const preview = document.getElementById('edit-pdf-preview');
+      preview.innerHTML = '';
+      if (files.length === 0) return;
+      
+      for (let i = 0; i < files.length; i++) {
+        const nameWithoutExt = files[i].name.replace(/\.[^/.]+$/, '');
+        const div = document.createElement('div');
+        div.className = 'flex items-center gap-2 bg-gray-50 p-2 rounded';
+        div.innerHTML = `
+          <span class="text-sm text-gray-500 shrink-0">nieuw ${i + 1}.</span>
+          <input
+            type="text"
+            class="new-pdf-label flex-1 border px-2 py-1 rounded text-sm"
+            placeholder="Naam voor deze PDF (optioneel)"
+            value="${nameWithoutExt}"
+          />
+        `;
+        preview.appendChild(div);
+      }
+    });
+
     // Close modal
     document.getElementById('cancelEdit').addEventListener('click', () => {
       editModal.classList.add('hidden');
       editForm.reset();
+      document.getElementById('edit-pdf-preview').innerHTML = '';
     });
 
     // Submit edit
@@ -584,6 +623,14 @@ const categoryLabels = {
 
         // Handle PDFs
         let pdfUrls = [...currentPdfUrls];
+        let pdfLabels = [...currentPdfLabels];
+
+        // Collect updated labels from inputs
+        document.querySelectorAll('.pdf-label-input').forEach((input, idx) => {
+          if (idx < pdfLabels.length) {
+            pdfLabels[idx] = input.value.trim();
+          }
+        });
 
         // Delete removed PDFs from storage
         if (pdfsToDelete.length > 0) {
@@ -600,6 +647,8 @@ const categoryLabels = {
         if (newPdfFiles.length > 0) {
           editStatus.textContent = `Uploading ${newPdfFiles.length} new PDF(s)...`;
           
+          const newLabelInputs = document.querySelectorAll('.new-pdf-label');
+          
           for (let i = 0; i < newPdfFiles.length; i++) {
             const file = newPdfFiles[i];
             const pdfFileName = `${Date.now()}-${i}-${file.name}`;
@@ -614,6 +663,7 @@ const categoryLabels = {
               .getPublicUrl(pdfFileName);
 
             pdfUrls.push(pdfUrlData.publicUrl);
+            pdfLabels.push(newLabelInputs[i]?.value?.trim() || '');
           }
         }
 
@@ -645,7 +695,8 @@ const categoryLabels = {
             category_featured_images: cleanedFeaturedImages,
             featured_order: featuredOrder,
             pdf_url: pdfUrls[0] || null,
-            pdf_urls: pdfUrls
+            pdf_urls: pdfUrls,
+            pdf_labels: pdfLabels
           })
           .eq('id', id);
 
