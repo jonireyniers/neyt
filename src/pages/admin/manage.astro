@@ -110,7 +110,9 @@ const categoryLabels = {
                     data-featured-order={item.featured_order || ''}
                     data-pdf-url={item.pdf_url || ''}
                     data-pdf-urls={JSON.stringify(item.pdf_urls || (item.pdf_url ? [item.pdf_url] : []))}
-                    data-pdf-labels={JSON.stringify(item.pdf_labels_nl || [])}
+                    data-pdf-labels-nl={JSON.stringify(item.pdf_labels_nl || [])}
+                    data-pdf-labels-en={JSON.stringify(item.pdf_labels_en || [])}
+                    data-pdf-labels-fr={JSON.stringify(item.pdf_labels_fr || [])}
                     class="edit-btn px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
                   >
                     Edit
@@ -271,30 +273,6 @@ const categoryLabels = {
     const { createClient } = supabase;
     const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    const translationDict = {
-      'Voorbeeld kasten 1': { en: 'Example cabinets 1', fr: 'Armoires exemple 1' },
-      'Voorbeeld kasten 2': { en: 'Example cabinets 2', fr: 'Armoires exemple 2' },
-      'voorbeeld kasten 1': { en: 'Example cabinets 1', fr: 'Armoires exemple 1' },
-      'voorbeeld kasten 2': { en: 'Example cabinets 2', fr: 'Armoires exemple 2' },
-      'Technische tekening': { en: 'Technical drawing', fr: 'Dessin technique' },
-      'technische tekening': { en: 'Technical drawing', fr: 'Dessin technique' },
-    };
-
-    function translateLabels(nlLabels) {
-      const en = [];
-      const fr = [];
-      for (const label of nlLabels) {
-        if (translationDict[label]) {
-          en.push(translationDict[label].en);
-          fr.push(translationDict[label].fr);
-        } else {
-          en.push(label);
-          fr.push(label);
-        }
-      }
-      return { en, fr };
-    }
-
     // Check if user is logged in
     (async () => {
       const { data: { user } } = await supabaseClient.auth.getUser();
@@ -368,7 +346,9 @@ const categoryLabels = {
     let currentImages = [];
     let imagesToDelete = [];
     let currentPdfUrls = [];
-    let currentPdfLabels = [];
+    let currentPdfLabelsNl = [];
+    let currentPdfLabelsEn = [];
+    let currentPdfLabelsFr = [];
     let pdfsToDelete = [];
     let categoryFeaturedImages = {};
 
@@ -441,7 +421,9 @@ const categoryLabels = {
         const categories = JSON.parse(btn.getAttribute('data-categories') || '[]');
         const images = JSON.parse(btn.getAttribute('data-images') || '[]');
         const pdfUrls = JSON.parse(btn.getAttribute('data-pdf-urls') || '[]');
-        const pdfLabels = JSON.parse(btn.getAttribute('data-pdf-labels') || '[]');
+        const pdfLabelsNl = JSON.parse(btn.getAttribute('data-pdf-labels-nl') || '[]');
+        const pdfLabelsEn = JSON.parse(btn.getAttribute('data-pdf-labels-en') || '[]');
+        const pdfLabelsFr = JSON.parse(btn.getAttribute('data-pdf-labels-fr') || '[]');
         const featuredOrder = btn.getAttribute('data-featured-order');
         categoryFeaturedImages = JSON.parse(btn.getAttribute('data-category-featured-images') || '{}');
 
@@ -459,7 +441,9 @@ const categoryLabels = {
         currentImages = [...images];
         imagesToDelete = [];
         currentPdfUrls = [...pdfUrls];
-        currentPdfLabels = [...pdfLabels];
+        currentPdfLabelsNl = [...pdfLabelsNl];
+        currentPdfLabelsEn = [...pdfLabelsEn];
+        currentPdfLabelsFr = [...pdfLabelsFr];
         pdfsToDelete = [];
         
         // Display current images with delete button
@@ -482,25 +466,19 @@ const categoryLabels = {
         const currentPdfDiv = document.getElementById('current-pdfs');
         if (pdfUrls.length > 0) {
           currentPdfDiv.innerHTML = pdfUrls.map((url, idx) => `
-            <div class="flex items-center gap-2 bg-gray-100 p-2 rounded" data-pdf-index="${idx}">
-              <span class="text-sm text-gray-500 w-6">${idx + 1}.</span>
-              <input
-                type="text"
-                class="pdf-label-input flex-1 border px-2 py-1 rounded text-sm bg-white"
-                value="${pdfLabels[idx] || ''}"
-                placeholder="Naam voor deze PDF"
-              />
-              <a href="${url}" target="_blank" class="text-blue-600 hover:underline text-sm shrink-0">
-                📄
-              </a>
-              <button 
-                type="button"
-                class="delete-pdf-btn text-red-600 hover:text-red-700 text-sm shrink-0"
-                data-index="${idx}"
-                data-url="${url}"
-              >
-                ✕
-              </button>
+            <div class="flex flex-col gap-1 bg-gray-100 p-2 rounded" data-pdf-index="${idx}">
+              <div class="flex items-center gap-2">
+                <span class="text-sm text-gray-500 w-6 shrink-0">${idx + 1}.</span>
+                <input type="text" class="pdf-label-input-nl flex-1 border px-2 py-1 rounded text-sm bg-white"
+                  value="${pdfLabelsNl[idx] || ''}" placeholder="NL label" />
+                <input type="text" class="pdf-label-input-en flex-1 border px-2 py-1 rounded text-sm bg-white"
+                  value="${pdfLabelsEn[idx] || ''}" placeholder="EN label" />
+                <input type="text" class="pdf-label-input-fr flex-1 border px-2 py-1 rounded text-sm bg-white"
+                  value="${pdfLabelsFr[idx] || ''}" placeholder="FR label" />
+                <a href="${url}" target="_blank" class="text-blue-600 hover:underline text-sm shrink-0">📄</a>
+                <button type="button" class="delete-pdf-btn text-red-600 hover:text-red-700 text-sm shrink-0"
+                  data-index="${idx}" data-url="${url}">✕</button>
+              </div>
             </div>
           `).join('');
           
@@ -509,7 +487,9 @@ const categoryLabels = {
               const idx = parseInt(delBtn.getAttribute('data-index'));
               const url = delBtn.getAttribute('data-url');
               currentPdfUrls.splice(idx, 1);
-              currentPdfLabels.splice(idx, 1);
+              currentPdfLabelsNl.splice(idx, 1);
+              currentPdfLabelsEn.splice(idx, 1);
+              currentPdfLabelsFr.splice(idx, 1);
               pdfsToDelete.push(url);
               delBtn.closest('div').remove();
               if (currentPdfUrls.length === 0) {
@@ -564,13 +544,13 @@ const categoryLabels = {
         const div = document.createElement('div');
         div.className = 'flex items-center gap-2 bg-gray-50 p-2 rounded';
         div.innerHTML = `
-          <span class="text-sm text-gray-500 shrink-0">nieuw ${i + 1}.</span>
-          <input
-            type="text"
-            class="new-pdf-label flex-1 border px-2 py-1 rounded text-sm"
-            placeholder="Naam voor deze PDF (optioneel)"
-            value="${nameWithoutExt}"
-          />
+          <span class="text-sm text-gray-500 w-6 shrink-0">nieuw ${i + 1}.</span>
+          <input type="text" class="new-pdf-label-nl flex-1 border px-2 py-1 rounded text-sm"
+            placeholder="NL label" value="${nameWithoutExt}" />
+          <input type="text" class="new-pdf-label-en flex-1 border px-2 py-1 rounded text-sm"
+            placeholder="EN label" value="" />
+          <input type="text" class="new-pdf-label-fr flex-1 border px-2 py-1 rounded text-sm"
+            placeholder="FR label" value="" />
         `;
         preview.appendChild(div);
       }
@@ -647,12 +627,24 @@ const categoryLabels = {
 
         // Handle PDFs
         let pdfUrls = [...currentPdfUrls];
-        let pdfLabels = [...currentPdfLabels];
+        let pdfLabelsNl = [...currentPdfLabelsNl];
+        let pdfLabelsEn = [...currentPdfLabelsEn];
+        let pdfLabelsFr = [...currentPdfLabelsFr];
 
         // Collect updated labels from inputs
-        document.querySelectorAll('.pdf-label-input').forEach((input, idx) => {
-          if (idx < pdfLabels.length) {
-            pdfLabels[idx] = input.value.trim();
+        document.querySelectorAll('.pdf-label-input-nl').forEach((input, idx) => {
+          if (idx < pdfLabelsNl.length) {
+            pdfLabelsNl[idx] = input.value.trim();
+          }
+        });
+        document.querySelectorAll('.pdf-label-input-en').forEach((input, idx) => {
+          if (idx < pdfLabelsEn.length) {
+            pdfLabelsEn[idx] = input.value.trim();
+          }
+        });
+        document.querySelectorAll('.pdf-label-input-fr').forEach((input, idx) => {
+          if (idx < pdfLabelsFr.length) {
+            pdfLabelsFr[idx] = input.value.trim();
           }
         });
 
@@ -671,7 +663,9 @@ const categoryLabels = {
         if (newPdfFiles.length > 0) {
           editStatus.textContent = `Uploading ${newPdfFiles.length} new PDF(s)...`;
           
-          const newLabelInputs = document.querySelectorAll('.new-pdf-label');
+          const newLabelInputsNl = document.querySelectorAll('.new-pdf-label-nl');
+          const newLabelInputsEn = document.querySelectorAll('.new-pdf-label-en');
+          const newLabelInputsFr = document.querySelectorAll('.new-pdf-label-fr');
           
           for (let i = 0; i < newPdfFiles.length; i++) {
             const file = newPdfFiles[i];
@@ -687,7 +681,9 @@ const categoryLabels = {
               .getPublicUrl(pdfFileName);
 
             pdfUrls.push(pdfUrlData.publicUrl);
-            pdfLabels.push(newLabelInputs[i]?.value?.trim() || '');
+            pdfLabelsNl.push(newLabelInputsNl[i]?.value?.trim() || '');
+            pdfLabelsEn.push(newLabelInputsEn[i]?.value?.trim() || '');
+            pdfLabelsFr.push(newLabelInputsFr[i]?.value?.trim() || '');
           }
         }
 
@@ -720,9 +716,9 @@ const categoryLabels = {
             featured_order: featuredOrder,
             pdf_url: pdfUrls[0] || null,
             pdf_urls: pdfUrls,
-            pdf_labels_nl: pdfLabels,
-            pdf_labels_en: translateLabels(pdfLabels).en,
-            pdf_labels_fr: translateLabels(pdfLabels).fr
+            pdf_labels_nl: pdfLabelsNl,
+            pdf_labels_en: pdfLabelsEn,
+            pdf_labels_fr: pdfLabelsFr
           })
           .eq('id', id);
 

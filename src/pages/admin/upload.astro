@@ -108,30 +108,6 @@ const locale: 'en' | 'fr' | 'nl' = 'en';
     
     const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    const translationDict = {
-      'Voorbeeld kasten 1': { en: 'Example cabinets 1', fr: 'Armoires exemple 1' },
-      'Voorbeeld kasten 2': { en: 'Example cabinets 2', fr: 'Armoires exemple 2' },
-      'voorbeeld kasten 1': { en: 'Example cabinets 1', fr: 'Armoires exemple 1' },
-      'voorbeeld kasten 2': { en: 'Example cabinets 2', fr: 'Armoires exemple 2' },
-      'Technische tekening': { en: 'Technical drawing', fr: 'Dessin technique' },
-      'technische tekening': { en: 'Technical drawing', fr: 'Dessin technique' },
-    };
-
-    function translateLabels(nlLabels) {
-      const en = [];
-      const fr = [];
-      for (const label of nlLabels) {
-        if (translationDict[label]) {
-          en.push(translationDict[label].en);
-          fr.push(translationDict[label].fr);
-        } else {
-          en.push(label);
-          fr.push(label);
-        }
-      }
-      return { en, fr };
-    }
-
     // Check if user is logged in
     (async () => {
       const { data: { user } } = await supabaseClient.auth.getUser();
@@ -158,13 +134,13 @@ const locale: 'en' | 'fr' | 'nl' = 'en';
         const div = document.createElement('div');
         div.className = 'flex items-center gap-2 bg-gray-50 p-2 rounded';
         div.innerHTML = `
-          <span class="text-sm text-gray-500 w-8">${i + 1}.</span>
-          <input
-            type="text"
-            class="pdf-label flex-1 border px-2 py-1 rounded text-sm"
-            placeholder="Naam voor deze PDF (optioneel)"
-            value="${nameWithoutExt}"
-          />
+          <span class="text-sm text-gray-500 w-6 shrink-0">${i + 1}.</span>
+          <input type="text" class="pdf-label-nl flex-1 border px-2 py-1 rounded text-sm"
+            placeholder="NL label" value="${nameWithoutExt}" />
+          <input type="text" class="pdf-label-en flex-1 border px-2 py-1 rounded text-sm"
+            placeholder="EN label" value="" />
+          <input type="text" class="pdf-label-fr flex-1 border px-2 py-1 rounded text-sm"
+            placeholder="FR label" value="" />
         `;
         pdfPreview.appendChild(div);
       }
@@ -217,13 +193,16 @@ const locale: 'en' | 'fr' | 'nl' = 'en';
 
         // Upload PDFs if present
         let pdfUrls = [];
-        let pdfLabels = [];
+        let pdfLabelsNl = [];
+        let pdfLabelsEn = [];
+        let pdfLabelsFr = [];
         const pdfFiles = formData.getAll('pdf').filter(f => f.size > 0);
         if (pdfFiles.length > 0) {
           statusEl.textContent = `Uploading ${pdfFiles.length} PDF(s)...`;
           
-          // Get labels from the preview inputs
-          const labelInputs = pdfPreview.querySelectorAll('.pdf-label');
+          const labelInputsNl = pdfPreview.querySelectorAll('.pdf-label-nl');
+          const labelInputsEn = pdfPreview.querySelectorAll('.pdf-label-en');
+          const labelInputsFr = pdfPreview.querySelectorAll('.pdf-label-fr');
           
           for (let i = 0; i < pdfFiles.length; i++) {
             const file = pdfFiles[i];
@@ -240,7 +219,9 @@ const locale: 'en' | 'fr' | 'nl' = 'en';
               .getPublicUrl(pdfFileName);
 
             pdfUrls.push(pdfUrlData.publicUrl);
-            pdfLabels.push(labelInputs[i]?.value?.trim() || '');
+            pdfLabelsNl.push(labelInputsNl[i]?.value?.trim() || '');
+            pdfLabelsEn.push(labelInputsEn[i]?.value?.trim() || '');
+            pdfLabelsFr.push(labelInputsFr[i]?.value?.trim() || '');
           }
         }
 
@@ -255,9 +236,9 @@ const locale: 'en' | 'fr' | 'nl' = 'en';
           images: imageUrls,
           pdf_url: pdfUrls[0] || null,
           pdf_urls: pdfUrls,
-          pdf_labels_nl: pdfLabels,
-          pdf_labels_en: translateLabels(pdfLabels).en,
-          pdf_labels_fr: translateLabels(pdfLabels).fr
+          pdf_labels_nl: pdfLabelsNl,
+          pdf_labels_en: pdfLabelsEn,
+          pdf_labels_fr: pdfLabelsFr
         };
 
         console.log('=== INSERT DATA ===', insertData);
