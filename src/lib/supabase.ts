@@ -22,7 +22,9 @@ export interface Furniture {
   featured_order?: number | null; // 1-6 for home page featured items
   pdf_url?: string;
   pdf_urls?: string[];
-  pdf_labels?: string[];
+  pdf_labels_nl?: string[];
+  pdf_labels_en?: string[];
+  pdf_labels_fr?: string[];
   created_at: string;
   updated_at: string;
 }

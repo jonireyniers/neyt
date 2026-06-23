@@ -1,0 +1,53 @@
+/* empty css                                         */
+import { f as createComponent, k as renderComponent, r as renderTemplate, m as maybeRenderHead } from '../../chunks/astro/server_CDBpw_Ph.mjs';
+import 'piccolore';
+import { $ as $$BaseLayout } from '../../chunks/BaseLayout_DoY-9ISW.mjs';
+import { a as $$Header, $ as $$Footer } from '../../chunks/Footer_BpSRVMVJ.mjs';
+export { renderers } from '../../renderers.mjs';
+
+const $$Privacy = createComponent(($$result, $$props, $$slots) => {
+  const locale = "en";
+  return renderTemplate`${renderComponent($$result, "BaseLayout", $$BaseLayout, { "title": "Privacy Policy | Neyt Furniture", "description": "Privacy Policy of Neyt NV \u2013 how we collect, use and protect your personal data in accordance with GDPR.", "locale": locale }, { "default": ($$result2) => renderTemplate` ${renderComponent($$result2, "Header", $$Header, { "locale": locale })} ${maybeRenderHead()}<main class="container py-16 max-w-3xl mx-auto"> <h1 class="text-3xl font-bold mb-8">Privacy Policy</h1> <p class="text-sm text-gray-500 mb-10">Last updated: 4 March 2026</p> <section class="mb-10"> <h2 class="text-xl font-semibold mb-3">1. Data Controller</h2> <p class="text-gray-700 leading-relaxed">
+Neyt NV<br>
+Heistraat 12, 9080 Beervelde, Belgium<br>
+VAT: BE0400.162.909<br>
+Tel.: +32 9 353 92 00<br>
+E-mail: <a href="mailto:info@neytfurniture.com" class="text-primary underline">info@neytfurniture.com</a> </p> </section> <section class="mb-10"> <h2 class="text-xl font-semibold mb-3">2. What data do we collect?</h2> <p class="text-gray-700 leading-relaxed mb-3">
+Through the contact form on our website, we collect the following personal data:
+</p> <ul class="list-disc list-inside text-gray-700 space-y-1"> <li>Name</li> <li>Email address</li> <li>Company name (optional)</li> <li>Content of your message</li> </ul> <p class="text-gray-700 mt-3 leading-relaxed">
+We do not collect any data via cookies, tracking or analytics services.
+</p> </section> <section class="mb-10"> <h2 class="text-xl font-semibold mb-3">3. Why do we use your data?</h2> <p class="text-gray-700 leading-relaxed">
+Your data is used solely to respond to your contact request. We do not use your data for marketing purposes and do not share it with third parties, unless required by law.
+</p> </section> <section class="mb-10"> <h2 class="text-xl font-semibold mb-3">4. Legal basis for processing</h2> <p class="text-gray-700 leading-relaxed">
+The processing of your personal data is based on your explicit consent (Art. 6(1)(a) GDPR), which you give by filling in and submitting the contact form.
+</p> </section> <section class="mb-10"> <h2 class="text-xl font-semibold mb-3">5. How long do we retain your data?</h2> <p class="text-gray-700 leading-relaxed">
+Your data is retained for as long as necessary to handle your request and archive it for possible follow-up communication, with a maximum retention period of <strong>2 years</strong> after the last contact. After that, it is permanently deleted.
+</p> </section> <section class="mb-10"> <h2 class="text-xl font-semibold mb-3">6. Your rights</h2> <p class="text-gray-700 leading-relaxed mb-3">
+Under the General Data Protection Regulation (GDPR), you have the following rights:
+</p> <ul class="list-disc list-inside text-gray-700 space-y-1"> <li><strong>Right of access</strong> – you can request to see what data we hold about you.</li> <li><strong>Right to rectification</strong> – you can have inaccurate data corrected.</li> <li><strong>Right to erasure</strong> – you can request deletion of your data ("right to be forgotten").</li> <li><strong>Right to restriction</strong> – you can request that processing be restricted.</li> <li><strong>Right to data portability</strong> – you can request your data in a readable format.</li> <li><strong>Right to object</strong> – you can object to the processing of your data.</li> <li><strong>Right to withdraw consent</strong> – you can withdraw your consent at any time.</li> </ul> <p class="text-gray-700 mt-4 leading-relaxed">
+To exercise these rights, please contact us at <a href="mailto:info@neytfurniture.com" class="text-primary underline">info@neytfurniture.com</a>. We will respond within 30 days.
+</p> </section> <section class="mb-10"> <h2 class="text-xl font-semibold mb-3">7. Filing a complaint</h2> <p class="text-gray-700 leading-relaxed">
+If you believe your rights are being violated, you can file a complaint with the Belgian Data Protection Authority (GBA):
+</p> <p class="text-gray-700 mt-2"> <a href="https://www.gegevensbeschermingsautoriteit.be" target="_blank" rel="noopener noreferrer" class="text-primary underline">www.gegevensbeschermingsautoriteit.be</a><br>
+Rue de la Presse 35, 1000 Brussels<br>
+Tel.: +32 2 274 48 00
+</p> </section> <section class="mb-10"> <h2 class="text-xl font-semibold mb-3">8. Security of your data</h2> <p class="text-gray-700 leading-relaxed">
+We take appropriate technical and organisational measures to protect your personal data against unauthorised access, loss or misuse. Your contact requests are processed via a secure connection (HTTPS).
+</p> </section> <section class="mb-10"> <h2 class="text-xl font-semibold mb-3">9. Changes to this policy</h2> <p class="text-gray-700 leading-relaxed">
+We may update this privacy policy from time to time. The most recent version is always available on this page. We recommend checking this page regularly.
+</p> </section> </main> ${renderComponent($$result2, "Footer", $$Footer, { "locale": locale })} ` })}`;
+}, "/Users/jonireyniers/prod-neyt/neyt/src/pages/en/privacy.astro", void 0);
+
+const $$file = "/Users/jonireyniers/prod-neyt/neyt/src/pages/en/privacy.astro";
+const $$url = "/en/privacy";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: $$Privacy,
+  file: $$file,
+  url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };
